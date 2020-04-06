@@ -1,0 +1,10 @@
+"..\Objects\bsp_main.obj",
+"..\Objects\bsp_keypad.obj",
+"..\Objects\bsp_lcd.obj",
+"..\Objects\bsp_tcl1543.obj",
+"..\Objects\bsp_usart.obj",
+"..\Objects\bsp_timer.obj",
+"..\Objects\bsp_ES_Logic.obj",
+"..\Objects\STARTUP.obj" 
+TO "..\Objects\12" 
+PRINT("..\Listings\12.m51") RAMSIZE(256) 

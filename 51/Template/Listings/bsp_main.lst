@@ -1,0 +1,252 @@
+C51 COMPILER V9.60.0.0   BSP_MAIN                                                          03/28/2020 20:44:48 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BSP_MAIN
+OBJECT MODULE PLACED IN ..\Objects\bsp_main.obj
+COMPILER INVOKED BY: F:\Keil_v5\C51\BIN\C51.EXE ..\user\bsp_main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\user;..\BSP\inc) D
+                    -EBUG OBJECTEXTEND PRINT(..\Listings\bsp_main.lst) OBJECT(..\Objects\bsp_main.obj)
+
+line level    source
+
+   1          #include "inc.h"
+   2          
+   3          
+   4          xdata Dishes Dishes_temp[] ={
+   5          {"qingcai",2.2},
+   6          {"dabaicai",2.8},
+   7          {"xiguan",4.9},
+   8          {"xiangjiao",71.3},
+   9          {"xihongshi",88.2},
+  10          {"niunan",99},
+  11          {"jinju",19},
+  12          {"niunan",22},
+  13          {"qiezi",33},
+  14          {"huasheng",55},
+  15          {"niunai",88},};
+  16          
+  17          Info Dishes_Info = {0,0,2.2,0,0,0};
+  18          
+  19          void Delay200ms()               //@11.0592MHz
+  20          {
+  21   1              unsigned char i, j, k;
+  22   1              _nop_();
+  23   1              i = 2;
+  24   1              j = 103;
+  25   1              k = 147;
+  26   1              do
+  27   1              {
+  28   2                      do
+  29   2                      {
+  30   3                              while (--k);
+  31   3                      } while (--j);
+  32   2              } while (--i);
+  33   1      }
+  34          
+  35          
+  36          static void bsp_init(void);
+  37          static void lcd_display(void);
+  38          char xdata str[50] = 0;
+  39          void main(void)
+  40          {
+  41   1              unsigned char key = 0;
+  42   1              uint8_t flag = 0,flag_temp = 0;
+  43   1              bsp_init();
+  44   1              while(1)
+  45   1              {
+  46   2                      key = Get_KeyPad() ;
+  47   2                      Dishes_Info.weight = Get_ES_Val() - Dishes_Info.Peeled;
+  48   2                      sprintf(str, "通道号:%d,重量:%05.3fkg,菜品编号:%d,""总价:",(int)(Dishes_Info.WhichES + 1), Dishes_Info.w
+             -eight, (int)Dishes_Info.Num);
+  49   2                      sprintf(str + strlen(str), "%06.2f;",Dishes_Info.money);
+  50   2                      Send_String(str);
+  51   2                      
+  52   2                      if(flag < 4)
+  53   2                      {
+C51 COMPILER V9.60.0.0   BSP_MAIN                                                          03/28/2020 20:44:48 PAGE 2   
+
+  54   3                              
+  55   3                              sprintf(str, "WE:%05.3f PR:%04.1f",Dishes_Info.weight,Dishes_Info.price);
+  56   3                              LcdShowStr(0x80,str);
+  57   3                              Dishes_Info.money = Dishes_Info.weight * Dishes_Info.price;
+  58   3                              sprintf(str, "MONEY:%06.2fNo:%d", Dishes_Info.money, (int)Dishes_Info.Num);
+  59   3                              LcdShowStr(0x80 + 0x40,str);
+  60   3                              switch(key)
+  61   3                              {
+  62   4                                      case 'S':  flag = 1;  uClear_KeyPad();break;
+  63   4                                      case '=':  flag = 2;  uClear_KeyPad();break;
+  64   4                                      case 'C':  flag = 3;  flag += 1<<4 ;
+  65   4                                                         LcdShowStr(0x80,"                ");
+  66   4                                                         LcdShowStr(0x80+ 0x40,"                ");
+  67   4                                                         uClear_KeyPad();break;
+  68   4                                      case 0xff:break;
+  69   4                                      case '0':
+  70   4                                      case '1':
+  71   4                                      case '2':
+  72   4                                      case '3':
+  73   4                                      case '4':
+  74   4                                      case '5':
+  75   4                                      case '6':
+  76   4                                      case '7':
+  77   4                                      case '8':
+  78   4                                      case '9':
+  79   4                                                              if(flag == 1)
+  80   4                                                              {
+  81   5                                                                      flag += 1<<4 ;
+  82   5                                                                      LcdShowStr(0x80,"                ");
+  83   5                                                                      LcdShowStr(0x80+ 0x40,"                ");
+  84   5                                                              }else if(flag == 2)
+  85   4                                                              {
+  86   5                                                                      flag += 1<<4;
+  87   5                                                              }
+  88   4                                                              break;
+  89   4                                      default:break;
+  90   4                              }                       
+  91   3                      }
+  92   2                      if((flag & (1<<4)))
+  93   2                      {
+  94   3                              flag_temp = flag ;
+  95   3                              flag_temp &= ~(1<<4); 
+  96   3                              if(key == 'S')
+  97   3                              {
+  98   4                                      flag = 0;
+  99   4                                      uClear_KeyPad();
+ 100   4                              }       
+ 101   3                              switch(flag_temp)
+ 102   3                              {
+ 103   4                                      case 1:
+ 104   4                              
+ 105   4                                      if((key != 'S' ) && (key != 0xff)) 
+ 106   4                                      {
+ 107   5                                              Dishes_Info.price = Dishes_temp[key-'0'].price;
+ 108   5                                              Dishes_Info.Num = key - '0';
+ 109   5                                              //sprintf(str, "菜名:%s, 单价:%2.1f\n",Dishes_temp[key-'0'].DisheName, Dishes_Info.price);
+ 110   5                                              //Send_String(str);
+ 111   5                                              
+ 112   5                                              sprintf(str, " name:%s",Dishes_temp[key-'0'].DisheName);
+ 113   5                                              LcdShowStr(0x80,str);
+ 114   5                                              
+ 115   5                                              sprintf(str, "price:%2.1f      ",Dishes_Info.price);    
+C51 COMPILER V9.60.0.0   BSP_MAIN                                                          03/28/2020 20:44:48 PAGE 3   
+
+ 116   5                                              LcdShowStr(0x80 + 0x40,str);
+ 117   5                                              uClear_KeyPad();        
+ 118   5                                      }
+ 119   4                                      break;
+ 120   4                                      case 2:
+ 121   4                                      if((key >= '0') && (key <= '9'))
+ 122   4                                      {
+ 123   5                                              LcdShowStr(0x80 ,"Electronic scale");
+ 124   5                                              sprintf(str, "USE_MODE: NO:%d  ",(int)(key-'0'));
+ 125   5                                              LcdShowStr(0x80 + 0x40 ,str);   
+ 126   5                                              Dishes_Info.WhichES = key-'0';
+ 127   5                                              uClear_KeyPad();
+ 128   5                                      }
+ 129   4                                      break;
+ 130   4                                      case 3:
+ 131   4                                              if(key != 'S')
+ 132   4                                              {
+ 133   5                                                      Dishes_Info.Peeled = Get_ES_Val();
+ 134   5                                                      //sprintf(str, "Peeled:%f01.3", Dishes_Info.Peeled);
+ 135   5                                                      //
+ 136   5                                                      Send_String(str);
+ 137   5                                                      LcdShowStr(0x80,"  name:Peeled  ");
+ 138   5                                                      
+ 139   5                                                      sprintf(str, "val:%2.3f      ",Dishes_Info.Peeled);     
+ 140   5                                                      LcdShowStr(0x80 + 0x40,str);    
+ 141   5                                              }
+ 142   4                                      break;
+ 143   4                                      default :break;
+ 144   4                              }
+ 145   3                              
+ 146   3                              
+ 147   3                              
+ 148   3                      }
+ 149   2                      
+ 150   2                      Delay200ms();
+ 151   2      
+ 152   2              }
+ 153   1      }
+ 154          
+ 155          static void lcd_display(void)
+ 156          {
+ 157   1              LcdInit();      
+ 158   1              LcdShowStr(0x80 ,"   Welcome use  ");
+ 159   1              LcdShowStr(0x80 + 0x40 ,"Electronic scale");
+ 160   1              Delay200ms();
+ 161   1              Delay200ms();
+ 162   1              LcdShowStr(0x80 ,"  class: b16   ");
+ 163   1              LcdShowStr(0x80+ 0x40," name: W X D");
+ 164   1              Delay200ms();
+ 165   1              Delay200ms();
+ 166   1      }
+ 167          
+ 168          static void bsp_init(void)
+ 169          {
+ 170   1              lcd_display();
+ 171   1              Timer0Init();
+ 172   1              UartInit();
+ 173   1              sprintf(str, "通道号:%d,重量:%05.3fkg,菜品编号:%d,总价:%06.2f;",(int)1, Dishes_Info.weight, (int)Dishes_I
+             -nfo.Num, Dishes_Info.money);
+ 174   1              Send_String(str);
+ 175   1      
+ 176   1              sprintf(str, "通道号:%d,重量:%05.3fkg,菜品编号:%d,总价:%06.2f;",(int)2, Dishes_Info.weight, (int)Dishes_I
+C51 COMPILER V9.60.0.0   BSP_MAIN                                                          03/28/2020 20:44:48 PAGE 4   
+
+             -nfo.Num, Dishes_Info.money);
+ 177   1              Send_String(str);
+ 178   1                              
+ 179   1              sprintf(str, "通道号:%d,重量:%05.3fkg,菜品编号:%d,总价:%06.2f;",(int)3, Dishes_Info.weight, (int)Dishes_I
+             -nfo.Num, Dishes_Info.money);
+ 180   1              Send_String(str);
+ 181   1      
+ 182   1              sprintf(str, "通道号:%d,重量:%05.3fkg,菜品编号:%d,总价:%06.2f;",(int)4, Dishes_Info.weight, (int)Dishes_I
+             -nfo.Num, Dishes_Info.money);
+ 183   1              Send_String(str);       
+ 184   1      }
+ 185          
+ 186          
+ 187          
+ 188          
+ 189          
+ 190          
+ 191          
+ 192          
+ 193          
+ 194          
+ 195          
+ 196          
+ 197          
+ 198          
+ 199          
+ 200          
+ 201          
+ 202          
+ 203          
+ 204          
+ 205          
+ 206          
+ 207          
+ 208          
+ 209          
+ 210          
+ 211          
+ 212          
+ 213          
+ 214          
+ 215          
+ 216          
+ 217          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1118    ----
+   CONSTANT SIZE    =    373    ----
+   XDATA SIZE       =    127    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     18       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

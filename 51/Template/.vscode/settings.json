@@ -1,0 +1,12 @@
+{
+    "files.encoding": "gb2312",
+    "files.associations": {
+        "stdio.h": "c",
+        "windows.h": "c",
+        "stdbool.h": "c",
+        "cstdio": "c",
+        "cstdlib": "c",
+        "cctype": "c",
+        "cjson.h": "c"
+    }
+}

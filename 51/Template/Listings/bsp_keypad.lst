@@ -1,0 +1,96 @@
+C51 COMPILER V9.60.0.0   BSP_KEYPAD                                                        03/28/2020 15:43:59 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BSP_KEYPAD
+OBJECT MODULE PLACED IN ..\Objects\bsp_keypad.obj
+COMPILER INVOKED BY: F:\Keil_v5\C51\BIN\C51.EXE ..\BSP\src\bsp_keypad.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\user;..\BSP\i
+                    -nc) DEBUG OBJECTEXTEND PRINT(..\Listings\bsp_keypad.lst) OBJECT(..\Objects\bsp_keypad.obj)
+
+line level    source
+
+   1          #include "bsp_keypad.h"
+   2          
+   3          static unsigned char key_val = 0XFF;
+   4          
+   5          code char hexaKeys[4][4] = {
+   6            {'7','4','1','S'},
+   7            {'8','5','2','0'},
+   8            {'9','6','3','='},
+   9            {'.','R','L','C'}
+  10          };
+  11          
+  12          static void Delay5ms()          //@11.0592MHz
+  13          {
+  14   1              unsigned char i, j;
+  15   1      
+  16   1              i = 9;
+  17   1              j = 244;
+  18   1              do
+  19   1              {
+  20   2                      while (--j);
+  21   2              } while (--i);
+  22   1      }
+  23          
+  24          
+  25          
+  26          uint8_t uGetKeyPadAction(void)
+  27          {
+  28   1              uint8_t i = 1, temp = 1;
+  29   1              uint8_t uReturn = 0xff;
+  30   1              SET_KEYPAD(0x0f);
+  31   1              for(i = 0; i < 4; i++)
+  32   1              {
+  33   2                      RESET_KEYPAD(temp);
+  34   2                      Delay5ms();
+  35   2                      switch(GET_KEYPAD_VAL)
+  36   2                      {
+  37   3                              case 1:uReturn = 0; break;
+  38   3                              case 2:uReturn = 1; break;
+  39   3                              case 4:uReturn = 2; break;
+  40   3                              case 8:uReturn = 3; break;              
+  41   3                              default : break;
+  42   3                      }
+  43   2                      SET_KEYPAD(temp);
+  44   2                      temp <<= 1; 
+  45   2                      if(uReturn != 0xff)
+  46   2                      {
+  47   3                              uReturn = 4 * i + uReturn;
+  48   3                              break;
+  49   3                      }
+  50   2              }
+  51   1              if(key_val != uReturn && uReturn != 0xff)
+  52   1              {
+  53   2                      key_val = (hexaKeys[i][uReturn % 4] );
+  54   2              }
+C51 COMPILER V9.60.0.0   BSP_KEYPAD                                                        03/28/2020 15:43:59 PAGE 2   
+
+  55   1              return uReturn;
+  56   1      }
+  57          
+  58          unsigned char Get_KeyPad(void)
+  59          {
+  60   1              return key_val;
+  61   1      }
+  62          
+  63          void uClear_KeyPad(void)
+  64          {
+  65   1              key_val = 0xff;
+  66   1      }
+  67          
+  68          
+  69          
+  70          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    152    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

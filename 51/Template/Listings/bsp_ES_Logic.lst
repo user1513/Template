@@ -1,0 +1,199 @@
+C51 COMPILER V9.60.0.0   BSP_ES_LOGIC                                                      03/28/2020 15:44:00 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BSP_ES_LOGIC
+OBJECT MODULE PLACED IN ..\Objects\bsp_ES_Logic.obj
+COMPILER INVOKED BY: F:\Keil_v5\C51\BIN\C51.EXE ..\BSP\src\bsp_ES_Logic.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\user;..\BSP
+                    -\inc) DEBUG OBJECTEXTEND PRINT(..\Listings\bsp_ES_Logic.lst) OBJECT(..\Objects\bsp_ES_Logic.obj)
+
+line level    source
+
+   1          #include "bsp_405x.h"
+   2          //test
+   3          
+   4          const float Electronic_dw[3] = {1, 4.48, 45};//设置每个挡位的放大倍数,从左到右1->3挡位
+   5          
+   6          struct _Es_Range
+   7          {
+   8                  /* data */
+   9                  float Range_min;                //挡位最小值
+  10                  float Range_max;                //挡位最大值
+  11          };
+  12          
+  13          xdata struct _Es_Range Es_Range[3] ={ 
+  14          {1, 5},                           //设置第一个挡位的范围
+  15          {0.1, 1},                         //设置第二个挡位的范围
+  16          {0, 0.1}};                         //设置第三个挡位的范围
+  17          
+  18          static uint8_t  Electronic_Auto_Mode(float val,uint8_t dw);//自动获取合适挡位
+  19          
+  20          static double ES_Val[2] = 0 ;//获取的电压值
+  21          
+  22          double Get_ES_Val(void) //外部调用获取电压值
+  23          {
+  24   1              return(*ES_Val);
+  25   1              //return(*(ES_Val + 1));
+  26   1      }
+  27          
+  28          static double Get_ES_Val2(void) //外部调用获取电压值
+  29          {
+  30   1              return(*(ES_Val + 1));
+  31   1      }
+  32          
+  33          static void Set_ES_Val1(double temp)    //内部调用设置校零电压值
+  34          {
+  35   1              *ES_Val = temp;
+  36   1      }
+  37          
+  38          static void Set_ES_Val2(double temp)    //内部调用设置未校零电压值
+  39          {
+  40   1              *(ES_Val + 1) = temp;
+  41   1      }
+  42          
+  43          uint8_t Electronic_scale_scan(uint8_t _scan,float val)
+  44          {
+  45   1              static uint8_t State_Machine = 1;       //状态机
+  46   1              static uint8_t last_scan = 0;           //记录上一次输入挡位
+  47   1              static uint8_t last_dw = 1;                     //记录上一次放大挡位(初始化默认为1)
+  48   1              uint8_t temp = 0;
+  49   1              if(_scan != last_scan){                         //当输入的电子秤编号与上一次不同时进行状态机置1
+  50   2                      last_scan = _scan;
+  51   2                      //设置从第一步开始
+  52   2                      State_Machine = 1;
+  53   2              }
+  54   1      
+C51 COMPILER V9.60.0.0   BSP_ES_LOGIC                                                      03/28/2020 15:44:00 PAGE 2   
+
+  55   1      
+  56   1      
+  57   1              switch(State_Machine)
+  58   1              {
+  59   2                      case 1:
+  60   2                              switch(last_scan)                                                       //打开对应输入开关
+  61   2                              {
+  62   3                                      case 0:INPUT_ONE_ENALBE                 break;
+  63   3                                      case 1:INPUT_TWO_ENALBE                 break;
+  64   3                                      case 2:INPUT_THREE_ENALBE               break;
+  65   3                                      case 3:INPUT_FOUR_ENALBE                break;
+  66   3                                      case 4:INPUT_CLEAR_ENALBE               break;
+  67   3                                      default :INPUT_CLEAR_ENALBE     break;
+  68   3                              }
+  69   2                              OP_dw1_ENALBE;
+  70   2                              State_Machine++;
+  71   2                      break;
+  72   2                      case 2:                                                                                 //进行数据的获取
+  73   2                              temp = Electronic_Auto_Mode(val, last_dw);
+  74   2                              
+  75   2                              if(last_dw != temp){
+  76   3                                      last_dw = temp;
+  77   3                                      switch(last_dw)
+  78   3                                      {
+  79   4                                              case 1:OP_dw1_ENALBE            break;
+  80   4                                              case 2:OP_dw2_ENALBE            break;
+  81   4                                              case 3:OP_dw3_ENALBE            break;
+  82   4                                              default:break;
+  83   4                                      }
+  84   3                                      State_Machine = 5;
+  85   3                              }
+  86   2                              else{
+  87   3                                      Set_ES_Val2(val / Electronic_dw[last_dw-1]);
+  88   3                                      State_Machine++;
+  89   3                                      INPUT_CLEAR_ENALBE
+  90   3                              }
+  91   2                              break;
+  92   2                      case 3:State_Machine++; break;
+  93   2                      case 4:                                         //获取校零数据
+  94   2                              //Set_ES_Val1(0.993554*((Get_ES_Val2() - (val / Electronic_dw[last_dw - 1])))+0.0135488) ;
+  95   2                              switch (last_dw)
+  96   2                              {
+  97   3                                      case 1:
+  98   3                                      if((Get_ES_Val2() - (val / Electronic_dw[last_dw - 1])) >= 4.971917)
+  99   3                                              Set_ES_Val1(((4.95-5)/(4.971917 - 4.978022)*(Get_ES_Val2() - (val / Electronic_dw[last_dw - 1]) - 4.9
+             -71917))+4.95) ;
+ 100   3                                      else                    
+ 101   3                                              Set_ES_Val1(0.991612*(Get_ES_Val2() - (val / Electronic_dw[last_dw - 1]))+0.0193707) ;
+ 102   3                                      break;
+ 103   3                                      case 2:Set_ES_Val1(1.02098*(Get_ES_Val2() - (val / Electronic_dw[last_dw - 1]))+0.00819215) ;break;
+ 104   3                                      case 3:Set_ES_Val1(1.02078*(Get_ES_Val2() - (val / Electronic_dw[last_dw - 1]))+0.000493174) ;
+ 105   3                                                if(Get_ES_Val() <= 0.001) Set_ES_Val1(0);break;
+ 106   3                                      default:break;
+ 107   3                              }
+ 108   2                              switch(last_scan)                                                       //打开对应输入开关
+ 109   2                              {
+ 110   3                                      case 0:INPUT_ONE_ENALBE                 break;
+ 111   3                                      case 1:INPUT_TWO_ENALBE                 break;
+ 112   3                                      case 2:INPUT_THREE_ENALBE               break;
+ 113   3                                      case 3:INPUT_FOUR_ENALBE                break;
+ 114   3                                      case 4:INPUT_CLEAR_ENALBE               break;
+ 115   3                                      default :INPUT_CLEAR_ENALBE     break;
+C51 COMPILER V9.60.0.0   BSP_ES_LOGIC                                                      03/28/2020 15:44:00 PAGE 3   
+
+ 116   3                              }
+ 117   2                              State_Machine = 5;//重新获取数据
+ 118   2                              break;
+ 119   2                      case 5:State_Machine = 2; break;        
+ 120   2                      default: break;
+ 121   2              }
+ 122   1              return 0;
+ 123   1      }
+ 124          
+ 125          
+ 126          
+ 127          static uint8_t  Electronic_Auto_Mode(float val,uint8_t dw)
+ 128          {
+ 129   1              uint8_t state = 0;
+ 130   1              float temp = val / Electronic_dw[dw - 1];//数组存储从0开始
+ 131   1                      if(temp > Es_Range[0].Range_min)
+ 132   1                              state = 1;
+ 133   1                      else if(temp <= Es_Range[1].Range_max && temp > Es_Range[1].Range_min)
+ 134   1                              state = 2;
+ 135   1                      else if(temp >= Es_Range[2].Range_min)
+ 136   1                              state = 3;
+ 137   1              return state;
+ 138   1      }
+ 139          
+ 140          
+ 141          
+ 142          
+ 143          
+ 144          // static uint8_t  Electronic_Auto_Mode(float val,uint8_t dw)
+ 145          // {
+ 146          //      uint8_t state = 0;
+ 147          //      float temp = val / Electronic_dw[dw];
+ 148          //      switch(dw)
+ 149          //      {
+ 150          //              case 1: if(temp > Es_Range[0].Rangle_min)
+ 151          //                                      state = 1;
+ 152          //                              else if(temp <= Es_Range[1].Rangle_max && temp > Es_Range[1].Rangle_min)
+ 153          //                                      state = 2;
+ 154          //                              else if(temp > 0)
+ 155          //                                      state = 3;
+ 156          //              break;
+ 157          //              case 2:
+ 158          //                              if(temp <= Es_Range[1].Rangle_max && temp > Es_Range[1].Rangle_min)
+ 159          //                                      state = 2;
+ 160          //                              else if(temp > 0)
+ 161          //                                      state = 3;
+ 162          //              break;
+ 163          //              case 3:
+ 164          //                              if(temp <= Es_Range[2].Rangle_max && temp > Es_Range[2].Rangle_min)
+ 165          //                                      state = 3;
+ 166          //      }
+ 167          //      return state;
+ 168          // }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    893    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     24    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     23      15
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   BSP_ES_LOGIC                                                      03/28/2020 15:44:00 PAGE 4   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

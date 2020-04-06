@@ -1,0 +1,63 @@
+C51 COMPILER V9.60.0.0   BSP_TCL1543                                                       03/28/2020 15:44:00 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BSP_TCL1543
+OBJECT MODULE PLACED IN ..\Objects\bsp_tcl1543.obj
+COMPILER INVOKED BY: F:\Keil_v5\C51\BIN\C51.EXE ..\BSP\src\bsp_tcl1543.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\user;..\BSP\
+                    -inc) DEBUG OBJECTEXTEND PRINT(..\Listings\bsp_tcl1543.lst) OBJECT(..\Objects\bsp_tcl1543.obj)
+
+line level    source
+
+   1          #include "bsp_tcl1543.h"
+   2          
+   3          static uint adc_val = 0;
+   4          static void delay(uchar n)
+   5          {
+   6   1              uchar i;
+   7   1              for(i=0;i<n;i++)
+   8   1              {
+   9   2                       _nop_();
+  10   2              }
+  11   1      }
+  12          
+  13          uint read2543(uchar port)
+  14          {
+  15   1              uint ad=0,i;
+  16   1              CLOCK=0;
+  17   1              _CS=0;
+  18   1              port<<=4;
+  19   1              for(i=0;i<12;i++)
+  20   1              {
+  21   2                      if(D_OUT) ad|=0x01;
+  22   2                      D_IN=(bit)(port&0x80);
+  23   2                      CLOCK=1;
+  24   2                      delay(3);
+  25   2                      CLOCK=0;
+  26   2                      delay(3);
+  27   2                      port<<=1;
+  28   2                      ad<<=1;
+  29   2              }
+  30   1              _CS=1;
+  31   1              ad>>=1;
+  32   1              adc_val = ad;
+  33   1              return(ad);
+  34   1      }
+  35          
+  36          uint GetTcl1543(void)
+  37          {
+  38   1              return(adc_val);
+  39   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    106    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
