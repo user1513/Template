@@ -6,7 +6,7 @@
 #define OLEDTIMEOUTFLAG     (1 << 2)/*OLED超时标志位*/
 #define SGP30TIMEOUTFLAG    (1 << 3)/*OLED超时标志位*/
 
-
+#include "stm32f4xx.h" 	
 
 #include "sys.h"
 
@@ -38,7 +38,7 @@
 
 #include "bsp_pcf8574.h"
 
-
+#include "bsp_sdio_sdcard.h"   
 
 #include "CRC.h" /*CRC8_CRC16_CRC32检验*/
 

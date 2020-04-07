@@ -5,9 +5,7 @@
 
 
 //LED端口定义
-#define LED0 PCout(0)	// DS0 
-
-#define FS0 PAout(6)	// DS0 
+#define LED0 PCout(13)	// DS0 
 
 void bspLedInit(void);//初始化	
 

@@ -1,7 +1,6 @@
 ..\obj\bsp_sgp30.o: ..\BSP\Src\bsp_sgp30.c
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_sgp30.h
 ..\obj\bsp_sgp30.o: ..\USER\bsp.h
-..\obj\bsp_sgp30.o: ..\SYSTEM\sys\sys.h
 ..\obj\bsp_sgp30.o: ..\USER\stm32f4xx.h
 ..\obj\bsp_sgp30.o: ..\CORE\core_cm4.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -37,6 +36,7 @@
 ..\obj\bsp_sgp30.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\bsp_sgp30.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\bsp_sgp30.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\bsp_sgp30.o: ..\SYSTEM\sys\sys.h
 ..\obj\bsp_sgp30.o: ..\SYSTEM\delay\delay.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_led.h
@@ -45,6 +45,7 @@
 ..\obj\bsp_sgp30.o: ..\USER\bsp.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_pcf8574.h
+..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\CRC.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

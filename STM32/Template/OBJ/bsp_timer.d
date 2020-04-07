@@ -1,7 +1,6 @@
 ..\obj\bsp_timer.o: ..\BSP\Src\bsp_timer.c
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_timer.h
 ..\obj\bsp_timer.o: ..\USER\bsp.h
-..\obj\bsp_timer.o: ..\SYSTEM\sys\sys.h
 ..\obj\bsp_timer.o: ..\USER\stm32f4xx.h
 ..\obj\bsp_timer.o: ..\CORE\core_cm4.h
 ..\obj\bsp_timer.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -37,6 +36,7 @@
 ..\obj\bsp_timer.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\bsp_timer.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\bsp_timer.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\bsp_timer.o: ..\SYSTEM\sys\sys.h
 ..\obj\bsp_timer.o: ..\SYSTEM\delay\delay.h
 ..\obj\bsp_timer.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_led.h
@@ -45,4 +45,5 @@
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\bsp_timer.o: ..\USER\bsp.h
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_pcf8574.h
+..\obj\bsp_timer.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\bsp_timer.o: ..\BSP\Inc\CRC.h

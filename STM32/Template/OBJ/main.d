@@ -1,14 +1,13 @@
 ..\obj\main.o: main.c
 ..\obj\main.o: bsp.h
-..\obj\main.o: ..\SYSTEM\sys\sys.h
-..\obj\main.o: ..\USER\stm32f4xx.h
+..\obj\main.o: stm32f4xx.h
 ..\obj\main.o: ..\CORE\core_cm4.h
 ..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\main.o: ..\CORE\core_cmInstr.h
 ..\obj\main.o: ..\CORE\core_cmFunc.h
 ..\obj\main.o: ..\CORE\core_cm4_simd.h
-..\obj\main.o: ..\USER\system_stm32f4xx.h
-..\obj\main.o: ..\USER\stm32f4xx_conf.h
+..\obj\main.o: system_stm32f4xx.h
+..\obj\main.o: stm32f4xx_conf.h
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_adc.h
 ..\obj\main.o: ..\USER\stm32f4xx.h
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_crc.h
@@ -36,6 +35,7 @@
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\main.o: ..\SYSTEM\sys\sys.h
 ..\obj\main.o: ..\SYSTEM\delay\delay.h
 ..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\main.o: ..\BSP\Inc\bsp_led.h
@@ -44,4 +44,5 @@
 ..\obj\main.o: ..\USER\bsp.h
 ..\obj\main.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\main.o: ..\BSP\Inc\bsp_pcf8574.h
+..\obj\main.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\main.o: ..\BSP\Inc\CRC.h

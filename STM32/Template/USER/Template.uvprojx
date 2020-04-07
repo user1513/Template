@@ -462,6 +462,11 @@
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_pcf8574.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_sdio_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_sdio_sdcard.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -536,6 +541,16 @@
               <FileName>stm32f4xx_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FWLIB\src\stm32f4xx_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWLIB\src\stm32f4xx_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWLIB\src\stm32f4xx_sdio.c</FilePath>
             </File>
           </Files>
         </Group>
