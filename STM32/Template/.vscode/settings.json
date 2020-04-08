@@ -17,6 +17,7 @@
         "bsp_adc.h": "c",
         "bsp_oled.h": "c",
         "sys.h": "c",
-        "bsp_pcf8574.h": "c"
+        "bsp_pcf8574.h": "c",
+        "exfuns.h": "c"
     }
 }

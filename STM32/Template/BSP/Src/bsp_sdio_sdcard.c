@@ -48,12 +48,12 @@ void SDIO_Register_Deinit()
 //返回值:错误代码;(0,无错误)
 SD_Error SD_Init(void)
 {
+	u8 clkdiv = 0;	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	SD_Error errorstatus=SD_OK;	 
-	u8 clkdiv=0;
-
+	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_DMA2, ENABLE);//使能GPIOC,GPIOD DMA2时钟
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SDIO, ENABLE);//SDIO时钟使能
@@ -97,14 +97,16 @@ SD_Error SD_Init(void)
  	if(errorstatus==SD_OK)errorstatus=SD_SelectDeselect((u32)(SDCardInfo.RCA<<16));//选中SD卡   
    	if(errorstatus==SD_OK)errorstatus=SD_EnableWideBusOperation(SDIO_BusWide_4b);	//4位宽度,如果是MMC卡,则不能用4位模式 
   	if((errorstatus==SD_OK)||(SDIO_MULTIMEDIA_CARD==CardType))
-	{  		    
+	{  
+
+		clkdiv = clkdiv;		
 		if(SDCardInfo.CardType==SDIO_STD_CAPACITY_SD_CARD_V1_1||SDCardInfo.CardType==SDIO_STD_CAPACITY_SD_CARD_V2_0)
 		{
 			clkdiv=SDIO_TRANSFER_CLK_DIV+2;	//V1.1/V2.0卡，设置最高48/4=12Mhz
 		}else clkdiv=SDIO_TRANSFER_CLK_DIV;	//SDHC等其他卡，设置最高48/2=24Mhz
-		//SDIO_Clock_Set(clkdiv);	//设置时钟频率,SDIO时钟计算公式:SDIO_CK时钟=SDIOCLK/[clkdiv+2];其中,SDIOCLK固定为48Mhz 
+		SDIO_Clock_Set(clkdiv);	//设置时钟频率,SDIO时钟计算公式:SDIO_CK时钟=SDIOCLK/[clkdiv+2];其中,SDIOCLK固定为48Mhz 
 		errorstatus=SD_SetDeviceMode(SD_DMA_MODE);	//设置为DMA模式
-		errorstatus=SD_SetDeviceMode(SD_POLLING_MODE);//设置为查询模式
+		//errorstatus=SD_SetDeviceMode(SD_POLLING_MODE);//设置为查询模式
  	}
 	return errorstatus;		 
 }
@@ -1678,7 +1680,21 @@ u8 SD_WriteDisk(u8*buf,u32 sector,u8 cnt)
 }
 
 
-
+//通过串口打印SD卡相关信息
+void show_sdcard_info(void)
+{
+	switch(SDCardInfo.CardType)
+	{
+		case SDIO_STD_CAPACITY_SD_CARD_V1_1:printf("Card Type:SDSC V1.1\r\n");break;
+		case SDIO_STD_CAPACITY_SD_CARD_V2_0:printf("Card Type:SDSC V2.0\r\n");break;
+		case SDIO_HIGH_CAPACITY_SD_CARD:printf("Card Type:SDHC V2.0\r\n");break;
+		case SDIO_MULTIMEDIA_CARD:printf("Card Type:MMC Card\r\n");break;
+	}	
+  	printf("Card ManufacturerID:%d\r\n",SDCardInfo.SD_cid.ManufacturerID);	//制造商ID
+ 	printf("Card RCA:%d\r\n",SDCardInfo.RCA);								//卡相对地址
+	printf("Card Capacity:%d MB\r\n",(u32)(SDCardInfo.CardCapacity>>20));	//显示容量
+ 	printf("Card BlockSize:%d\r\n\r\n",SDCardInfo.CardBlockSize);			//显示块大小
+}
 
 
 

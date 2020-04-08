@@ -52,15 +52,15 @@ void TIM3_IRQHandler(void)
 
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //溢出中断
 	{
-		if(g_usLedTimeout == 0)
-			EventStartA(0);
+		//if(g_usLedTimeout == 0)
+			//EventStartA(0);
 
 		g_usLedTimeout++;
 		
 		if(g_usLedTimeout > LEDTIMEOUT)  //计数器超出设定闪烁间隔
 		{
 			g_usLedTimeout = 0;
-			EventStopA(0);
+			//EventStopA(0);
 			g_ucStateFlag &= ~LEDTIMEOUTFLAG;//将第零位清零
 		}
 //		if(g_usDht22Timeout == 0)

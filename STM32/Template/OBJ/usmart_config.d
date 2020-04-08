@@ -40,3 +40,6 @@
 ..\obj\usmart_config.o: ..\SYSTEM\sys\sys.h
 ..\obj\usmart_config.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\usmart_config.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\obj\usmart_config.o: ..\Fatfs\inc\fattester.h
+..\obj\usmart_config.o: ..\Fatfs\inc\ff.h
+..\obj\usmart_config.o: ..\Fatfs\inc\ffconf.h

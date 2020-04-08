@@ -14,7 +14,9 @@
 
 #include "stdio.h"
 
-// #include "usart.h"
+#include "usart.h"	
+
+#include "usmart.h"
 
 #include "bsp_led.h"
 
@@ -42,6 +44,17 @@
 
 #include "CRC.h" /*CRC8_CRC16_CRC32检验*/
 
+#include "ff.h" /*fatfs*/
+
+#include "exfuns.h"
+
+#include "fattester.h"	
+
+#include "string.h"
+
+#include "stdlib.h"
+
+/*外设初始化函数*/
 void bspInit(void);
 
 #endif

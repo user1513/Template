@@ -39,6 +39,9 @@
 ..\obj\bsp_sgp30.o: ..\SYSTEM\sys\sys.h
 ..\obj\bsp_sgp30.o: ..\SYSTEM\delay\delay.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\bsp_sgp30.o: ..\SYSTEM\usart\usart.h
+..\obj\bsp_sgp30.o: ..\USMART\usmart.h
+..\obj\bsp_sgp30.o: ..\USMART\usmart_str.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_led.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include\EventRecorder.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_timer.h
@@ -47,5 +50,11 @@
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\CRC.h
+..\obj\bsp_sgp30.o: ..\Fatfs\inc\ff.h
+..\obj\bsp_sgp30.o: ..\Fatfs\inc\ffconf.h
+..\obj\bsp_sgp30.o: ..\Fatfs\inc\exfuns.h
+..\obj\bsp_sgp30.o: ..\Fatfs\inc\fattester.h
+..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

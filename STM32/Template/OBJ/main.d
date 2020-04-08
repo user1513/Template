@@ -38,6 +38,9 @@
 ..\obj\main.o: ..\SYSTEM\sys\sys.h
 ..\obj\main.o: ..\SYSTEM\delay\delay.h
 ..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\main.o: ..\SYSTEM\usart\usart.h
+..\obj\main.o: ..\USMART\usmart.h
+..\obj\main.o: ..\USMART\usmart_str.h
 ..\obj\main.o: ..\BSP\Inc\bsp_led.h
 ..\obj\main.o: F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include\EventRecorder.h
 ..\obj\main.o: ..\BSP\Inc\bsp_timer.h
@@ -46,3 +49,9 @@
 ..\obj\main.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\main.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\main.o: ..\BSP\Inc\CRC.h
+..\obj\main.o: ..\Fatfs\inc\ff.h
+..\obj\main.o: ..\Fatfs\inc\ffconf.h
+..\obj\main.o: ..\Fatfs\inc\exfuns.h
+..\obj\main.o: ..\Fatfs\inc\fattester.h
+..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
