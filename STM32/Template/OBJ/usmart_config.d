@@ -43,3 +43,15 @@
 ..\obj\usmart_config.o: ..\Fatfs\inc\fattester.h
 ..\obj\usmart_config.o: ..\Fatfs\inc\ff.h
 ..\obj\usmart_config.o: ..\Fatfs\inc\ffconf.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\FreeRTOS.h
+..\obj\usmart_config.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\usmart_config.o: ..\USER\FreeRTOSConfig.h
+..\obj\usmart_config.o: ..\SYSTEM\usart\usart.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\projdefs.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\portable.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\deprecated_definitions.h
+..\obj\usmart_config.o: ..\FreeRTOS\portable\RVDS\ARM_CM4F\portmacro.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\mpu_wrappers.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\queue.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\task.h
+..\obj\usmart_config.o: ..\FreeRTOS\include\list.h

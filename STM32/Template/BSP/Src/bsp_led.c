@@ -20,7 +20,7 @@ void bspLedInit(void)
 }
 
 
-void bspLedFlash(void)
+void bspLedToggle(void)
 {
 	static uint8_t flag = 0;
 	LED0 = flag;

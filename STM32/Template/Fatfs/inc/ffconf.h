@@ -273,7 +273,10 @@
 
 
 /* #include <somertos.h>	// O/S definitions */
-#define FF_FS_REENTRANT	0
+#include "FreeRTOS.h"
+#include "queue.h"
+#define FF_FS_REENTRANT	1
+typedef QueueHandle_t HANDLE;
 #define FF_FS_TIMEOUT	1000
 #define FF_SYNC_t		HANDLE
 /* The option FF_FS_REENTRANT switches the re-entrancy (thread safe) of the FatFs

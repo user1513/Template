@@ -2,7 +2,7 @@
 
 void bspInit(void)
 {
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置系统中断优先级分组2
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
 	
     delay_init(168);		        /*初始化延时函数*/
 
@@ -13,7 +13,7 @@ void bspInit(void)
 
 //	EventRecorderStart();           /*事件记录器启动*/
 
-    TIM3_Int_Init(9,8399);          /*timer3 = 84Mhz, 设定溢出时间为1ms*/
+//    TIM3_Int_Init(9,8399);          /*timer3 = 84Mhz, 设定溢出时间为1ms*/
 
 	uart_init(115200);				/*串口0初始化*/
 	
@@ -33,7 +33,7 @@ void bspInit(void)
 
 	//TIM_SetCompare2(TIM2, 32);	/*PWM占空比初始化*/
 
-	bsp_pcf8974x_io_init();			/*pcf8974外设初始化*/
+//	bsp_pcf8974x_io_init();			/*pcf8974外设初始化*/
 
 	usmart_init(84);				/*初始化usmart*/
 

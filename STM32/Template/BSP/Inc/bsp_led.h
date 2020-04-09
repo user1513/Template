@@ -9,6 +9,6 @@
 
 void bspLedInit(void);//初始化	
 
-void bspLedFlash(void);//PC0引脚闪烁
+void bspLedToggle(void);//PC0引脚闪烁
 
 #endif

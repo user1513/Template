@@ -37,3 +37,11 @@
 ..\obj\usart.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
 ..\obj\usart.o: ..\SYSTEM\usart\usart.h
 ..\obj\usart.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\usart.o: ..\FreeRTOS\include\FreeRTOS.h
+..\obj\usart.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\usart.o: ..\USER\FreeRTOSConfig.h
+..\obj\usart.o: ..\FreeRTOS\include\projdefs.h
+..\obj\usart.o: ..\FreeRTOS\include\portable.h
+..\obj\usart.o: ..\FreeRTOS\include\deprecated_definitions.h
+..\obj\usart.o: ..\FreeRTOS\portable\RVDS\ARM_CM4F\portmacro.h
+..\obj\usart.o: ..\FreeRTOS\include\mpu_wrappers.h

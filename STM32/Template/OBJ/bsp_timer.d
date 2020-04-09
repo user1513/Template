@@ -44,7 +44,6 @@
 ..\obj\bsp_timer.o: ..\USMART\usmart_str.h
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_led.h
 ..\obj\bsp_timer.o: F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include\EventRecorder.h
-..\obj\bsp_timer.o: ..\BSP\Inc\bsp_timer.h
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\bsp_timer.o: ..\USER\bsp.h
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_pcf8574.h
@@ -52,6 +51,17 @@
 ..\obj\bsp_timer.o: ..\BSP\Inc\CRC.h
 ..\obj\bsp_timer.o: ..\Fatfs\inc\ff.h
 ..\obj\bsp_timer.o: ..\Fatfs\inc\ffconf.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\FreeRTOS.h
+..\obj\bsp_timer.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\bsp_timer.o: ..\USER\FreeRTOSConfig.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\projdefs.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\portable.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\deprecated_definitions.h
+..\obj\bsp_timer.o: ..\FreeRTOS\portable\RVDS\ARM_CM4F\portmacro.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\mpu_wrappers.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\queue.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\task.h
+..\obj\bsp_timer.o: ..\FreeRTOS\include\list.h
 ..\obj\bsp_timer.o: ..\Fatfs\inc\exfuns.h
 ..\obj\bsp_timer.o: ..\Fatfs\inc\fattester.h
 ..\obj\bsp_timer.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
