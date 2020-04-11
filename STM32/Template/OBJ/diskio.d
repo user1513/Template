@@ -57,7 +57,7 @@
 ..\obj\diskio.o: ..\USMART\usmart.h
 ..\obj\diskio.o: ..\USMART\usmart_str.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_led.h
-..\obj\diskio.o: F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include\EventRecorder.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_key.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\diskio.o: ..\USER\bsp.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_pcf8574.h
@@ -67,3 +67,6 @@
 ..\obj\diskio.o: ..\Fatfs\inc\fattester.h
 ..\obj\diskio.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\obj\diskio.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_wm8978.h
+..\obj\diskio.o: ..\APP\audioplay.h
+..\obj\diskio.o: ..\AUDIOCODEC\wav\wavplay.h

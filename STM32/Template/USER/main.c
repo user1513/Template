@@ -10,7 +10,7 @@ static void vTaskTaskInit(void *pvParameters);
 
 static void vTaskLED(void *pvParameters);
 
-static void vTaskFileWrite(void *pvParameters);
+//static void vTaskFileWrite(void *pvParameters);
 
 static void vTaskFileRead(void *pvParameters);
 
@@ -25,7 +25,7 @@ static TaskHandle_t xHandleTaskLED = NULL;
 
 static TaskHandle_t xHandleTaskRead = NULL;
 
-static TaskHandle_t xHandleTaskWrite = NULL;
+//static TaskHandle_t xHandleTaskWrite = NULL;
 /*
 *********************************************************************************************************
 *	函 数 名: main
@@ -86,17 +86,17 @@ static void vTaskTaskInit(void *pvParameters)
 	
 	xTaskCreate( vTaskFileRead,    		/* 任务函数  */
                  "vTaskFileRead",  		/* 任务名    */
-                 128,         		/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,        		/* 任务参数  */
-                 4,           		/* 任务优先级*/
-                 &xHandleTaskRead ); /* 任务句柄  */
-	
-	xTaskCreate( vTaskFileWrite,    		/* 任务函数  */
-                 "vTaskFileWrite",  		/* 任务名    */
-                 128,         		/* 任务栈大小，单位word，也就是4字节 */
+                 256,         		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        		/* 任务参数  */
                  3,           		/* 任务优先级*/
-                 &xHandleTaskWrite ); /* 任务句柄  */
+                 &xHandleTaskRead ); /* 任务句柄  */
+	
+//	xTaskCreate( vTaskFileWrite,    		/* 任务函数  */
+//                 "vTaskFileWrite",  		/* 任务名    */
+//                 128,         		/* 任务栈大小，单位word，也就是4字节 */
+//                 NULL,        		/* 任务参数  */
+//                 4,           		/* 任务优先级*/
+//                 &xHandleTaskWrite ); /* 任务句柄  */
 	
     vTaskDelete(xHandleTaskInit); //删除开始任务
 	
@@ -131,17 +131,25 @@ static void vTaskFileWrite(void *pvParameters)
 	}
 }
 
+//static void vTaskFileRead(void *pvParameters)
+//{
+//	while(1)
+//	{
+//		f_open(file, "0:float.txt", FA_READ | FA_OPEN_ALWAYS);
+
+//		mf_read( mf_size());
+
+//		f_close(file);
+
+//        vTaskDelay(10000);
+//	}
+//}
+
 static void vTaskFileRead(void *pvParameters)
 {
 	while(1)
 	{
-		f_open(file, "0:float.txt", FA_READ | FA_OPEN_ALWAYS);
-
-		mf_read( mf_size());
-
-		f_close(file);
-
-        vTaskDelay(10000);
+		audio_play();
 	}
 }
 

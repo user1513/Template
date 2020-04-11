@@ -57,7 +57,7 @@
 ..\obj\main.o: ..\USMART\usmart.h
 ..\obj\main.o: ..\USMART\usmart_str.h
 ..\obj\main.o: ..\BSP\Inc\bsp_led.h
-..\obj\main.o: F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include\EventRecorder.h
+..\obj\main.o: ..\BSP\Inc\bsp_key.h
 ..\obj\main.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\main.o: ..\USER\bsp.h
 ..\obj\main.o: ..\BSP\Inc\bsp_pcf8574.h
@@ -68,3 +68,6 @@
 ..\obj\main.o: ..\Fatfs\inc\exfuns.h
 ..\obj\main.o: ..\Fatfs\inc\fattester.h
 ..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\obj\main.o: ..\BSP\Inc\bsp_wm8978.h
+..\obj\main.o: ..\APP\audioplay.h
+..\obj\main.o: ..\AUDIOCODEC\wav\wavplay.h

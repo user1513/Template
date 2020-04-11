@@ -8,6 +8,7 @@ void bspInit(void)
 
 	bspLedInit();		            /*初始化LED端口*/
 
+	bspKeyInit();
 	/*使用EventRecorder的printf需要屏蔽usart.c中宏定义*/
 //	EventRecorderInitialize(EventRecordAll, 1U);/*事件记录器初始化*/
 
@@ -36,6 +37,10 @@ void bspInit(void)
 //	bsp_pcf8974x_io_init();			/*pcf8974外设初始化*/
 
 	usmart_init(84);				/*初始化usmart*/
+	
+	WM8978_Init();				//初始化WM8978
+	WM8978_HPvol_Set(40,40);	//耳机音量设置
+	WM8978_SPKvol_Set(50);		//喇叭音量设置
 
 	exfuns_init();					/*fatfs变量声明*/
 	
@@ -46,6 +51,8 @@ void bspInit(void)
 		printf("Please Check!\n");
 		delay_ms(500);
 	}
+	
+	
 	
 	printf("程序开始!!!\n");
 

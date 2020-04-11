@@ -6,9 +6,7 @@
 
 #include "ff.h"
 #include "stdlib.h"
-#include "FreeRTOS.h"
-#include "queue.h"
-
+#include "semphr.h"
 #if FF_USE_LFN == 3	/* Dynamic memory allocation */
 
 /*------------------------------------------------------------------------*/

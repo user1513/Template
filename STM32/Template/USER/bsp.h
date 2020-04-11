@@ -15,7 +15,9 @@
 
 #include "bsp_led.h"
 
-#include "EventRecorder.h"
+#include "bsp_key.h"
+
+//#include "EventRecorder.h"
 
 //#include "bsp_timer.h"
 
@@ -48,6 +50,10 @@
 #include "string.h"
 
 #include "stdlib.h"
+
+#include "bsp_wm8978.h"	 
+
+#include "audioplay.h"	
 
 /*外设初始化函数*/
 void bspInit(void);
