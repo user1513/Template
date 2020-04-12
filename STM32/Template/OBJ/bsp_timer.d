@@ -69,3 +69,4 @@
 ..\obj\bsp_timer.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp_timer.o: ..\APP\audioplay.h
 ..\obj\bsp_timer.o: ..\AUDIOCODEC\wav\wavplay.h
+..\obj\bsp_timer.o: ..\APP\recorder.h

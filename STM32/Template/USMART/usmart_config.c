@@ -7,6 +7,7 @@
 #include "stdio.h"	
 #include "stdarg.h"
 #include "fattester.h"
+#include "bsp_key.h"
 //函数名列表初始化(用户自己添加)
 //用户直接在这里输入要执行的函数名及其查找串
 u8 FuncTest(u8 data)
@@ -46,7 +47,7 @@ struct _m_usmart_nametab usmart_nametab[]=
 	(void*)mf_gets, "void mf_gets(u16 size)",
 	(void*)mf_putc, "u8 mf_putc(u8 c)",
 	(void*)mf_puts, "u8 mf_puts(u8*c)",
-	
+	(void*)uasrt_key_send,"u8 uasrt_key_send(u8 _ucKey)",
 };						  
 ///////////////////////////////////END///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////

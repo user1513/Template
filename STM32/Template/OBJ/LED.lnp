@@ -56,6 +56,7 @@
 "..\obj\segger_hardfaulthandler.o"
 "..\obj\wavplay.o"
 "..\obj\audioplay.o"
+"..\obj\recorder.o"
 "..\obj\eventrecorder.o"
 "..\obj\retarget_io.o"
 --library_type=microlib --strict --scatter "..\OBJ\LED.sct"

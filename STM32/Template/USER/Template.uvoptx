@@ -162,18 +162,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>152</LineNumber>
+          <LineNumber>47</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134261866</Address>
+          <Address>134254508</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\main.c</Filename>
+          <Filename>..\APP\recorder.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\LED\main.c\152</Expression>
+          <Expression>\\LED\../APP/recorder.c\47</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -222,15 +222,43 @@
           <WinNumber>1</WinNumber>
           <ItemText>fname</ItemText>
         </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>pname</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>i2srecbuf1</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>f_rec</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>i2srecbuf1</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
-          <SubType>10</SubType>
-          <ItemText>0x20006920</ItemText>
+          <SubType>0</SubType>
+          <ItemText>i2srecbuf1</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
+      <MemoryWindow2>
+        <Mm>
+          <WinNumber>2</WinNumber>
+          <SubType>10</SubType>
+          <ItemText>i2srecbuf1</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow2>
       <ScvdPack>
         <Filename>F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\EventRecorder.scvd</Filename>
         <Type>Keil.ARM_Compiler.1.6.2</Type>
@@ -650,7 +678,7 @@
 
   <Group>
     <GroupName>FreeRTOD/Ports</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -786,7 +814,7 @@
 
   <Group>
     <GroupName>USMART</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -830,7 +858,7 @@
 
   <Group>
     <GroupName>SYSTEM</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1135,6 +1163,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\audioplay.c</PathWithFileName>
       <FilenameWithoutPath>audioplay.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>12</GroupNumber>
+      <FileNumber>64</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\APP\recorder.c</PathWithFileName>
+      <FilenameWithoutPath>recorder.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

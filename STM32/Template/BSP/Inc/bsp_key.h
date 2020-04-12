@@ -38,4 +38,8 @@
 void bspKeyInit(void);	//IO初始化
 u8 KEY_Scan(u8);  		//按键扫描函数	
 
+u8 uasrt_key_send(u8 _ucKey);
+
+u8 uasrt_key_get(void);
+
 #endif

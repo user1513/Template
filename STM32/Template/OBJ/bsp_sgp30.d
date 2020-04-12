@@ -69,5 +69,6 @@
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp_sgp30.o: ..\APP\audioplay.h
 ..\obj\bsp_sgp30.o: ..\AUDIOCODEC\wav\wavplay.h
+..\obj\bsp_sgp30.o: ..\APP\recorder.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

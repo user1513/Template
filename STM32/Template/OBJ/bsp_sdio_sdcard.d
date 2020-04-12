@@ -69,3 +69,4 @@
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp_sdio_sdcard.o: ..\APP\audioplay.h
 ..\obj\bsp_sdio_sdcard.o: ..\AUDIOCODEC\wav\wavplay.h
+..\obj\bsp_sdio_sdcard.o: ..\APP\recorder.h

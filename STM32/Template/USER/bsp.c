@@ -8,7 +8,7 @@ void bspInit(void)
 
 	bspLedInit();		            /*初始化LED端口*/
 
-	bspKeyInit();
+//	bspKeyInit();
 	/*使用EventRecorder的printf需要屏蔽usart.c中宏定义*/
 //	EventRecorderInitialize(EventRecordAll, 1U);/*事件记录器初始化*/
 
@@ -16,7 +16,7 @@ void bspInit(void)
 
 //    TIM3_Int_Init(9,8399);          /*timer3 = 84Mhz, 设定溢出时间为1ms*/
 
-	uart_init(115200);				/*串口0初始化*/
+	uart_init(512000);				/*串口0初始化*/
 	
     //vDhtxx_Init();                /*DHT22初始化函数*/
 	

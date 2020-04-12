@@ -58,6 +58,30 @@ u8 KEY_Scan(u8 mode)
  	return 0;// 无按键按下
 }
 
+u8 keyval = 0;
+
+u8 uasrt_key_send(u8 _ucKey)
+{
+	return keyval = _ucKey;
+}
+
+u8 uasrt_key_get(void)
+{
+	static u8 key = 0;
+	
+	if(key != keyval)
+	{
+		key = keyval;
+		
+		keyval = 0;
+	}
+	else
+	{
+		key = 0;
+	}
+	return key;
+}
+
 
 
 

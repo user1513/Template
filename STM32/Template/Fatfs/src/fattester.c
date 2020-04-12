@@ -72,6 +72,45 @@ u8 mf_read(u16 len)
 	return res;
 }
 
+//读出数据
+//len:读出的长度
+//返回值:执行结果
+u8 mf_read_type(const char* str, u32 len)
+{
+	u16 i,t;
+	u8 res=0;
+	u32 tlen=0;
+
+	for(i=0;i<len/512;i++)
+	{
+		res=f_read(file,fatbuf,512,&br);
+		if(res)
+		{
+			printf("Read Error:%d\r\n",res);
+			break;
+		}else
+		{
+			tlen+=br;
+			for(t=0;t<br;t++)printf(str,fatbuf[t]); 
+		}
+	}
+	if(len%512)
+	{
+		res=f_read(file,fatbuf,len%512,&br);
+		if(res)	//读数据出错了
+		{
+			printf("\r\nRead Error:%d\r\n",res);   
+		}else
+		{
+			tlen+=br;
+			for(t=0;t<br;t++)printf(str,fatbuf[t]); 
+		}	 
+	}
+	if(tlen)printf("\r\nReaded data len:%d\r\n",tlen);//读到的数据长度
+	printf("Read data over\r\n");	 
+	return res;
+}
+
 //写入数据
 //dat:数据缓存区
 //len:写入长度

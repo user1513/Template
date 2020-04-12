@@ -96,6 +96,38 @@ u8 wav_decode_init(u8* fname,__wavctrl* wavx)
 //size:填充数据量
 //bits:位数(16/24)
 //返回值:读到的数据个数
+//u32 wav_buffill(u8 *buf,u16 size,u8 bits)
+//{
+//	u16 readlen=0;
+//	u32 bread;
+//	u16 i;
+//	u8 *p;
+//	if(bits==24)//24bit音频,需要处理一下
+//	{
+//		readlen=(size/4)*3;							//此次要读取的字节数
+//		f_read(audiodev.file,audiodev.tbuf,readlen,(UINT*)&bread);	//读取数据
+//		p=audiodev.tbuf;
+//		for(i=0;i<size;)
+//		{
+//			buf[i++]=p[1];
+//			buf[i]=p[2]; 
+//			i+=2;
+//			buf[i++]=p[0];
+//			p+=3;
+//		} 
+//		bread=(bread*4)/3;		//填充后的大小.
+//	}else 
+//	{
+//		f_read(audiodev.file,buf,size,(UINT*)&bread);//16bit音频,直接读取数据  
+//		if(bread<size)//不够数据了,补充0
+//		{
+//			for(i=bread;i<size-bread;i++)buf[i]=0; 
+//		}
+//	}
+//	return bread;
+//} 
+
+
 u32 wav_buffill(u8 *buf,u16 size,u8 bits)
 {
 	u16 readlen=0;
@@ -118,7 +150,25 @@ u32 wav_buffill(u8 *buf,u16 size,u8 bits)
 		bread=(bread*4)/3;		//填充后的大小.
 	}else 
 	{
-		f_read(audiodev.file,buf,size,(UINT*)&bread);//16bit音频,直接读取数据  
+		
+		if(wavctrl.nchannels == 1)
+		{
+			f_read(audiodev.file,buf,size/2,(UINT*)&bread);//16bit音频,直接读取数据
+			int j = 0;
+			for(int i = bread - 1;i > 0; i -= 2,j++)
+			{
+				buf[bread*2 - (1 + 4 * j)] = buf[i];
+				buf[bread*2 - (2 + 4 * j)] = buf[i - 1];
+				buf[bread*2 - (3 + 4 * j)] = buf[i];
+				buf[bread*2 - (4 + 4 * j)] = buf[i - 1];
+			}
+			bread *= 2;	
+		}
+		else
+		{
+			f_read(audiodev.file,buf,size,(UINT*)&bread);//16bit音频,直接读取数据  
+		}
+
 		if(bread<size)//不够数据了,补充0
 		{
 			for(i=bread;i<size-bread;i++)buf[i]=0; 
@@ -229,7 +279,7 @@ u8 wav_play_song(u8* fname)
 							break; 
 						}
 						wav_get_curtime(audiodev.file,&wavctrl);//得到总时间和当前播放的时间 
-						audio_msg_show(wavctrl.totsec,wavctrl.cursec,wavctrl.bitrate);
+						//audio_msg_show(wavctrl.totsec,wavctrl.cursec,wavctrl.bitrate);
 						t++;
 						if(t==20)
 						{

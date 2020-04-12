@@ -55,3 +55,4 @@
 ..\obj\usmart_config.o: ..\FreeRTOS\include\queue.h
 ..\obj\usmart_config.o: ..\FreeRTOS\include\task.h
 ..\obj\usmart_config.o: ..\FreeRTOS\include\list.h
+..\obj\usmart_config.o: ..\BSP\Inc\bsp_key.h

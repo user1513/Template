@@ -36,5 +36,3 @@
 ..\obj\bsp_i2s.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\bsp_i2s.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\bsp_i2s.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
-..\obj\bsp_i2s.o: ..\SYSTEM\usart\usart.h
-..\obj\bsp_i2s.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

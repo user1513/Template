@@ -752,6 +752,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\audioplay.c</FilePath>
             </File>
+            <File>
+              <FileName>recorder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\recorder.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

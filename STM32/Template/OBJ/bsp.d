@@ -68,3 +68,4 @@
 ..\obj\bsp.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp.o: ..\APP\audioplay.h
 ..\obj\bsp.o: ..\AUDIOCODEC\wav\wavplay.h
+..\obj\bsp.o: ..\APP\recorder.h

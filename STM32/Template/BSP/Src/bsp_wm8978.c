@@ -35,6 +35,7 @@ static u16 WM8978_REGVAL_TBL[58]=
 u8 WM8978_Init(void)
 {
 	u8 res;
+
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOC, ENABLE);			//使能外设GPIOB,GPIOC时钟
@@ -60,8 +61,7 @@ u8 WM8978_Init(void)
 	GPIO_PinAFConfig(GPIOC,GPIO_PinSource3,GPIO_AF_SPI2);	//PC3 ,AF5  I2S_DACDATA 
 	GPIO_PinAFConfig(GPIOC,GPIO_PinSource6,GPIO_AF_SPI2);	//PC6 ,AF5  I2S_MCK
 	GPIO_PinAFConfig(GPIOC,GPIO_PinSource2,GPIO_AF6_SPI2);	//PC2 ,AF6  I2S_ADCDATA  I2S2ext_SD是AF6!!!
-	
-
+ 
 	
 	IIC_Init();//初始化IIC接口
 	res=WM8978_Write_Reg(0,0);	//软复位WM8978

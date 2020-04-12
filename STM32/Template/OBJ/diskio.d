@@ -70,3 +70,4 @@
 ..\obj\diskio.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\diskio.o: ..\APP\audioplay.h
 ..\obj\diskio.o: ..\AUDIOCODEC\wav\wavplay.h
+..\obj\diskio.o: ..\APP\recorder.h

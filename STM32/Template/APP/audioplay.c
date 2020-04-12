@@ -68,24 +68,24 @@ u16 audio_get_tnum(u8 *path)
 //显示曲目索引
 //index:当前索引
 //total:总文件数
-void audio_index_show(u16 index,u16 total)
-{
+//void audio_index_show(u16 index,u16 total)
+//{
 	//显示当前曲目的索引,及总曲目数
 //	LCD_ShowxNum(60+0,230,index,3,16,0X80);		//索引
 //	LCD_ShowChar(60+24,230,'/',16,0);
 //	LCD_ShowxNum(60+32,230,total,3,16,0X80); 	//总曲目				  	  
-}
+//}
  
 //显示播放时间,比特率 信息  
 //totsec;音频文件总时间长度
 //cursec:当前播放时间
 //bitrate:比特率(位速)
-void audio_msg_show(u32 totsec,u32 cursec,u32 bitrate)
-{	
-	static u16 playtime=0XFFFF;//播放时间标记	      
-	if(playtime!=cursec)					//需要更新显示时间
-	{
-		playtime=cursec;
+//void audio_msg_show(u32 totsec,u32 cursec,u32 bitrate)
+//{	
+//	static u16 playtime=0XFFFF;//播放时间标记	      
+//	if(playtime!=cursec)					//需要更新显示时间
+//	{
+//		playtime=cursec;
 		//显示播放时间			 
 //		LCD_ShowxNum(60,210,playtime/60,2,16,0X80);		//分钟
 //		LCD_ShowChar(60+16,210,':',16,0);
@@ -98,8 +98,8 @@ void audio_msg_show(u32 totsec,u32 cursec,u32 bitrate)
 //		//显示位率			   
 //   		LCD_ShowxNum(60+110,210,bitrate/1000,4,16,0X80);//显示位率	 
 //		LCD_ShowString(60+110+32,210,200,16,16,"Kbps");	 
-	} 		 
-}
+//	} 		 
+//}
 //播放音乐
 void audio_play(void)
 {
@@ -173,7 +173,7 @@ void audio_play(void)
 		strcat((char*)pname,(const char*)fn);  			//将文件名接在后面
 // 		LCD_Fill(60,190,240,190+16,WHITE);				//清除之前的显示
 //		Show_Str(60,190,240-60,16,fn,16,0);				//显示歌曲名字 
-		audio_index_show(curindex+1,totwavnum);
+//		audio_index_show(curindex+1,totwavnum);
 		key=audio_play_song(pname); 			 		//播放这个音频文件
 		if(key==KEY2_PRES)		//上一曲
 		{

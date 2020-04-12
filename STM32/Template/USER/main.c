@@ -86,7 +86,7 @@ static void vTaskTaskInit(void *pvParameters)
 	
 	xTaskCreate( vTaskFileRead,    		/* 任务函数  */
                  "vTaskFileRead",  		/* 任务名    */
-                 256,         		/* 任务栈大小，单位word，也就是4字节 */
+                 512,         		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        		/* 任务参数  */
                  3,           		/* 任务优先级*/
                  &xHandleTaskRead ); /* 任务句柄  */
@@ -149,7 +149,7 @@ static void vTaskFileRead(void *pvParameters)
 {
 	while(1)
 	{
-		audio_play();
+		wav_recorder();
 	}
 }
 

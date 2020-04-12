@@ -275,7 +275,7 @@
 /* #include <somertos.h>	// O/S definitions */
 #include "FreeRTOS.h"
 #include "queue.h"
-#define FF_FS_REENTRANT	1
+#define FF_FS_REENTRANT	0
 typedef QueueHandle_t HANDLE;
 #define FF_FS_TIMEOUT	1000
 #define FF_SYNC_t		HANDLE

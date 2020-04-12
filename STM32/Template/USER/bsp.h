@@ -55,6 +55,8 @@
 
 #include "audioplay.h"	
 
+#include "recorder.h"
+
 /*外设初始化函数*/
 void bspInit(void);
 

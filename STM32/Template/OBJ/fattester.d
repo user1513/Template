@@ -69,3 +69,4 @@
 ..\obj\fattester.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\fattester.o: ..\APP\audioplay.h
 ..\obj\fattester.o: ..\AUDIOCODEC\wav\wavplay.h
+..\obj\fattester.o: ..\APP\recorder.h
