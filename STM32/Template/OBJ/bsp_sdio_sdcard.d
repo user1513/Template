@@ -48,7 +48,7 @@
 ..\obj\bsp_sdio_sdcard.o: ..\USER\bsp.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\CRC.h
+..\obj\bsp_sdio_sdcard.o: ..\APP\CRC.h
 ..\obj\bsp_sdio_sdcard.o: ..\Fatfs\inc\ff.h
 ..\obj\bsp_sdio_sdcard.o: ..\Fatfs\inc\ffconf.h
 ..\obj\bsp_sdio_sdcard.o: ..\FreeRTOS\include\FreeRTOS.h
@@ -69,4 +69,4 @@
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp_sdio_sdcard.o: ..\APP\audioplay.h
 ..\obj\bsp_sdio_sdcard.o: ..\AUDIOCODEC\wav\wavplay.h
-..\obj\bsp_sdio_sdcard.o: ..\APP\recorder.h
+..\obj\bsp_sdio_sdcard.o: ..\APP\myapp.h

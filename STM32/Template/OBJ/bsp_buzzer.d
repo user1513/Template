@@ -48,7 +48,7 @@
 ..\obj\bsp_buzzer.o: ..\USER\bsp.h
 ..\obj\bsp_buzzer.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp_buzzer.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\bsp_buzzer.o: ..\BSP\Inc\CRC.h
+..\obj\bsp_buzzer.o: ..\APP\CRC.h
 ..\obj\bsp_buzzer.o: ..\Fatfs\inc\ff.h
 ..\obj\bsp_buzzer.o: ..\Fatfs\inc\ffconf.h
 ..\obj\bsp_buzzer.o: ..\FreeRTOS\include\FreeRTOS.h
@@ -69,4 +69,4 @@
 ..\obj\bsp_buzzer.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp_buzzer.o: ..\APP\audioplay.h
 ..\obj\bsp_buzzer.o: ..\AUDIOCODEC\wav\wavplay.h
-..\obj\bsp_buzzer.o: ..\APP\recorder.h
+..\obj\bsp_buzzer.o: ..\APP\myapp.h

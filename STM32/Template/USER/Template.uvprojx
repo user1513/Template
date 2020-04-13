@@ -453,11 +453,6 @@
               <FilePath>..\BSP\Src\bsp_sgp30.c</FilePath>
             </File>
             <File>
-              <FileName>CRC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\CRC.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_pwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_pwm.c</FilePath>
@@ -491,6 +486,76 @@
               <FileName>bsp_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_key.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>APP</GroupName>
+          <Files>
+            <File>
+              <FileName>wavplay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\AUDIOCODEC\wav\wavplay.c</FilePath>
+            </File>
+            <File>
+              <FileName>audioplay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\audioplay.c</FilePath>
+            </File>
+            <File>
+              <FileName>base64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>CRC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\CRC.c</FilePath>
+            </File>
+            <File>
+              <FileName>myapp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\myapp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>USMART</GroupName>
+          <Files>
+            <File>
+              <FileName>usmart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USMART\usmart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usmart_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USMART\usmart_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>usmart_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USMART\usmart_str.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SYSTEM</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\delay\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\sys\sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\usart\usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -591,46 +656,6 @@
               <FileName>fattester.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Fatfs\src\fattester.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>USMART</GroupName>
-          <Files>
-            <File>
-              <FileName>usmart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\USMART\usmart.c</FilePath>
-            </File>
-            <File>
-              <FileName>usmart_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\USMART\usmart_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>usmart_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\USMART\usmart_str.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>SYSTEM</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\delay\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>sys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\sys\sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\usart\usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -736,26 +761,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>MUSIC_PLAY</GroupName>
-          <Files>
-            <File>
-              <FileName>wavplay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\AUDIOCODEC\wav\wavplay.c</FilePath>
-            </File>
-            <File>
-              <FileName>audioplay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\audioplay.c</FilePath>
-            </File>
-            <File>
-              <FileName>recorder.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\recorder.c</FilePath>
             </File>
           </Files>
         </Group>

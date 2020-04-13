@@ -62,7 +62,7 @@
 ..\obj\main.o: ..\USER\bsp.h
 ..\obj\main.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\main.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\main.o: ..\BSP\Inc\CRC.h
+..\obj\main.o: ..\APP\CRC.h
 ..\obj\main.o: ..\Fatfs\inc\ff.h
 ..\obj\main.o: ..\Fatfs\inc\ffconf.h
 ..\obj\main.o: ..\Fatfs\inc\exfuns.h
@@ -71,4 +71,4 @@
 ..\obj\main.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\main.o: ..\APP\audioplay.h
 ..\obj\main.o: ..\AUDIOCODEC\wav\wavplay.h
-..\obj\main.o: ..\APP\recorder.h
+..\obj\main.o: ..\APP\myapp.h

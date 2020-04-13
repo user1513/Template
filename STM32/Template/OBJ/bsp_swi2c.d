@@ -48,7 +48,7 @@
 ..\obj\bsp_swi2c.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp_swi2c.o: ..\USER\bsp.h
 ..\obj\bsp_swi2c.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\bsp_swi2c.o: ..\BSP\Inc\CRC.h
+..\obj\bsp_swi2c.o: ..\APP\CRC.h
 ..\obj\bsp_swi2c.o: ..\Fatfs\inc\ff.h
 ..\obj\bsp_swi2c.o: ..\Fatfs\inc\ffconf.h
 ..\obj\bsp_swi2c.o: ..\FreeRTOS\include\FreeRTOS.h
@@ -69,4 +69,4 @@
 ..\obj\bsp_swi2c.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\bsp_swi2c.o: ..\APP\audioplay.h
 ..\obj\bsp_swi2c.o: ..\AUDIOCODEC\wav\wavplay.h
-..\obj\bsp_swi2c.o: ..\APP\recorder.h
+..\obj\bsp_swi2c.o: ..\APP\myapp.h

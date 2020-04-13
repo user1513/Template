@@ -16,7 +16,7 @@
 //All rights reserved									  
 ////////////////////////////////////////////////////////////////////////////////// 	
 
-#define I2S_RX_DMA_BUF_SIZE    	4096		//定义RX DMA 数组大小
+#define I2S_RX_DMA_BUF_SIZE    	3000		//定义RX DMA 数组大小
 
 void rec_i2s_dma_rx_callback(void);
 void recoder_enter_rec_mode(void);

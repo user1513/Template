@@ -62,11 +62,11 @@
 ..\obj\fattester.o: ..\USER\bsp.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\fattester.o: ..\BSP\Inc\CRC.h
+..\obj\fattester.o: ..\APP\CRC.h
 ..\obj\fattester.o: ..\Fatfs\inc\exfuns.h
 ..\obj\fattester.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\obj\fattester.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_wm8978.h
 ..\obj\fattester.o: ..\APP\audioplay.h
 ..\obj\fattester.o: ..\AUDIOCODEC\wav\wavplay.h
-..\obj\fattester.o: ..\APP\recorder.h
+..\obj\fattester.o: ..\APP\myapp.h

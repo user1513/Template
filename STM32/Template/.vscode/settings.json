@@ -20,6 +20,9 @@
         "bsp_pcf8574.h": "c",
         "exfuns.h": "c",
         "includes.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "myapp.h": "c",
+        "recorder.h": "c",
+        "base64.h": "c"
     }
 }
