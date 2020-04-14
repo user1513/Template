@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\BSP\Inc;..\USMART;..\Fatfs\inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\AUDIOCODEC\wav;..\APP</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\BSP\Inc;..\USMART;..\Fatfs\inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\AUDIOCODEC\wav;..\APP;..\APP\Encode_Check_Func;..\APP\Speech_Play;..\APP\Speech_Rec</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -487,6 +487,11 @@
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_key.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_exti.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -498,24 +503,34 @@
               <FilePath>..\AUDIOCODEC\wav\wavplay.c</FilePath>
             </File>
             <File>
+              <FileName>myapp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\myapp.c</FilePath>
+            </File>
+            <File>
+              <FileName>Speech_Rec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\Speech_Rec\Speech_Rec.c</FilePath>
+            </File>
+            <File>
+              <FileName>Voice_Access.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\Speech_Rec\Voice_Access.c</FilePath>
+            </File>
+            <File>
               <FileName>audioplay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\APP\audioplay.c</FilePath>
+              <FilePath>..\APP\Speech_Play\audioplay.c</FilePath>
             </File>
             <File>
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\APP\base64.c</FilePath>
+              <FilePath>..\APP\Encode_Check_Func\base64.c</FilePath>
             </File>
             <File>
               <FileName>CRC.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\APP\CRC.c</FilePath>
-            </File>
-            <File>
-              <FileName>myapp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\myapp.c</FilePath>
+              <FilePath>..\APP\Encode_Check_Func\CRC.c</FilePath>
             </File>
           </Files>
         </Group>

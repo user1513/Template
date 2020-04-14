@@ -1,8 +1,8 @@
-#ifndef __EXTI_H
-#define __EXIT_H	 
+#ifndef __BSP_EXTI_H
+#define __BSP_EXIT_H	 
 #include "sys.h"  	
 
-void EXTIX_Init(void);	//外部中断初始化		 					    
+void bspExitInit(void);	//外部中断初始化		 					    
 #endif
 
 

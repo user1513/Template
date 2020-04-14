@@ -62,12 +62,14 @@
 ..\obj\diskio.o: ..\USER\bsp.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\diskio.o: ..\APP\CRC.h
+..\obj\diskio.o: ..\APP\Encode_Check_Func\CRC.h
 ..\obj\diskio.o: ..\Fatfs\inc\exfuns.h
 ..\obj\diskio.o: ..\Fatfs\inc\fattester.h
 ..\obj\diskio.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\obj\diskio.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_wm8978.h
-..\obj\diskio.o: ..\APP\audioplay.h
+..\obj\diskio.o: ..\APP\Speech_Play\audioplay.h
 ..\obj\diskio.o: ..\AUDIOCODEC\wav\wavplay.h
 ..\obj\diskio.o: ..\APP\myapp.h
+..\obj\diskio.o: ..\APP\Speech_Rec\Speech_Rec.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_exti.h

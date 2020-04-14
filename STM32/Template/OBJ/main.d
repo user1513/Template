@@ -52,6 +52,7 @@
 ..\obj\main.o: ..\FreeRTOS\include\task.h
 ..\obj\main.o: ..\FreeRTOS\include\list.h
 ..\obj\main.o: ..\FreeRTOS\include\queue.h
+..\obj\main.o: ..\FreeRTOS\include\semphr.h
 ..\obj\main.o: bsp.h
 ..\obj\main.o: ..\SYSTEM\delay\delay.h
 ..\obj\main.o: ..\USMART\usmart.h
@@ -62,13 +63,15 @@
 ..\obj\main.o: ..\USER\bsp.h
 ..\obj\main.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\main.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\main.o: ..\APP\CRC.h
+..\obj\main.o: ..\APP\Encode_Check_Func\CRC.h
 ..\obj\main.o: ..\Fatfs\inc\ff.h
 ..\obj\main.o: ..\Fatfs\inc\ffconf.h
 ..\obj\main.o: ..\Fatfs\inc\exfuns.h
 ..\obj\main.o: ..\Fatfs\inc\fattester.h
 ..\obj\main.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\obj\main.o: ..\BSP\Inc\bsp_wm8978.h
-..\obj\main.o: ..\APP\audioplay.h
+..\obj\main.o: ..\APP\Speech_Play\audioplay.h
 ..\obj\main.o: ..\AUDIOCODEC\wav\wavplay.h
 ..\obj\main.o: ..\APP\myapp.h
+..\obj\main.o: ..\APP\Speech_Rec\Speech_Rec.h
+..\obj\main.o: ..\BSP\Inc\bsp_exti.h

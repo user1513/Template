@@ -1,21 +1,24 @@
-#include "exti.h"
+#include "bsp_exti.h"
+#include "FreeRTOS.h"
+#include "semphr.h"			/*用于信号量*/
 
+extern SemaphoreHandle_t xKeySemaphoreHandle;
 
-
-//外部中断2服务程序
-void EXTI2_IRQHandler(void)
+//外部中断15服务程序
+void EXTI15_10_IRQHandler(void)
 {
-	delay_ms(10);	//消抖
-	if(KEY2==0)	  
-	{				 
-   LED0=!LED0; 
-	}		 
-	 EXTI_ClearITPendingBit(EXTI_Line2);//清除LINE2上的中断标志位 
+	 if(EXTI_GetITStatus(EXTI_Line15) == SET)
+	 {
+		 BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		 xSemaphoreGiveFromISR(xKeySemaphoreHandle, &xHigherPriorityTaskWoken);
+		 portYIELD_FROM_ISR( xHigherPriorityTaskWoken);	 
+	 	EXTI_ClearITPendingBit(EXTI_Line15);//清除LINE2上的中断标志位 
+	 }
 }
  
 //外部中断初始化程序
 //初始化PE2~4,PA0为中断输入.
-void EXTIX_Init(void)
+void bspExitInit(void)
 {
 	NVIC_InitTypeDef   NVIC_InitStructure;
 	EXTI_InitTypeDef   EXTI_InitStructure;
@@ -24,18 +27,20 @@ void EXTIX_Init(void)
 
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource6);//PA6 连接到中断线6
 
-	/* 配置EXTI_Line0 */
-	EXTI_InitStructure.EXTI_Line = EXTI_Line6;//LINE0
+	/* 配置EXTI_Line15 */
+	EXTI_InitStructure.EXTI_Line = EXTI_Line15;//LINE15
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;//中断事件
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //下降沿触发 
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;//使能LINE0
 	EXTI_Init(&EXTI_InitStructure);//配置
 
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;//外部中断6
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;//抢占优先级0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x02;//子优先级2
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;//外部中断15
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x06;//抢占优先级0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;//子优先级2
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;//使能外部中断通道
 	NVIC_Init(&NVIC_InitStructure);//配置
+	
+	
 }
 
 

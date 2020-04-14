@@ -47,7 +47,7 @@
 ..\obj\bsp.o: ..\USER\bsp.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\bsp.o: ..\APP\CRC.h
+..\obj\bsp.o: ..\APP\Encode_Check_Func\CRC.h
 ..\obj\bsp.o: ..\Fatfs\inc\ff.h
 ..\obj\bsp.o: ..\Fatfs\inc\ffconf.h
 ..\obj\bsp.o: ..\FreeRTOS\include\FreeRTOS.h
@@ -66,6 +66,8 @@
 ..\obj\bsp.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\obj\bsp.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_wm8978.h
-..\obj\bsp.o: ..\APP\audioplay.h
+..\obj\bsp.o: ..\APP\Speech_Play\audioplay.h
 ..\obj\bsp.o: ..\AUDIOCODEC\wav\wavplay.h
 ..\obj\bsp.o: ..\APP\myapp.h
+..\obj\bsp.o: ..\APP\Speech_Rec\Speech_Rec.h
+..\obj\bsp.o: ..\BSP\Inc\bsp_exti.h

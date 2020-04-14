@@ -1,5 +1,5 @@
-..\obj\audioplay.o: ..\APP\audioplay.c
-..\obj\audioplay.o: ..\APP\audioplay.h
+..\obj\audioplay.o: ..\APP\Speech_Play\audioplay.c
+..\obj\audioplay.o: ..\APP\Speech_Play\audioplay.h
 ..\obj\audioplay.o: ..\SYSTEM\sys\sys.h
 ..\obj\audioplay.o: ..\USER\stm32f4xx.h
 ..\obj\audioplay.o: ..\CORE\core_cm4.h

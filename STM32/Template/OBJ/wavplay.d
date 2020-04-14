@@ -36,7 +36,7 @@
 ..\obj\wavplay.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\wavplay.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\wavplay.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
-..\obj\wavplay.o: ..\APP\audioplay.h
+..\obj\wavplay.o: ..\APP\Speech_Play\audioplay.h
 ..\obj\wavplay.o: ..\Fatfs\inc\ff.h
 ..\obj\wavplay.o: ..\Fatfs\inc\ffconf.h
 ..\obj\wavplay.o: ..\FreeRTOS\include\FreeRTOS.h

@@ -48,7 +48,7 @@
 ..\obj\bsp_sgp30.o: ..\USER\bsp.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_sdio_sdcard.h
-..\obj\bsp_sgp30.o: ..\APP\CRC.h
+..\obj\bsp_sgp30.o: ..\APP\Encode_Check_Func\CRC.h
 ..\obj\bsp_sgp30.o: ..\Fatfs\inc\ff.h
 ..\obj\bsp_sgp30.o: ..\Fatfs\inc\ffconf.h
 ..\obj\bsp_sgp30.o: ..\FreeRTOS\include\FreeRTOS.h
@@ -67,8 +67,10 @@
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_wm8978.h
-..\obj\bsp_sgp30.o: ..\APP\audioplay.h
+..\obj\bsp_sgp30.o: ..\APP\Speech_Play\audioplay.h
 ..\obj\bsp_sgp30.o: ..\AUDIOCODEC\wav\wavplay.h
 ..\obj\bsp_sgp30.o: ..\APP\myapp.h
+..\obj\bsp_sgp30.o: ..\APP\Speech_Rec\Speech_Rec.h
+..\obj\bsp_sgp30.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
 ..\obj\bsp_sgp30.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

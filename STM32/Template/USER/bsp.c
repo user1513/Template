@@ -8,7 +8,10 @@ void bspInit(void)
 
 	bspLedInit();		            /*初始化LED端口*/
 
-//	bspKeyInit();
+	bspKeyInit();					/*初始化按键端口*/
+	
+	bspExitInit();					/*初始化按键对于的中断*/
+	
 	/*使用EventRecorder的printf需要屏蔽usart.c中宏定义*/
 //	EventRecorderInitialize(EventRecordAll, 1U);/*事件记录器初始化*/
 
@@ -40,7 +43,7 @@ void bspInit(void)
 	
 	WM8978_Init();				//初始化WM8978
 	WM8978_HPvol_Set(40,40);	//耳机音量设置
-	WM8978_SPKvol_Set(50);		//喇叭音量设置
+	WM8978_SPKvol_Set(63);		//喇叭音量设置
 
 	exfuns_init();					/*fatfs变量声明*/
 	

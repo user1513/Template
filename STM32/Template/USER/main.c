@@ -10,9 +10,9 @@ static void vTaskTaskInit(void *pvParameters);
 
 static void vTaskLED(void *pvParameters);
 
-//static void vTaskFileWrite(void *pvParameters);
+static void vTaskKeyGet(void *pvParameters);
 
-static void vTaskFileRead(void *pvParameters);
+static void vTaskSpeechRec(void *pvParameters);
 
 /*
 **********************************************************************************************************
@@ -23,9 +23,13 @@ static TaskHandle_t xHandleTaskInit = NULL;
 
 static TaskHandle_t xHandleTaskLED = NULL;
 
-static TaskHandle_t xHandleTaskRead = NULL;
+static TaskHandle_t xHandleTaskSpeechRec = NULL;
 
-//static TaskHandle_t xHandleTaskWrite = NULL;
+static TaskHandle_t xHandleTaskKeyGet = NULL;
+
+SemaphoreHandle_t xKeySemaphoreHandle = NULL;		/*创建按键与中断同步二值信号量*/
+
+SemaphoreHandle_t xSpeechRecSemaphoreHandle = NULL;	/*创建按键与语音识别同步信号量*/
 /*
 *********************************************************************************************************
 *	函 数 名: main
@@ -70,33 +74,40 @@ int main(void)
 }
 
 static void vTaskTaskInit(void *pvParameters)
+
 {
 	taskENTER_CRITICAL();           //进入临界区
 	
 	/*1. f_mount()注册/取消注册卷的工作区*/
 	mf_mount("0:", 1);
 	
-	xTaskCreate( vTaskLED,    		/* 任务函数  */
-                 "vTaskLED",  		/* 任务名    */
-                 64,         		/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,        		/* 任务参数  */
-                 5,           		/* 任务优先级*/
-                 &xHandleTaskLED ); /* 任务句柄  */
+	/*创建二值信号量,专门用于按键和中断同步*/
+	/*首次创建二值信号量,值为0*/
+	xKeySemaphoreHandle = xSemaphoreCreateBinary();	
+	
+	xSpeechRecSemaphoreHandle = xSemaphoreCreateBinary();
+
+	xTaskCreate( vTaskLED,    			/* 任务函数  */
+                 "vTaskLED",  			/* 任务名    */
+                 64,         			/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        			/* 任务参数  */
+                 5,           			/* 任务优先级*/
+                 &xHandleTaskLED ); 	/* 任务句柄  */
 	
 	
-	xTaskCreate( vTaskFileRead,    		/* 任务函数  */
-                 "vTaskFileRead",  		/* 任务名    */
-                 512,         		/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,        		/* 任务参数  */
-                 3,           		/* 任务优先级*/
-                 &xHandleTaskRead ); /* 任务句柄  */
+	xTaskCreate( vTaskSpeechRec,    		/* 任务函数  */
+                 "vTaskSpeechRec",  		/* 任务名    */
+                 128,         			/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        			/* 任务参数  */
+                 3,           			/* 任务优先级*/
+                 &xHandleTaskSpeechRec ); 	/* 任务句柄  */
 	
-//	xTaskCreate( vTaskFileWrite,    		/* 任务函数  */
-//                 "vTaskFileWrite",  		/* 任务名    */
-//                 128,         		/* 任务栈大小，单位word，也就是4字节 */
-//                 NULL,        		/* 任务参数  */
-//                 4,           		/* 任务优先级*/
-//                 &xHandleTaskWrite ); /* 任务句柄  */
+	xTaskCreate( vTaskKeyGet,    		/* 任务函数  */
+                 "vTaskKeyGet",  		/* 任务名    */
+                 64,         			/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        			/* 任务参数  */
+                 6,           			/* 任务优先级*/
+                 &xHandleTaskKeyGet ); 	/* 任务句柄  */
 	
     vTaskDelete(xHandleTaskInit); //删除开始任务
 	
@@ -105,54 +116,39 @@ static void vTaskTaskInit(void *pvParameters)
 
 
 
-static void vTaskFileWrite(void *pvParameters)
+
+
+
+
+static void vTaskSpeechRec(void *pvParameters)
+
 {
-	static float float_num=0.00;
-	uint32_t length = 0;
+	static uint8_t SpeechRecNum = 0;
 	while(1)
 	{
-		f_open(file, "0:float.txt", FA_WRITE | FA_OPEN_APPEND);
-
-		char* str = (char*)pvPortMalloc(sizeof(30));
-
-		sprintf(str, "float_num的值为: %.2f\r\n",float_num);
-
-		printf("%s", str);
-
-		f_write(file, str, strlen(str), &length);
-
-		vPortFree(str);
-
-		float_num+=0.01f;
-
-		f_close(file);
-
-        vTaskDelay(1000);
+		xSemaphoreTake(xSpeechRecSemaphoreHandle, portMAX_DELAY);
+		
+		Speech_Handle(SpeechRecNum++ % 2);
+		
+		//wav_recorder();
 	}
 }
 
-//static void vTaskFileRead(void *pvParameters)
-//{
-//	while(1)
-//	{
-//		f_open(file, "0:float.txt", FA_READ | FA_OPEN_ALWAYS);
+static void vTaskKeyGet(void *pvParameters)
 
-//		mf_read( mf_size());
-
-//		f_close(file);
-
-//        vTaskDelay(10000);
-//	}
-//}
-
-static void vTaskFileRead(void *pvParameters)
 {
 	while(1)
 	{
-		wav_recorder();
+		xSemaphoreTake(xKeySemaphoreHandle, portMAX_DELAY);		/*等待按键中断发送信号量*/
+
+		vTaskDelay(10);
+
+		if(KEY == 0)
+		{
+			xSemaphoreGive(xSpeechRecSemaphoreHandle);			/*启动语音识别任务*/
+		}
 	}
 }
-
 
 
 
@@ -166,6 +162,7 @@ static void vTaskFileRead(void *pvParameters)
 *********************************************************************************************************
 */
 static void vTaskLED(void *pvParameters)
+
 {
     while(1)
     {

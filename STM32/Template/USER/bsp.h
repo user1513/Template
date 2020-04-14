@@ -57,6 +57,9 @@
 
 #include "myapp.h"
 
+#include "Speech_Rec.h" /*语音识别相关api*/
+
+#include "bsp_exti.h"
 /*外设初始化函数*/
 void bspInit(void);
 

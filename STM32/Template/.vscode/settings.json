@@ -23,6 +23,8 @@
         "freertos.h": "c",
         "myapp.h": "c",
         "recorder.h": "c",
-        "base64.h": "c"
+        "base64.h": "c",
+        "voice_access.h": "c",
+        "speech_rec.h": "c"
     }
 }

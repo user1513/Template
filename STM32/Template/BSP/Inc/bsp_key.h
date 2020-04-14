@@ -1,19 +1,13 @@
 #ifndef _BSP_KEY_H
 #define _BSP_KEY_H	 
 #include "sys.h" 
-//////////////////////////////////////////////////////////////////////////////////	 
-//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-//ALIENTEK STM32F407开发板
-//按键输入驱动代码	   
-//正点原子@ALIENTEK
-//技术论坛:www.openedv.com
-//创建日期:2014/5/3
-//版本：V1.0
-//版权所有，盗版必究。
-//Copyright(C) 广州市星翼电子科技有限公司 2014-2024
-//All rights reserved									  
-////////////////////////////////////////////////////////////////////////////////// 	 
 
+#define config_USE_ZDYZ 0	/*使用正点原子f407板子*/
+#define config_USE_DIY	1	/*使用非正点的板子*/
+
+#define key_DEVICE_NAME config_USE_DIY
+
+#if key_DEVICE_NAME == config_USE_ZDYZ
 /*下面的方式是通过直接操作库函数方式读取IO*/
 #define KEY0 		GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4) //PE4
 #define KEY1 		GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_3)	//PE3 
@@ -30,16 +24,24 @@
 */
 
 
+
+#else
+
+#define KEY 	PAin(15)
+
+#endif
+
 #define KEY0_PRES 	1
 #define KEY1_PRES	2
 #define KEY2_PRES	3
 #define WKUP_PRES   4
 
-void bspKeyInit(void);	//IO初始化
-u8 KEY_Scan(u8);  		//按键扫描函数	
+void bspKeyInit(void);			//IO初始化
 
-u8 uasrt_key_send(u8 _ucKey);
+u8 KEY_Scan(u8);  				//按键扫描函数	
 
-u8 uasrt_key_get(void);
+u8 uasrt_key_send(u8 _ucKey);	//通过串口模拟发送按键值
+
+u8 uasrt_key_get(void);			//获取串口发送按键值
 
 #endif
