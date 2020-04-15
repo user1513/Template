@@ -47,6 +47,7 @@ void Speech_Handle(uint8_t _ucMode)
 				{
 					status = 0xff; 
 					voice_End_Receive(); 
+					delay_ms(50);
 					test();	
 				}
 				break;
@@ -95,23 +96,29 @@ void test(void)
 	
 	uint32_t br = 0;
 	
-	uint32_t tlen = 0;
-	
-	f_read(file, str, 2000, &br);
-	
-	tlen += br;
+	uint8_t ret = 0;
+	ret = f_read(file, str, 2000, &br);
+	if(ret)
+	{
+		printf("读取失败\n");
+	}
 	
 	uint8_t flag = 1;
 	
-	while(tlen < filelength)
+	while(br == 2000)
 	{
 		if(flag)
 		{
 		SetDmaStatus(0x80);		/*设置dma模式*/
 		
-		usartSendStart((uint8_t*)str, strlen(str));
+		usartSendStart((uint8_t*)str, br);
 		
-		f_read(file, str1, 2000, &br);
+		ret = f_read(file, str1, 2000, &br);
+		
+		if(ret)
+		{
+			printf("读取失败\n");
+		}
 		
 		while(GetDmaStatus()&0x80);
 		}
@@ -119,15 +126,22 @@ void test(void)
 		{
 		SetDmaStatus(0x80);		/*设置dma模式*/
 		
-		usartSendStart((uint8_t*)str1, strlen(str1));
+		usartSendStart((uint8_t*)str1, br);
 		
-		f_read(file, str, 2000, &br);
+		ret = f_read(file, str, 2000, &br);
+			
+		if(ret)
+		{
+			printf("读取失败\n");
+		}
 		
 		while(GetDmaStatus()&0x80);
 		}
 		flag = !flag;
-		tlen += br;
 	}
+	
+	f_close(file);
+	
 	sprintf(str, "\"}");
 	
 	usartSendStart((uint8_t*)str, strlen(str));

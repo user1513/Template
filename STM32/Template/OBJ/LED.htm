@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\LED.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\LED.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Apr 15 22:00:47 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Apr 15 23:09:42 2020
 <BR><P>
 <H3>Maximum Stack Usage =        736 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1410,10 +1410,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test
 </UL>
 
-<P><STRONG><a name="[f2]"></a>Speech_Handle</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, speech_rec.o(i.Speech_Handle))
+<P><STRONG><a name="[f2]"></a>Speech_Handle</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, speech_rec.o(i.Speech_Handle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 672<LI>Call Chain = Speech_Handle &rArr; test &rArr; voice_info_size &rArr; mf_open &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; SD_WriteDisk &rArr; SD_WriteBlock &rArr; SD_Init &rArr; SD_EnableWideBusOperation &rArr; SDEnWideBus &rArr; FindSCR &rArr; CmdResp1Error
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test
+<BR>[Calls]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;voice_Receive
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;voice_End_Receive
 </UL>
@@ -1697,6 +1698,7 @@ Global Symbols
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortExitCritical
 <LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortEnterCritical
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bspInit
 <LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usmart_sys_cmd_exe
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usmart_scan
@@ -1880,6 +1882,7 @@ Global Symbols
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetSchedulerState
 </UL>
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bspInit
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Speech_Handle
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usmart_config.o(.data)
 </UL>
@@ -1980,7 +1983,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_sync
 <LI><a href="#[155]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;validate
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mf_close
+<BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test
+<LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mf_close
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;voice_End_Receive
 </UL>
 
@@ -2588,7 +2592,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usmart_config.o(.data)
 </UL>
-<P><STRONG><a name="[f5]"></a>test</STRONG> (Thumb, 438 bytes, Stack size 64 bytes, speech_rec.o(i.test))
+<P><STRONG><a name="[f5]"></a>test</STRONG> (Thumb, 456 bytes, Stack size 64 bytes, speech_rec.o(i.test))
 <BR><BR>[Stack]<UL><LI>Max Depth = 664<LI>Call Chain = test &rArr; voice_info_size &rArr; mf_open &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; SD_WriteDisk &rArr; SD_WriteBlock &rArr; SD_Init &rArr; SD_EnableWideBusOperation &rArr; SDEnWideBus &rArr; FindSCR &rArr; CmdResp1Error
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;voice_info_size
@@ -2599,11 +2603,13 @@ Global Symbols
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_read
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_open
+<LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_close
 <LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usartSendStart
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetDmaStatus
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetDmaStatus
 <LI><a href="#[1ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[1ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Speech_Handle
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskSpeechRec

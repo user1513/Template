@@ -55,7 +55,7 @@ void bspInit(void)
 		delay_ms(500);
 	}
 	
-	bspUsartInit(115200);
+	bspUsartInit(460800);
 	
 	bspDmaUsartInit();				/*DMA≥ı ºªØ*/
 	
