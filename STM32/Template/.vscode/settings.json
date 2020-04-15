@@ -25,6 +25,9 @@
         "recorder.h": "c",
         "base64.h": "c",
         "voice_access.h": "c",
-        "speech_rec.h": "c"
+        "speech_rec.h": "c",
+        "bsp_usart.h": "c",
+        "bsp_dma.h": "c",
+        "cstring": "c"
     }
 }

@@ -30,6 +30,7 @@ void wav_recorder(void);
 u8 voice_Receive(void);
 void voice_End_Receive(void);
 void voice_info_Send(void);
+uint32_t voice_info_size(void);
 #endif
 #endif
 

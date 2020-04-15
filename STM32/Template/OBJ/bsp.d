@@ -71,3 +71,5 @@
 ..\obj\bsp.o: ..\APP\myapp.h
 ..\obj\bsp.o: ..\APP\Speech_Rec\Speech_Rec.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_exti.h
+..\obj\bsp.o: ..\BSP\Inc\bsp_dma.h
+..\obj\bsp.o: ..\BSP\Inc\bsp_usart.h

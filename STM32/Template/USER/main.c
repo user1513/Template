@@ -30,6 +30,8 @@ static TaskHandle_t xHandleTaskKeyGet = NULL;
 SemaphoreHandle_t xKeySemaphoreHandle = NULL;		/*创建按键与中断同步二值信号量*/
 
 SemaphoreHandle_t xSpeechRecSemaphoreHandle = NULL;	/*创建按键与语音识别同步信号量*/
+
+QueueHandle_t xDmaModeMutexHandle  = NULL;
 /*
 *********************************************************************************************************
 *	函 数 名: main
@@ -53,7 +55,6 @@ int main(void)
 	
 	/*外设初始化*/
 	bspInit();
-		
 	/* 创建初始任务 */
 	 xTaskCreate( vTaskTaskInit,   		/* 任务函数  */
                  "vTaskTaskInit",     	/* 任务名    */
@@ -64,7 +65,6 @@ int main(void)
 	
     /* 启动调度，开始执行任务 */
     vTaskStartScheduler();
-	
 	/* 
 	  如果系统正常启动是不会运行到这里的，运行到这里极有可能是用于定时器任务或者空闲任务的
 	  heap空间不足造成创建失败，此要加大FreeRTOSConfig.h文件中定义的heap大小：
@@ -84,8 +84,10 @@ static void vTaskTaskInit(void *pvParameters)
 	/*创建二值信号量,专门用于按键和中断同步*/
 	/*首次创建二值信号量,值为0*/
 	xKeySemaphoreHandle = xSemaphoreCreateBinary();	
-	
+	/*创建二值信号量,专门用于按键和语音识别任务同步*/
 	xSpeechRecSemaphoreHandle = xSemaphoreCreateBinary();
+	/*创建互斥信号量,确保dma的工作模式不会出错*/
+	xDmaModeMutexHandle = xSemaphoreCreateMutex();
 
 	xTaskCreate( vTaskLED,    			/* 任务函数  */
                  "vTaskLED",  			/* 任务名    */
@@ -123,6 +125,7 @@ static void vTaskTaskInit(void *pvParameters)
 static void vTaskSpeechRec(void *pvParameters)
 
 {
+		test();
 	static uint8_t SpeechRecNum = 0;
 	while(1)
 	{

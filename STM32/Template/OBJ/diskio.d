@@ -73,3 +73,5 @@
 ..\obj\diskio.o: ..\APP\myapp.h
 ..\obj\diskio.o: ..\APP\Speech_Rec\Speech_Rec.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_exti.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_dma.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_usart.h

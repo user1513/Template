@@ -72,3 +72,5 @@
 ..\obj\bsp_sdio_sdcard.o: ..\APP\myapp.h
 ..\obj\bsp_sdio_sdcard.o: ..\APP\Speech_Rec\Speech_Rec.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_exti.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_dma.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_usart.h

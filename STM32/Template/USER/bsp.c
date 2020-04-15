@@ -55,7 +55,9 @@ void bspInit(void)
 		delay_ms(500);
 	}
 	
+	bspUsartInit(115200);
 	
+	bspDmaUsartInit();				/*DMA初始化*/
 	
 	printf("程序开始!!!\n");
 

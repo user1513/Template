@@ -72,3 +72,5 @@
 ..\obj\fattester.o: ..\APP\myapp.h
 ..\obj\fattester.o: ..\APP\Speech_Rec\Speech_Rec.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_exti.h
+..\obj\fattester.o: ..\BSP\Inc\bsp_dma.h
+..\obj\fattester.o: ..\BSP\Inc\bsp_usart.h

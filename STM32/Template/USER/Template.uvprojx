@@ -413,54 +413,9 @@
               <FilePath>.\bsp.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_dhtxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_dhtxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_buzzer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_buzzer.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_led.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_oled.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_swi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_swi2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_sgp30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_sgp30.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_pwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_pcf8574.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_pcf8574.c</FilePath>
             </File>
             <File>
               <FileName>bsp_sdio_sdcard.c</FileName>
@@ -491,6 +446,16 @@
               <FileName>bsp_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_usart.c</FilePath>
             </File>
           </Files>
         </Group>

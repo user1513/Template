@@ -338,5 +338,18 @@ void voice_info_Send(void)
     mf_read_type("%c",mf_size());
 }
 
+uint32_t voice_info_size(void)
+{
+	uint32_t size = 0;
+	
+	mf_open("Speech_Rec.pcm", FA_READ| FA_OPEN_ALWAYS);
+	
+	size = mf_size();
+	
+	mf_close();
+	
+	return size;
+}
+
 #endif
 
