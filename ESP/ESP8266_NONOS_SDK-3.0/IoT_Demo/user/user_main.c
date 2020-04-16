@@ -21,7 +21,10 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg);
 
 void ICACHE_FLASH_ATTR user_init(void)
 {
-
+    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_TOUT_INT_ENA | UART_FRM_ERR_INT_ENA);
+    
+    WRITE_PERI_REG
+	UART_INT_ENA UART_RXFIFO_OVF_INT_ENA (BIT(4))
 	UART_SetPrintPort(UART1);
     //设置串口初始化
 	uart_init(115200,115200);
@@ -127,7 +130,8 @@ void scan_All_Ap_Info_done(void *arg, STATUS status)
 
 
 
-void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg){
+void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg)
+{
     uint32 current_stamp;
     current_stamp = sntp_get_current_timestamp();
     if(current_stamp == 0)
@@ -142,7 +146,10 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg){
     }
 }
 
+void uart0_rx_intr_handler(void *para)
+{
 
+}
 
 
 

@@ -10,6 +10,7 @@
         "softap_udp_tcp.h": "c",
         "bsp_delay.h": "c",
         "dns.h": "c",
-        "my_sntp.h": "c"
+        "my_sntp.h": "c",
+        "uart.h": "c"
     }
 }
