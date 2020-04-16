@@ -125,7 +125,7 @@ static void vTaskTaskInit(void *pvParameters)
 static void vTaskSpeechRec(void *pvParameters)
 
 {
-		test();
+	SpeechRecUartPack();
 	static uint8_t SpeechRecNum = 0;
 	while(1)
 	{

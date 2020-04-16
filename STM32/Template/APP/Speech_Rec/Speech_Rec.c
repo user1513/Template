@@ -8,6 +8,15 @@
 #include "bsp_dma.h"
 #include "exfuns.h" 
 
+#define FH_NAME 0X55AA  /*Frame Header帧头*/
+#define FT_NAME 0XA5  	/*Frame Tail帧头*/
+#define DEVICE_ADDR 0X10/*设备地址*/
+
+#define SPEECH_REC_TYPE_START 0X00		/*发送语音识别包发送开始*/
+#define SPEECH_REC_TYPE_RUNNING 0X01	/*发送语音识别包发送中*/
+#define SPEECH_REC_TYPE_STOP 0X02		/*发送语音识别包发送结束*/
+
+
 #define POST_NAME 	"http://vop.baidu.com/server_api" 	/*语音识别POST端口*/
 #define HOST_NAME 	"vop.baidu.com"						/*语音识别主机名*/
 #define FORMAT 		"pcm"								/*语音识别文件类型*/
@@ -32,7 +41,8 @@ Content-length: %d\r\n\
 const char * SpeechRecStrBody = "\
 {\"format\":\"%s\",\"rate\":16000,\"dev_pid\":%d,\"channel\":1,\"token\":\"%s\",\"cuid\":\"%s\",\"len\":%d,\"speech\":\"";
 
-
+/*用于将一段数据打包成合格的数据包结构*/
+static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length);
 
 /*语音识别处理函数*/
 void Speech_Handle(uint8_t _ucMode)
@@ -48,39 +58,39 @@ void Speech_Handle(uint8_t _ucMode)
 					status = 0xff; 
 					voice_End_Receive(); 
 					delay_ms(50);
-					test();	
+					SpeechRecUartPack();	
 				}
 				break;
         default: break;
     }
 }
 
-extern void (*USART_tx_callback)(void);
 
 
 
-void test(void)
+void SpeechRecUartPack(void)
 {
-	char* str = (char*)pvPortMalloc(sizeof(char)*400);
+	char* str = (char*)pvPortMalloc(sizeof(char)*400);/*分配空间*/
 
-	char* str1 = (char*)pvPortMalloc(sizeof(char)*200);
+	char* str1 = (char*)pvPortMalloc(sizeof(char)*200);/*分配空间*/
+	
+	printf("开始发送语音识别包\n");
 
 	uint32_t length = 0;
 
-	uint32_t filelength = voice_info_size();
+	uint32_t filelength = voice_info_size();/*获取base64加密后的文件大小*/
 	
 	sprintf(str1,SpeechRecStrBody,FORMAT,DEV_PID,TOKEN,CUID, (int)(filelength * 0.75));
 	
-	length = strlen(str1) + 2;
-
-	strlen(str1);
+	length = strlen(str1);
 	
-	sprintf(str,SpeechRecStr,POST_NAME,HOST_NAME,length + filelength,str1);
+	sprintf(str + 6,SpeechRecStr,POST_NAME,HOST_NAME,length + filelength + 2,str1);
+	
+	length = UartDataPacking(str, SPEECH_REC_TYPE_START, strlen(str + 6));
 	
 	SetDmaStatus(0x81);		/*设置dma模式*/
 	
-	usartSendStart((uint8_t*)str, strlen(str));
-	//printf("strlen: %d\n str:%s",strlen((const char *)str), str);
+	usartSendStart((uint8_t*)str, length);/*数据长度+数据包结构*/
 	
 	vPortFree(str1);
 	
@@ -88,16 +98,22 @@ void test(void)
 	
 	vPortFree(str);
 	
-	str = (char*)pvPortMalloc(sizeof(char)*2000);
+	str = (char*)pvPortMalloc(sizeof(char)*2008);
 
-	str1 = (char*)pvPortMalloc(sizeof(char)*2000);
-	
+	str1 = (char*)pvPortMalloc(sizeof(char)*2008);
+
+	UartDataPacking(str, SPEECH_REC_TYPE_RUNNING, 2000);
+
+	UartDataPacking(str1, SPEECH_REC_TYPE_RUNNING, 2000);
+
 	f_open(file, "Speech_Rec.pcm", FA_READ| FA_OPEN_ALWAYS);
 	
 	uint32_t br = 0;
 	
 	uint8_t ret = 0;
-	ret = f_read(file, str, 2000, &br);
+
+	ret = f_read(file, str + 6, 2000, &br);
+
 	if(ret)
 	{
 		printf("读取失败\n");
@@ -111,9 +127,9 @@ void test(void)
 		{
 		SetDmaStatus(0x80);		/*设置dma模式*/
 		
-		usartSendStart((uint8_t*)str, br);
+		usartSendStart((uint8_t*)str, br + 8);
 		
-		ret = f_read(file, str1, 2000, &br);
+		ret = f_read(file, str1 + 6, 2000, &br);
 		
 		if(ret)
 		{
@@ -126,9 +142,9 @@ void test(void)
 		{
 		SetDmaStatus(0x80);		/*设置dma模式*/
 		
-		usartSendStart((uint8_t*)str1, br);
+		usartSendStart((uint8_t*)str1, br + 8);
 		
-		ret = f_read(file, str, 2000, &br);
+		ret = f_read(file, str + 6, 2000, &br);
 			
 		if(ret)
 		{
@@ -141,10 +157,12 @@ void test(void)
 	}
 	
 	f_close(file);
+
+	UartDataPacking(str, SPEECH_REC_TYPE_STOP, 2);
+
+	sprintf(str + 6, "\"}");
 	
-	sprintf(str, "\"}");
-	
-	usartSendStart((uint8_t*)str, strlen(str));
+	usartSendStart((uint8_t*)str, 10);
 	
 	vPortFree(str1);
 	
@@ -154,11 +172,29 @@ void test(void)
 
 }
 
-void SpeechRecUartPack()
+/*用于将一段数据打包成合格的数据包结构*/
+/*注意length只代表数据长度,不代表整个数据包长度*/
+static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length)
+
 {
-	uint8_t * buf1 = (uint8_t *)malloc(sizeof(4000));
-	
-	uint8_t * buf2 = buf1 + 2000;
+
+	str[0] = FH_NAME >> 8;			/*写入数据帧头高八位*/
+
+	str[1] = FH_NAME & 0Xff;		/*写入数据帧头低八位*/
+
+	str[2] = DEVICE_ADDR;			/*写入设备地址八位*/
+
+	str[3] = type;/*写入发送数据包类型*/
+
+	str[4] = (length & 0xff00) >> 8;/*写入数据长度高八位*/
+
+	str[5] = length & 0xff;			/*写入数据长度低八位*/
+
+	str[length + 6] = 0x00;			/*不使用校验*/
+
+	str[length + 7] = FT_NAME;		/*写入帧尾*/
+
+	return length + 8;
 }
 
 

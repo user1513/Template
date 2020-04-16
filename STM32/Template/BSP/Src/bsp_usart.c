@@ -22,7 +22,7 @@ void bspUsartInit(uint32_t bound){
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP; //上拉
 	GPIO_Init(GPIOA,&GPIO_InitStructure); //初始化PA2，PA3
 
-   //USART2 初始化设置
+    //USART2 初始化设置
 	USART_InitStructure.USART_BaudRate = bound;//波特率设置
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;//字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;//一个停止位
@@ -36,10 +36,10 @@ void bspUsartInit(uint32_t bound){
 	//USART_ITConfig(USART2,  USART_IT_RXNE, ENABLE);//开启相关中断	 
 	USART_ITConfig(USART2,  USART_IT_IDLE, ENABLE);//开启相关中断
 
-	//Usart1 NVIC 配置
+	//Usart2 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;//串口2中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=7;//抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority =0;		//子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=7;//抢占优先级7
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =0;		//子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器、
 

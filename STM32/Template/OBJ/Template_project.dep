@@ -1,6 +1,6 @@
 Dependencies for Project 'Template', Target 'project': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
-F (.\main.c)(0x5E96FCD7)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x5E97E01B)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (includes.h)(0x5E95AAD3)
 I (F:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9AD21A)
 I (F:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AD21A)
@@ -74,7 +74,7 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_dma.h)(0x5E97026E)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
@@ -152,7 +152,7 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_dma.h)(0x5E97026E)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
@@ -262,7 +262,7 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_dma.h)(0x5E97026E)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
@@ -539,11 +539,11 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
 I (..\FreeRTOS\include\semphr.h)(0x5E8F0FDB)
-F (..\BSP\Src\bsp_usart.c)(0x5E96C0BF)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp_usart.o --omf_browse ..\obj\bsp_usart.crf --depend ..\obj\bsp_usart.d)
+F (..\BSP\Src\bsp_usart.c)(0x5E97E962)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp_usart.o --omf_browse ..\obj\bsp_usart.crf --depend ..\obj\bsp_usart.d)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
 I (..\USER\bsp.h)(0x5E9703E8)
 I (..\USER\stm32f4xx.h)(0x542BA483)
@@ -613,7 +613,7 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_dma.h)(0x5E97026E)
 F (..\AUDIOCODEC\wav\wavplay.c)(0x5E95AC36)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\wavplay.o --omf_browse ..\obj\wavplay.crf --depend ..\obj\wavplay.d)
@@ -677,8 +677,8 @@ I (..\BSP\Inc\bsp_key.h)(0x5E95ACB3)
 I (..\BSP\Inc\bsp_led.h)(0x5E92A19B)
 F (..\APP\myapp.c)(0x5E95314F)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\myapp.o --omf_browse ..\obj\myapp.crf --depend ..\obj\myapp.d)
 I (..\APP\myapp.h)(0x5E953142)
-F (..\APP\Speech_Rec\Speech_Rec.c)(0x5E972140)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\speech_rec.o --omf_browse ..\obj\speech_rec.crf --depend ..\obj\speech_rec.d)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+F (..\APP\Speech_Rec\Speech_Rec.c)(0x5E97E962)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\Compiler-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\speech_rec.o --omf_browse ..\obj\speech_rec.crf --depend ..\obj\speech_rec.d)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (F:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
 I (..\APP\Speech_Rec\Voice_Access.h)(0x5E96F706)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
@@ -1670,7 +1670,7 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_dma.h)(0x5E97026E)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
@@ -1955,7 +1955,7 @@ I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\APP\Speech_Play\audioplay.h)(0x540081A1)
 I (..\AUDIOCODEC\wav\wavplay.h)(0x54008285)
 I (..\APP\myapp.h)(0x5E953142)
-I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E96F27E)
+I (..\APP\Speech_Rec\Speech_Rec.h)(0x5E97D572)
 I (..\BSP\Inc\bsp_exti.h)(0x5E95B4F2)
 I (..\BSP\Inc\bsp_dma.h)(0x5E97026E)
 I (..\BSP\Inc\bsp_usart.h)(0x5E970405)

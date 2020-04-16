@@ -4,5 +4,5 @@
 #include "stdint.h"
 /*语音识别处理函数*/
 void Speech_Handle(uint8_t _ucMode);
-void test(void);
+void SpeechRecUartPack(void);
 #endif
