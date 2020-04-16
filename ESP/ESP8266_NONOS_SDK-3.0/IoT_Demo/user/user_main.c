@@ -21,6 +21,8 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg);
 
 void ICACHE_FLASH_ATTR user_init(void)
 {
+
+	UART_SetPrintPort(UART1);
     //设置串口初始化
 	uart_init(115200,115200);
     //打印sdk版本信息
@@ -83,7 +85,7 @@ void  udp_Soft_Timer_Handle(void * reg)
 
 			//读取station模式下的状态
 			My_Get_station_Status(1);
-			dns_parse(&stcp_Con, "www.openedv.com");
+			dns_parse(&stcp_Con, "vop.baidu.com");
 			bsp_SoftTimer_close(&udp_start_os_timer);
 
             os_timer_disarm(&sntp_timer);
@@ -116,7 +118,7 @@ void scan_All_Ap_Info_done(void *arg, STATUS status)
             pBss_info = pBss_info->next.stqe_next;
         }
 
-        My_Set_station_Status("2601b-2.4G", "19728888", 1);
+        My_Set_station_Status("WIWH", "19728888", 1);
         bsp_SoftTimer_Restart(&udp_start_os_timer, 5000, (void *)2, 1);
     }
 }
