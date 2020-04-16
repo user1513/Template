@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "hw_timer.h": "c",
+        "softap_station.h": "c",
+        "user_interface.h": "c",
+        "bsp_timer.h": "c",
+        "bsp_led.h": "c",
+        "bsp_exit.h": "c",
+        "inc.h": "c",
+        "softap_udp_tcp.h": "c",
+        "bsp_delay.h": "c",
+        "dns.h": "c",
+        "my_sntp.h": "c"
+    }
+}
