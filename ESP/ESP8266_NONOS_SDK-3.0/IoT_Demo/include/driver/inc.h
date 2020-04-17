@@ -1,6 +1,13 @@
 #ifndef __INC__H
 #define __INC__H
 
+typedef struct
+{
+	const char* dns_name;
+	char ip_name[16];
+	unsigned short port;
+}GetDnsInfo;
+
 #include "ets_sys.h"
 #include "osapi.h"
 #include "spi_flash.h"

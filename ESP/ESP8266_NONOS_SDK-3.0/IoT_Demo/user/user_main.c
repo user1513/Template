@@ -14,8 +14,14 @@ void  udp_Soft_Timer_Handle(void * reg);
 void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg);
 
 
+GetDnsInfo g_DnsInfo[2] ={
+{"vop.baidu.com","0",80},
+{"www.baidu.com","0",80}};
 
-
+struct sntp_No_str tSntp[3] = {
+	{0,"cn.pool.ntp.org"},
+	{1,"asia.pool.ntp.org"},
+	{2,"cn.ntp.org.cn"}};
 
 
 
@@ -56,11 +62,6 @@ void ICACHE_FLASH_ATTR user_init(void)
     //设置软件定时
     Led_SoftTimer_init(&led_os_timer,Led_Soft_Timer_Handle,500);
     bsp_SoftTimer_init(&udp_start_os_timer,udp_Soft_Timer_Handle,2000,1,1);
-    struct sntp_No_str tSntp[3] = {
-        {0,"cn.pool.ntp.org"},
-        {1,"asia.pool.ntp.org"},
-        {2,"cn.ntp.org.cn"}}; 
-    my_sntp_init(tSntp);
 }
 
 
@@ -97,9 +98,9 @@ void  udp_Soft_Timer_Handle(void * reg)
 
 			//读取station模式下的状态
 			My_Get_station_Status(1);
-			dns_parse(&stcp_Con, "vop.baidu.com");
+			multiple_dns_parse(&g_DnsInfo[sizeof(g_DnsInfo)/sizeof(g_DnsInfo[0]) - 1], &stcp_Con, sizeof(g_DnsInfo)/sizeof(g_DnsInfo[0]));
 			bsp_SoftTimer_close(&udp_start_os_timer);
-
+			my_sntp_init(tSntp);
             os_timer_disarm(&sntp_timer);
             os_timer_setfn(&sntp_timer, (os_timer_func_t *)user_check_sntp_stamp, NULL);
             os_timer_arm(&sntp_timer, 100, 0);
@@ -131,7 +132,7 @@ void scan_All_Ap_Info_done(void *arg, STATUS status)
         }
 
         My_Set_station_Status("WIWH", "19728888", 1);
-        bsp_SoftTimer_Restart(&udp_start_os_timer, 5000, (void *)2, 1);
+        bsp_SoftTimer_Restart(&udp_start_os_timer, 100, (void *)2, 1);
     }
 }
 
@@ -156,15 +157,71 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg)
 }
 
 
+/******************************************************************************
+ * FunctionName : uart0_rx_intr_handler
+ * Description  : Internal used function
+ *                UART0 interrupt handler, add self handle code inside
+ * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
+ * Returns      : NONE
+*/
+void uart0_rx_intr_handler(void *para)
+{
+	uint8 RcvChar;
+	uint8 uart_no = UART0;//UartDev.buff_uart_no;
+	uint8 fifo_len = 0;
+	uint8 buf_idx = 0;
+	uint8 temp,cnt;
+	//RcvMsgBuff *pRxBuff = (RcvMsgBuff *)para;
 
+		/*ATTENTION:*/
+	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
+	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
+	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
+	if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
+		os_printf("FRM_ERR\r\n");
+		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
+	}else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
+		os_printf("FULL_INT_ST\r\n");
+        fifo_len = RF_FIFO_LEN(UART0);
+        buf_idx = 0;
+        while(buf_idx < fifo_len)
+        {
+            uart_tx_one_char(UART0, READ_FIFO);
+            buf_idx++;
+        }
+		//uart_rx_intr_disable(UART0);
+		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
+	}else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
+		os_printf("TOUT_INT_ST\r\n");
+        os_printf("RF_FIFO_LEN:%d",(int)RF_FIFO_LEN(uart_no));
+        fifo_len = RF_FIFO_LEN(UART0);
+        buf_idx = 0;
+        while(buf_idx < fifo_len)
+        {
+            uart_tx_one_char(UART0, READ_FIFO);
+            buf_idx++;
+        }
+		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
+	}else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
+		os_printf("EMPTY_INT_ST\r\n");
+	/* to output uart data from uart buffer directly in empty interrupt handler*/
+	/*instead of processing in system event, in order not to wait for current task/function to quit */
+	/*ATTENTION:*/
+	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
+	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
+	CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_TXFIFO_EMPTY_INT_ENA);
+	#if UART_BUFF_EN
+		tx_start_uart_buffer(UART0);
+	#endif
+		//system_os_post(uart_recvTaskPrio, 1, 0);
+		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_TXFIFO_EMPTY_INT_CLR);
 
+	}else if(UART_RXFIFO_OVF_INT_ST  == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_OVF_INT_ST)){
+		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_RXFIFO_OVF_INT_CLR);
+		os_printf("RX OVF!!\r\n");
+	}
 
-
-
-
-
-
-
+}
 
 
 

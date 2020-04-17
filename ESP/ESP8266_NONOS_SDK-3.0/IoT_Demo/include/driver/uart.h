@@ -38,8 +38,11 @@
 #define UART_HW_RTS   0   //set 1: enable uart hw flow control RTS, PIN MTDO, FOR UART0
 #define UART_HW_CTS  0    //set1: enable uart hw flow contrl CTS , PIN MTCK, FOR UART0
 
+#define TX_FIFO_LEN(uart_no) (READ_PERI_REG(UART_STATUS(uart_no))>>UART_TXFIFO_CNT_S)&UART_TXFIFO_CNT
+#define RF_FIFO_LEN(uart_no) (READ_PERI_REG(UART_STATUS(uart_no))>>UART_RXFIFO_CNT_S)&UART_RXFIFO_CNT
 
-
+/*¶ÁÈ¡fifoÊý¾Ý*/
+#define READ_FIFO (READ_PERI_REG(UART_FIFO(UART0))&0XFF)
 
 #define UART0   0
 #define UART1   1
