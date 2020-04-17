@@ -217,38 +217,33 @@ void at_port_print(const char *str) __attribute__((alias("uart0_sendStr")));
  * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
  * Returns      : NONE
 *******************************************************************************/
-LOCAL void
+LOCAL void 
 uart0_rx_intr_handler(void *para)
 {
-    /* uart0 and uart1 intr combine togther, when interrupt occur, see reg 0x3ff20020, bit2, bit0 represents
-    * uart1 and uart0 respectively
-    */
-    uint8 RcvChar;
-    uint8 uart_no = UART0;//UartDev.buff_uart_no;
-    uint8 fifo_len = 0;
-    uint8 buf_idx = 0;
-    uint8 temp,cnt;
-    //RcvMsgBuff *pRxBuff = (RcvMsgBuff *)para;
-    
-    	/*ATTENTION:*/
+	uint8 RcvChar;
+	uint8 uart_no = UART0;//UartDev.buff_uart_no;
+	uint8 fifo_len = 0;
+	uint8 buf_idx = 0;
+	uint8 temp,cnt;
+	//RcvMsgBuff *pRxBuff = (RcvMsgBuff *)para;
+
+		/*ATTENTION:*/
 	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
 	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
 	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
-    if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
-        DBG1("FRM_ERR\r\n");
-        WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
-    }else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
-        DBG("f");
-        uart_rx_intr_disable(UART0);
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
-        system_os_post(uart_recvTaskPrio, 0, 0);
-    }else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
-        DBG("t");
-        uart_rx_intr_disable(UART0);
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
-        system_os_post(uart_recvTaskPrio, 0, 0);
-    }else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
-        DBG("e");
+	if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
+		os_printf("FRM_ERR\r\n");
+		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
+	}else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
+		os_printf("FULL_INT_ST\r\n");
+		//uart_rx_intr_disable(UART0);
+		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
+	}else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
+		os_printf("TOUT_INT_ST\r\n");
+		//uart_rx_intr_disable(UART0);
+		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
+	}else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
+		os_printf("EMPTY_INT_ST\r\n");
 	/* to output uart data from uart buffer directly in empty interrupt handler*/
 	/*instead of processing in system event, in order not to wait for current task/function to quit */
 	/*ATTENTION:*/
@@ -258,15 +253,65 @@ uart0_rx_intr_handler(void *para)
 	#if UART_BUFF_EN
 		tx_start_uart_buffer(UART0);
 	#endif
-        //system_os_post(uart_recvTaskPrio, 1, 0);
-        WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_TXFIFO_EMPTY_INT_CLR);
-        
-    }else if(UART_RXFIFO_OVF_INT_ST  == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_OVF_INT_ST)){
-        WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_RXFIFO_OVF_INT_CLR);
-        DBG1("RX OVF!!\r\n");
-    }
+		//system_os_post(uart_recvTaskPrio, 1, 0);
+		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_TXFIFO_EMPTY_INT_CLR);
+
+	}else if(UART_RXFIFO_OVF_INT_ST  == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_OVF_INT_ST)){
+		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_RXFIFO_OVF_INT_CLR);
+		os_printf("RX OVF!!\r\n");
+	}
 
 }
+// LOCAL void
+// uart0_rx_intr_handler(void *para)
+// {
+//     /* uart0 and uart1 intr combine togther, when interrupt occur, see reg 0x3ff20020, bit2, bit0 represents
+//     * uart1 and uart0 respectively
+//     */
+//     uint8 RcvChar;
+//     uint8 uart_no = UART0;//UartDev.buff_uart_no;
+//     uint8 fifo_len = 0;
+//     uint8 buf_idx = 0;
+//     uint8 temp,cnt;
+//     //RcvMsgBuff *pRxBuff = (RcvMsgBuff *)para;
+    
+//     	/*ATTENTION:*/
+// 	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
+// 	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
+// 	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
+//     if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
+//         DBG1("FRM_ERR\r\n");
+//         WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
+//     }else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
+//         DBG("f");
+//         uart_rx_intr_disable(UART0);
+//         WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
+//         system_os_post(uart_recvTaskPrio, 0, 0);
+//     }else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
+//         DBG("t");
+//         uart_rx_intr_disable(UART0);
+//         WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
+//         system_os_post(uart_recvTaskPrio, 0, 0);
+//     }else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
+//         DBG("e");
+// 	/* to output uart data from uart buffer directly in empty interrupt handler*/
+// 	/*instead of processing in system event, in order not to wait for current task/function to quit */
+// 	/*ATTENTION:*/
+// 	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
+// 	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
+// 	CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_TXFIFO_EMPTY_INT_ENA);
+// 	#if UART_BUFF_EN
+// 		tx_start_uart_buffer(UART0);
+// 	#endif
+//         //system_os_post(uart_recvTaskPrio, 1, 0);
+//         WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_TXFIFO_EMPTY_INT_CLR);
+        
+//     }else if(UART_RXFIFO_OVF_INT_ST  == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_OVF_INT_ST)){
+//         WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_RXFIFO_OVF_INT_CLR);
+//         DBG1("RX OVF!!\r\n");
+//     }
+
+// }
 
 /******************************************************************************
  * FunctionName : uart_init

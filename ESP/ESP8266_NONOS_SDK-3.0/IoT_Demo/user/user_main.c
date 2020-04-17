@@ -21,13 +21,22 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg);
 
 void ICACHE_FLASH_ATTR user_init(void)
 {
-    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_TOUT_INT_ENA | UART_FRM_ERR_INT_ENA);
-    
-    WRITE_PERI_REG
-	UART_INT_ENA UART_RXFIFO_OVF_INT_ENA (BIT(4))
-	UART_SetPrintPort(UART1);
-    //设置串口初始化
-	uart_init(115200,115200);
+    UART_SetPrintPort(UART1);
+        //设置串口初始化
+	uart_init(BIT_RATE_460800,BIT_RATE_460800);
+    os_printf("READ_PERI_REG1:%d\n", READ_PERI_REG(UART_CONF1(UART0)));
+    /*设置full阈值为100*/
+    WRITE_PERI_REG(UART_CONF1(UART0),((100 & UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S) |
+    (READ_PERI_REG(UART_CONF1(UART0)) & (~UART_RXFIFO_FULL_THRHD)));
+    os_printf("READ_PERI_REG2:%d\n", READ_PERI_REG(UART_CONF1(UART0)));
+    /*设置timeout阈值为100,在bps = 460800下 为1.736ms后发送中断*/
+    WRITE_PERI_REG(UART_CONF1(UART0),((100 & UART_RX_TOUT_THRHD) << UART_RX_TOUT_THRHD_S) |
+    (READ_PERI_REG(UART_CONF1(UART0)) & (~(UART_RX_TOUT_THRHD<< UART_RX_TOUT_THRHD_S))));
+    os_printf("READ_PERI_REG3:%d\n", READ_PERI_REG(UART_CONF1(UART0)));
+    /*设置接收超时中断,接收帧错误中断,和full中断*/
+    SET_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA | UART_FRM_ERR_INT_ENA | UART_RXFIFO_FULL_INT_ENA);
+    os_printf("SET_PERI_REG_MASK:%d\n", READ_PERI_REG(UART_INT_ENA(UART0)));
+
     //打印sdk版本信息
     os_printf("SDK version:%s\n", system_get_sdk_version());
     //led初始化
@@ -146,10 +155,7 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg)
     }
 }
 
-void uart0_rx_intr_handler(void *para)
-{
 
-}
 
 
 
