@@ -29,7 +29,7 @@ void ICACHE_FLASH_ATTR user_init(void)
 {
     UART_SetPrintPort(UART1);
         //设置串口初始化
-	uart_init(BIT_RATE_460800,BIT_RATE_460800);
+	uart_init(BIT_RATE_115200,BIT_RATE_115200);
     os_printf("READ_PERI_REG1:%d\n", READ_PERI_REG(UART_CONF1(UART0)));
     /*设置full阈值为100*/
     WRITE_PERI_REG(UART_CONF1(UART0),((100 & UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S) |
@@ -100,10 +100,10 @@ void  udp_Soft_Timer_Handle(void * reg)
 			My_Get_station_Status(1);
 			multiple_dns_parse(&g_DnsInfo[sizeof(g_DnsInfo)/sizeof(g_DnsInfo[0]) - 1], &stcp_Con, sizeof(g_DnsInfo)/sizeof(g_DnsInfo[0]));
 			bsp_SoftTimer_close(&udp_start_os_timer);
-			my_sntp_init(tSntp);
-            os_timer_disarm(&sntp_timer);
-            os_timer_setfn(&sntp_timer, (os_timer_func_t *)user_check_sntp_stamp, NULL);
-            os_timer_arm(&sntp_timer, 100, 0);
+			//my_sntp_init(tSntp);
+            //os_timer_disarm(&sntp_timer);
+            //os_timer_setfn(&sntp_timer, (os_timer_func_t *)user_check_sntp_stamp, NULL);
+            //os_timer_arm(&sntp_timer, 100, 0);
 		}
     }
 }
@@ -164,13 +164,22 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg)
  * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
  * Returns      : NONE
 */
+uint16_t g_total = 0;
+char * g_CurrentPoint = NULL;
+char * g_UartPoint1 = NULL;
+char * g_UartPoint2 = NULL;
+char uartstr[40];
+uint8 uartflag = 0;
+uint8 uartOKflag = 1;
 void uart0_rx_intr_handler(void *para)
 {
+
 	uint8 RcvChar;
 	uint8 uart_no = UART0;//UartDev.buff_uart_no;
 	uint8 fifo_len = 0;
 	uint8 buf_idx = 0;
 	uint8 temp,cnt;
+	char * pTmp = NULL;
 	//RcvMsgBuff *pRxBuff = (RcvMsgBuff *)para;
 
 		/*ATTENTION:*/
@@ -181,26 +190,133 @@ void uart0_rx_intr_handler(void *para)
 		os_printf("FRM_ERR\r\n");
 		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
 	}else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
-		os_printf("FULL_INT_ST\r\n");
+		//os_printf("FULL_INT_ST\r\n");
         fifo_len = RF_FIFO_LEN(UART0);
         buf_idx = 0;
         while(buf_idx < fifo_len)
         {
-            uart_tx_one_char(UART0, READ_FIFO);
-            buf_idx++;
+        	RcvChar = READ_FIFO;
+            //uart_tx_one_char(UART0, RcvChar);
+
+        	g_CurrentPoint[g_total] = RcvChar;
+			buf_idx++;
+			g_total++;
+			if(g_total >= 2500)
+			{
+				g_total = 0;
+				if(uartOKflag)
+				{
+				uartOKflag = 0;
+				espconn_send(&stcp_Con,g_CurrentPoint,2500);
+				}
+				else
+				{
+					uartflag = 0x40;
+				}
+				g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+			}
+			if(uartOKflag && uartflag == 0x40)
+			{
+				uartOKflag = 0;
+				uartflag = 0x01;
+				pTmp = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+				espconn_send(&stcp_Con,pTmp,2500);
+			}
         }
+
+
+
 		//uart_rx_intr_disable(UART0);
 		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
 	}else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
-		os_printf("TOUT_INT_ST\r\n");
-        os_printf("RF_FIFO_LEN:%d",(int)RF_FIFO_LEN(uart_no));
+		//os_printf("TOUT_INT_ST\r\n");
+        //os_printf("RF_FIFO_LEN:%d",(int)RF_FIFO_LEN(uart_no));
         fifo_len = RF_FIFO_LEN(UART0);
         buf_idx = 0;
-        while(buf_idx < fifo_len)
+        if(uartflag == 0x40)
         {
-            uart_tx_one_char(UART0, READ_FIFO);
-            buf_idx++;
+			while(uartOKflag);
+			uartOKflag = 0;
+			uartflag = 0x01;
+			pTmp = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+			espconn_send(&stcp_Con,pTmp,2500);
         }
+       // while(uartOKflag);
+        while(buf_idx < fifo_len)
+		{
+			RcvChar = READ_FIFO;
+			//uart_tx_one_char(UART0, RcvChar);
+
+			uartstr[buf_idx] = RcvChar;
+
+			if(uartflag)
+			{
+				g_CurrentPoint[g_total] = RcvChar;
+				g_total++;
+
+				if(g_total >= 2500)
+				{
+					uartflag |= 0x80;
+					g_total = 0;
+					espconn_send(&stcp_Con,g_CurrentPoint,2500);
+					uartOKflag = 0;
+					g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+				}
+			}
+
+			buf_idx++;
+		}
+        if(uartflag == 0x01)
+        {
+        	if(uartOKflag == 1)
+        	{
+        		espconn_send(&stcp_Con,g_CurrentPoint,g_total);
+        		uartflag = 0;
+        		g_total = 0;
+        	}
+        	else
+        	{
+            	if(g_total != 0)
+            		uartflag = 0X81;
+        	}
+        }
+		if(uartstr[0] == 0x55 && uartstr[1] == 0xAA)
+		{
+        	switch(uartstr[3])
+        	{
+        	case 0:
+        		uartOKflag = 1;
+        		uartflag = 1 ;
+        		g_total = 0;
+        		if( g_UartPoint1 != NULL || g_UartPoint2 != NULL)
+        		{
+            		os_free(g_UartPoint1);
+            		os_free(g_UartPoint2);
+        		}
+        		//Create_Tcp_Connect_Client(&stcp_Con, "192.168.0.105", 8888);
+        		Create_Tcp_Connect_Client(&stcp_Con,g_DnsInfo[0].ip_name , g_DnsInfo[0].port);
+        		g_UartPoint1 = (char *)os_malloc(sizeof(char) * 2500);
+        		g_UartPoint2 = (char *)os_malloc(sizeof(char) * 2500);
+        		g_CurrentPoint = g_UartPoint1;
+        		if(g_UartPoint1 == NULL || g_UartPoint2 == NULL)
+        		{
+        			os_printf("动态分配空间失败\n");
+        		}
+        	break;
+        	case 1:break;
+        	case 2:
+        		uartflag = 0 ;
+        		espconn_disconnect(&stcp_Con);
+        		os_free(g_UartPoint1);
+        		os_free(g_UartPoint2);
+        		g_UartPoint1 = NULL;
+        		g_UartPoint2 = NULL;
+        		break;
+        	default:break;
+        	}
+		}
+
+		os_printf("\nESP8266_WIFI_Send_OK\n");
 		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
 	}else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
 		os_printf("EMPTY_INT_ST\r\n");

@@ -22,7 +22,7 @@
  ../../include/gpio.h ../../include/espconn.h ../include/driver/uart.h \
  ../include/driver/uart_register.h ../../include/eagle_soc.h \
  ../../include/c_types.h ../include/driver/gpio16.h \
- ../include/driver/hw_timer.h ../../include/sntp.h \
+ ../include/driver/hw_timer.h ../../include/sntp.h ../../include/mem.h \
  ../include/driver/softap_station.h ../include/driver/softap_udp_tcp.h \
  ../include/driver/inc.h ../include/driver/dns.h \
  ../include/driver/my_sntp.h ../include/driver/bsp_delay.h \

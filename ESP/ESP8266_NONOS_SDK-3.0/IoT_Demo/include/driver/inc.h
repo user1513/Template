@@ -18,7 +18,7 @@ typedef struct
 #include "driver/gpio16.h"	//单独用来配置gpio16引脚
 #include "driver/hw_timer.h"//单独用来配置硬件定时器
 #include "sntp.h"
-
+#include "mem.h"
 //自己改写代码
 #include "driver/softap_station.h"
 #include "driver/softap_udp_tcp.h"
