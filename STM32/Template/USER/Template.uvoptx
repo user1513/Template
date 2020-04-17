@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>98</LineNumber>
+          <LineNumber>168</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134232112</Address>
+          <Address>134232404</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,7 +173,39 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\Speech_Rec\Speech_Rec.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\LED\../APP/Speech_Rec/Speech_Rec.c\98</Expression>
+          <Expression>\\LED\../APP/Speech_Rec/Speech_Rec.c\168</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>106</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134232156</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\APP\Speech_Rec\Speech_Rec.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\LED\../APP/Speech_Rec/Speech_Rec.c\106</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>100</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134232130</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\APP\Speech_Rec\Speech_Rec.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\LED\../APP/Speech_Rec/Speech_Rec.c\100</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -247,12 +279,17 @@
           <WinNumber>1</WinNumber>
           <ItemText>tlen,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>str</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>i2srecbuf1</ItemText>
+          <ItemText>str</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>

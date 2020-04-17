@@ -12,9 +12,7 @@
 #define FT_NAME 0XA5  	/*Frame Tail帧头*/
 #define DEVICE_ADDR 0X10/*设备地址*/
 
-#define SPEECH_REC_TYPE_START 0X00		/*发送语音识别包发送开始*/
-#define SPEECH_REC_TYPE_RUNNING 0X01	/*发送语音识别包发送中*/
-#define SPEECH_REC_TYPE_STOP 0X02		/*发送语音识别包发送结束*/
+#define SPEECH_REC_TYPE		0/*发送语音识别包发送开始*/
 
 
 #define POST_NAME 	"http://vop.baidu.com/server_api" 	/*语音识别POST端口*/
@@ -42,8 +40,11 @@ const char * SpeechRecStrBody = "\
 {\"format\":\"%s\",\"rate\":16000,\"dev_pid\":%d,\"channel\":1,\"token\":\"%s\",\"cuid\":\"%s\",\"len\":%d,\"speech\":\"";
 
 /*用于将一段数据打包成合格的数据包结构*/
-static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length);
-
+static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check);
+/*数据前部打包*/
+static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length);
+/*数据尾部打包*/
+static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint8_t Check);
 /*语音识别处理函数*/
 void Speech_Handle(uint8_t _ucMode)
 
@@ -84,13 +85,13 @@ void SpeechRecUartPack(void)
 	
 	length = strlen(str1);
 	
-	sprintf(str + 6,SpeechRecStr,POST_NAME,HOST_NAME,length + filelength + 2,str1);
+	sprintf(str + 7,SpeechRecStr,POST_NAME,HOST_NAME,length + filelength + 2,str1);
 	
-	length = UartDataPacking(str, SPEECH_REC_TYPE_START, strlen(str + 6));
+	UartDataFrontPacking(str, SPEECH_REC_TYPE, strlen(str + 7) + filelength + 2);
 	
-	SetDmaStatus(0x81);		/*设置dma模式*/
+	SetDmaStatus(0x80);		/*设置dma模式*/
 	
-	usartSendStart((uint8_t*)str, length);/*数据长度+数据包结构*/
+	usartSendStart((uint8_t*)str, strlen(str + 7) + 7);/*数据长度+数据包结构*/
 	
 	vPortFree(str1);
 	
@@ -98,13 +99,9 @@ void SpeechRecUartPack(void)
 	
 	vPortFree(str);
 	
-	str = (char*)pvPortMalloc(sizeof(char)*2008);
+	str = (char*)pvPortMalloc(sizeof(char)*2000);
 
-	str1 = (char*)pvPortMalloc(sizeof(char)*2008);
-
-	UartDataPacking(str, SPEECH_REC_TYPE_RUNNING, 2000);
-
-	UartDataPacking(str1, SPEECH_REC_TYPE_RUNNING, 2000);
+	str1 = (char*)pvPortMalloc(sizeof(char)*2000);
 
 	f_open(file, "Speech_Rec.pcm", FA_READ| FA_OPEN_ALWAYS);
 	
@@ -112,7 +109,7 @@ void SpeechRecUartPack(void)
 	
 	uint8_t ret = 0;
 
-	ret = f_read(file, str + 6, 2000, &br);
+	ret = f_read(file, str, 2000, &br);
 
 	if(ret)
 	{
@@ -127,9 +124,9 @@ void SpeechRecUartPack(void)
 		{
 		SetDmaStatus(0x80);		/*设置dma模式*/
 		
-		usartSendStart((uint8_t*)str, br + 8);
+		usartSendStart((uint8_t*)str, br);
 		
-		ret = f_read(file, str1 + 6, 2000, &br);
+		ret = f_read(file, str1, 2000, &br);
 		
 		if(ret)
 		{
@@ -142,9 +139,9 @@ void SpeechRecUartPack(void)
 		{
 		SetDmaStatus(0x80);		/*设置dma模式*/
 		
-		usartSendStart((uint8_t*)str1, br + 8);
+		usartSendStart((uint8_t*)str1, br);
 		
-		ret = f_read(file, str + 6, 2000, &br);
+		ret = f_read(file, str, 2000, &br);
 			
 		if(ret)
 		{
@@ -158,11 +155,11 @@ void SpeechRecUartPack(void)
 	
 	f_close(file);
 
-	UartDataPacking(str, SPEECH_REC_TYPE_STOP, 2);
-
-	sprintf(str + 6, "\"}");
+	sprintf(str, "\"}");
 	
-	usartSendStart((uint8_t*)str, 10);
+	UartDataTailPacking(str, 2, 0, 0);/*写数据尾部*/
+
+	usartSendStart((uint8_t*)str, 4);
 	
 	vPortFree(str1);
 	
@@ -174,7 +171,17 @@ void SpeechRecUartPack(void)
 
 /*用于将一段数据打包成合格的数据包结构*/
 /*注意length只代表数据长度,不代表整个数据包长度*/
-static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length)
+static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check)
+
+{
+	UartDataFrontPacking(str, type, length);
+
+	UartDataTailPacking(str, length, 7, Check);
+	
+	return length + 9;
+}
+/*数据前部打包*/
+static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length)
 
 {
 
@@ -186,15 +193,29 @@ static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length)
 
 	str[3] = type;/*写入发送数据包类型*/
 
-	str[4] = (length & 0xff00) >> 8;/*写入数据长度高八位*/
+	str[4] = (length & 0x00ff0000) >> 16;/*写入数据长度高十六位*/
 
-	str[5] = length & 0xff;			/*写入数据长度低八位*/
+	str[5] = (length & 0x0000ff00) >> 8;/*写入数据长度高八位*/
 
-	str[length + 6] = 0x00;			/*不使用校验*/
+	str[6] = length & 0x000000ff;		/*写入数据长度低八位*/
 
-	str[length + 7] = FT_NAME;		/*写入帧尾*/
+}
+/*数据尾部打包*/
+static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint8_t Check)
 
-	return length + 8;
+{
+	switch(Check)
+	{
+		case 0: 
+		str[length + Offset] = 0x00;			/*不使用校验*/
+		break;
+		case 1: 
+		break;
+		case 2: 
+		break;
+		default:break;
+	}
+	str[length + Offset + 1] = FT_NAME;		/*写入帧尾*/
 }
 
 
