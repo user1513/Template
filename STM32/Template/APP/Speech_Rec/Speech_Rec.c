@@ -12,8 +12,8 @@
 #define FT_NAME 0XA5  	/*Frame Tail帧头*/
 #define DEVICE_ADDR 0X10/*设备地址*/
 
-#define SPEECH_REC_TYPE		0/*发送语音识别包发送开始*/
-
+#define SPEECH_REC_TYPE_START		0/*打开TCP连接,等待语音识别包发送*/
+#define SPEECH_REC_TYPE_END			2/*关闭TCP连接*/
 
 #define POST_NAME 	"http://vop.baidu.com/server_api" 	/*语音识别POST端口*/
 #define HOST_NAME 	"vop.baidu.com"						/*语音识别主机名*/
@@ -45,6 +45,9 @@ static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_
 static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length);
 /*数据尾部打包*/
 static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint8_t Check);
+
+char g_Str[20];
+
 /*语音识别处理函数*/
 void Speech_Handle(uint8_t _ucMode)
 
@@ -52,7 +55,10 @@ void Speech_Handle(uint8_t _ucMode)
     static uint8_t status = 0xff;
     switch(_ucMode)
     {
-        case 0:status = voice_Receive(); break;
+        case 0:
+		UartDataPacking(g_Str,SPEECH_REC_TYPE_START,0,0);	
+		usartSendStart((uint8_t*)g_Str, 9);/*数据长度+数据包结构*/
+		status = voice_Receive(); break;
         case 1://if(!status) {status = 0xff; voice_End_Receive(); voice_info_Send();} break;
 			if(!status) 
 				{
@@ -85,13 +91,11 @@ void SpeechRecUartPack(void)
 	
 	length = strlen(str1);
 	
-	sprintf(str + 7,SpeechRecStr,POST_NAME,HOST_NAME,length + filelength + 2,str1);
-	
-	UartDataFrontPacking(str, SPEECH_REC_TYPE, strlen(str + 7) + filelength + 2);
+	sprintf(str,SpeechRecStr,POST_NAME,HOST_NAME,length + filelength + 2,str1);
 	
 	SetDmaStatus(0x80);		/*设置dma模式*/
 	
-	usartSendStart((uint8_t*)str, strlen(str + 7) + 7);/*数据长度+数据包结构*/
+	usartSendStart((uint8_t*)str, strlen(str));/*数据长度+数据包结构*/
 	
 	vPortFree(str1);
 	
@@ -156,10 +160,8 @@ void SpeechRecUartPack(void)
 	f_close(file);
 
 	sprintf(str, "\"}");
-	
-	UartDataTailPacking(str, 2, 0, 0);/*写数据尾部*/
 
-	usartSendStart((uint8_t*)str, 4);
+	usartSendStart((uint8_t*)str, 2);
 	
 	vPortFree(str1);
 	

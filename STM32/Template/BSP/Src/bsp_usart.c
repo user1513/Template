@@ -12,10 +12,10 @@ void bspUsartInit(uint32_t bound){
 	//串口2对应引脚复用映射
 	GPIO_PinAFConfig(GPIOA,GPIO_PinSource2,GPIO_AF_USART2); //GPIOA9复用为USART1
 	GPIO_PinAFConfig(GPIOA,GPIO_PinSource3,GPIO_AF_USART2); //GPIOA10复用为USART1
-	
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource0,GPIO_AF_USART2); //GPIOA9复用为USART1	
 	//USART2端口配置
     //除了复用ADC和DAC这两个外设时的mode选模拟输入外，其余外设的mode全部选AF
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3; //GPIOA2与GPIOA3
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_2 | GPIO_Pin_3; //GPIOA2与GPIOA3
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;//复用功能
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;	//速度50MHz
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; //推挽复用输出
@@ -27,7 +27,7 @@ void bspUsartInit(uint32_t bound){
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;//字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;//一个停止位
 	USART_InitStructure.USART_Parity = USART_Parity_No;//无奇偶校验位
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;//无硬件数据流控制
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_CTS;//使能发送数据流控制
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;	//收发模式
 	USART_Init(USART2, &USART_InitStructure); //初始化串口2
 

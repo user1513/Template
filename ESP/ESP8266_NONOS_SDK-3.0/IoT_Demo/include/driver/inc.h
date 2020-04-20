@@ -29,4 +29,7 @@ typedef struct
 #include "driver/bsp_exit.h"
 #include "driver/bsp_led.h"
 #include "driver/bsp_timer.h"
+
+
+#define RTS_FLAG(a)  GPIO_OUTPUT_SET(GPIO_ID_PIN(10),a)
 #endif

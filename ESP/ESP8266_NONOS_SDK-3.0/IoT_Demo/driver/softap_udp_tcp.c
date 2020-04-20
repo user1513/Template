@@ -6,10 +6,107 @@ static int ICACHE_FLASH_ATTR My_Pow(int x, int y);
 //将类型为XX.XX.XX.XX的IP字符串转换成uint8_t[4]的数组
 static bool ICACHE_FLASH_ATTR IpStr2Tab(uint8_t* ip_table,const char * ip_str);
 
+#define FH_NAME 0X55AA  /*Frame Header帧头*/
+#define FT_NAME 0XA5  	/*Frame Tail帧头*/
+#define DEVICE_ADDR 0X20/*设备地址*/
 
+#define SPEECH_REC_TYPE_PACK		3/*发送api获取数据*/
+
+/*用于将一段数据打包成合格的数据包结构*/
+static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check);
+/*数据前部打包*/
+static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length);
+/*数据尾部打包*/
+static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint8_t Check);
+
+uint16_t str_parse(char *src_data,char *dest_data)
+{
+	char * pTmp = src_data;
+	uint16_t offset = 0;
+	uint16_t data_start_offset = 0;
+	uint16_t data_end_offset = 0;
+	while((*pTmp) != '[') {pTmp++; offset++;}
+	while(*pTmp)
+	{
+		if(pTmp[0] == '[' && pTmp[1] == '\"')
+		{
+			data_start_offset = offset + 2;
+			offset += 1;
+			pTmp += 1;
+		}
+
+		if(pTmp[1] == ']' && pTmp[0] == '\"')
+		{
+			data_end_offset = offset;
+			break;
+		}
+		offset++;
+		pTmp++;
+	}
+	uint16_t weight = data_end_offset - data_start_offset;
+
+	UartDataPacking(dest_data, SPEECH_REC_TYPE_PACK,weight,0);
+
+	os_memcpy(dest_data + 7,src_data + data_start_offset, weight);
+
+	return weight;
+}
+
+/*用于将一段数据打包成合格的数据包结构*/
+/*注意length只代表数据长度,不代表整个数据包长度*/
+static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check)
+
+{
+	UartDataFrontPacking(str, type, length);
+
+	UartDataTailPacking(str, length, 7, Check);
+
+	return length + 9;
+}
+
+/*数据前部打包*/
+static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length)
+
+{
+
+	str[0] = FH_NAME >> 8;			/*写入数据帧头高八位*/
+
+	str[1] = FH_NAME & 0Xff;		/*写入数据帧头低八位*/
+
+	str[2] = DEVICE_ADDR;			/*写入设备地址八位*/
+
+	str[3] = type;/*写入发送数据包类型*/
+
+	str[4] = (length & 0x00ff0000) >> 16;/*写入数据长度高十六位*/
+
+	str[5] = (length & 0x0000ff00) >> 8;/*写入数据长度高八位*/
+
+	str[6] = length & 0x000000ff;		/*写入数据长度低八位*/
+
+}
+/*数据尾部打包*/
+static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint8_t Check)
+
+{
+	switch(Check)
+	{
+		case 0:
+		str[length + Offset] = 0x00;			/*不使用校验*/
+		break;
+		case 1:
+		break;
+		case 2:
+		break;
+		default:break;
+	}
+	str[length + Offset + 1] = FT_NAME;		/*写入帧尾*/
+}
 
 void ICACHE_FLASH_ATTR ESP8266_WIFI_recv_callback(void *arg, char *pdata, unsigned short len)
 {
+	char str[50] = {0};
+	char *pstr = str;
+
     struct espconn* pEspconn = (struct espconn*)arg;
     remot_info * P_port_info = NULL;	// 远端连接信息结构体指针
 
@@ -36,36 +133,61 @@ void ICACHE_FLASH_ATTR ESP8266_WIFI_recv_callback(void *arg, char *pdata, unsign
 
     os_printf("pdata = %s\n", pdata);
 
-    if(!strcmp(pdata,"open"))
+    uint16_t length = str_parse(pdata,pstr) + 9;
+
+    while(length--)
     {
-        os_printf("开灯!!!!\n");
-    }
-    if(!strcmp(pdata,"close"))
-    {
-        os_printf("关灯!!!!\n");
+    	uart_tx_one_char(UART0,*pstr);
+    	pstr++;
     }
     os_printf("\nESP8266_WIFI_Recelve_OK\n");
 }
+
+
+
 extern uint8 uartflag;
 extern uint16_t g_total;
 extern char * g_CurrentPoint;
 extern uint8 uartOKflag;
-void ICACHE_FLASH_ATTR ESP8266_WIFI_sent_callback(void *arg)
+extern char * g_UartPoint1 ;
+extern char * g_UartPoint2 ;
+
+void  ESP8266_WIFI_sent_callback(void *arg)
 {
-    //os_printf("\nESP8266_WIFI_Send_OK\n");
-    uartOKflag = 1;
-    if(uartflag == 0x81)
-    {
-    	uartflag = 0;
-    	espconn_send(&stcp_Con,g_CurrentPoint,g_total);
-    	g_total = 0;
-    }
+    os_printf("\nESP8266_WIFI_Send_OK\n");
+
+}
+
+//连接tcp连接成功回调函数
+void ICACHE_FLASH_ATTR ESP8266_WIFI_write_finish_callback(void *arg)
+{
+//	os_printf("ESP8266_WIFI_write_finish_callback\n");
+	 uartOKflag = 1;
+	    if(uartflag == 0x81)
+	    {
+	    	uartflag = 0;
+	    	espconn_send(&stcp_Con,g_CurrentPoint,g_total);
+	    	g_total = 0;
+	    }
+	    if(uartflag & 0x40)
+	    {
+
+			SET_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
+	    	RTS_FLAG(0);
+	        uartOKflag = 0;
+	        uartflag = 0x01;
+	        os_printf("wait uartOKflag!!!\n");
+	        espconn_send(&stcp_Con,((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1),2800);
+	    }
 }
 
 //连接tcp连接成功回调函数
 void ICACHE_FLASH_ATTR ESP8266_WIFI_connect_callback(void *arg)
 {
     os_printf("TCP连接成功\n");
+    espconn_regist_write_finish(&stcp_Con, (espconn_connect_callback) ESP8266_WIFI_write_finish_callback);
+    espconn_set_opt(&stcp_Con,0x04);
+
 }
 
 //连接tcp断开连接回调函数
@@ -117,9 +239,9 @@ void Create_Udp_Connect_Client(struct espconn* pEspconn, const char * remote_ip_
 }
 
 
+
+
 esp_tcp _esp_tcp;
-
-
 
 //创建tcp服务器
 void Create_Tcp_Connect_Server(struct espconn* pEspconn, int local_port)
