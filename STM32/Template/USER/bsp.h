@@ -65,6 +65,7 @@
 
 #include "bsp_usart.h"
 
+#include "myapp.h"
 /*外设初始化函数*/
 void bspInit(void);
 

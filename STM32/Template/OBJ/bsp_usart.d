@@ -74,4 +74,4 @@
 ..\obj\bsp_usart.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\bsp_usart.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\bsp_usart.o: ..\BSP\Inc\bsp_usart.h
-..\obj\bsp_usart.o: ..\APP\Encode_Check_Func\gbk2utf2uni.h
+..\obj\bsp_usart.o: ..\FreeRTOS\include\semphr.h

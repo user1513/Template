@@ -16,6 +16,7 @@ static void vTaskSpeechRec(void *pvParameters);
 
 static void vTaskUsartParse(void *pvParameters);
 
+static void vTaskAudioPlay(void *pvParameters);
 /*
 **********************************************************************************************************
 											变量声明
@@ -30,6 +31,8 @@ static TaskHandle_t xHandleTaskSpeechRec = NULL;
 static TaskHandle_t xHandleTaskKeyGet = NULL;
 
 static TaskHandle_t xHandleTaskUsartParse = NULL;
+
+static TaskHandle_t xHandleTaskAudioPlay = NULL;
 
 //******************************************************************************************************//
 
@@ -131,6 +134,13 @@ static void vTaskTaskInit(void *pvParameters)
                  NULL,        				/* 任务参数  */
                  6,           				/* 任务优先级*/
                  &xHandleTaskUsartParse ); 	/* 任务句柄  */
+				 
+	xTaskCreate( vTaskAudioPlay,    		/* 任务函数  */
+                 "vTaskAudioPlay",  		/* 任务名    */
+                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        				/* 任务参数  */
+                 2,           				/* 任务优先级*/
+                 &xHandleTaskAudioPlay ); 	/* 任务句柄  */
 	
     vTaskDelete(xHandleTaskInit); 			//删除开始任务
 	
@@ -173,14 +183,23 @@ static void vTaskKeyGet(void *pvParameters)
 static void vTaskUsartParse(void *pvParameters)
 
 {
-	uint8_t * point = NULL;	
 	while(1)
 	{
 	xSemaphoreTake(xUsartParseSemaphoreHandle, portMAX_DELAY);		/*等待按键中断发送信号量*/
-	
-	
+	usart_parse(read_current_finaliy_point());
 	}
-	
+}
+//e6 89 93 e5 bc 80 e5 8d a7 e5 ae a4 e7 81 af 2c e5 85 b3 e9 97 ad e5 ae a2 e5 8e 85 e7 a9 ba e8 b0 83
+
+	uint32_t ucTmp = 0;
+static void vTaskAudioPlay(void *pvParameters)
+{
+	uint32_t * ucpTmp = NULL;
+	while(1)
+	{
+		xQueueReceive(AudioNoQueueHandle,(void *)&ucpTmp, portMAX_DELAY);
+		ucTmp = (int)ucpTmp;
+	}
 }
 
 

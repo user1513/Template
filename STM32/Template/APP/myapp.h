@@ -3,6 +3,7 @@
 
 #include "stdint.h"
 
+uint8_t usart_parse(uint8_t * _ucpTmp);
 #endif
 
 

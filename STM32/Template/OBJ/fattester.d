@@ -74,4 +74,3 @@
 ..\obj\fattester.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_usart.h
-..\obj\fattester.o: ..\APP\Encode_Check_Func\gbk2utf2uni.h

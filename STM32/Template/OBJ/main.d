@@ -77,4 +77,3 @@
 ..\obj\main.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\main.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\main.o: ..\BSP\Inc\bsp_usart.h
-..\obj\main.o: ..\APP\Encode_Check_Func\gbk2utf2uni.h
