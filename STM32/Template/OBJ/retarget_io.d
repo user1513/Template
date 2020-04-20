@@ -6,4 +6,3 @@
 ..\obj\retarget_io.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
 ..\obj\retarget_io.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\rt_sys.h
 ..\obj\retarget_io.o: .\RTE\_project\RTE_Components.h
-..\obj\retarget_io.o: F:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\1.6.2\Include\EventRecorder.h

@@ -14,6 +14,8 @@ static void vTaskKeyGet(void *pvParameters);
 
 static void vTaskSpeechRec(void *pvParameters);
 
+static void vTaskUsartParse(void *pvParameters);
+
 /*
 **********************************************************************************************************
 											变量声明
@@ -27,11 +29,19 @@ static TaskHandle_t xHandleTaskSpeechRec = NULL;
 
 static TaskHandle_t xHandleTaskKeyGet = NULL;
 
+static TaskHandle_t xHandleTaskUsartParse = NULL;
+
+//******************************************************************************************************//
+
 SemaphoreHandle_t xKeySemaphoreHandle = NULL;		/*创建按键与中断同步二值信号量*/
 
 SemaphoreHandle_t xSpeechRecSemaphoreHandle = NULL;	/*创建按键与语音识别同步信号量*/
 
-QueueHandle_t xDmaModeMutexHandle  = NULL;
+SemaphoreHandle_t xUsartParseSemaphoreHandle = NULL;/*创建二值信号量,专门用于串口空闲中断与串口解析任务同步*/
+
+QueueHandle_t xDmaModeMutexHandle  = NULL;			/*创建互斥信号量,确保dma的工作模式不会出错*/
+
+QueueHandle_t AudioNoQueueHandle = NULL; 			/*创建队列用于存放音频播放内容*/
 /*
 *********************************************************************************************************
 *	函 数 名: main
@@ -86,42 +96,49 @@ static void vTaskTaskInit(void *pvParameters)
 	xKeySemaphoreHandle = xSemaphoreCreateBinary();	
 	/*创建二值信号量,专门用于按键和语音识别任务同步*/
 	xSpeechRecSemaphoreHandle = xSemaphoreCreateBinary();
+	/*创建二值信号量,专门用于串口空闲中断与串口解析任务同步*/
+	xUsartParseSemaphoreHandle = xSemaphoreCreateBinary();
 	/*创建互斥信号量,确保dma的工作模式不会出错*/
 	xDmaModeMutexHandle = xSemaphoreCreateMutex();
+	/*创建队列存放需要播放的音频编号,可以存放5个大小为4个字节的item*/
+	AudioNoQueueHandle = xQueueCreate( 5, sizeof(int));
 
-	xTaskCreate( vTaskLED,    			/* 任务函数  */
-                 "vTaskLED",  			/* 任务名    */
-                 64,         			/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,        			/* 任务参数  */
-                 5,           			/* 任务优先级*/
-                 &xHandleTaskLED ); 	/* 任务句柄  */
+	xTaskCreate( vTaskLED,    				/* 任务函数  */
+                 "vTaskLED",  				/* 任务名    */
+                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        				/* 任务参数  */
+                 5,           				/* 任务优先级*/
+                 &xHandleTaskLED ); 		/* 任务句柄  */
 	
 	
 	xTaskCreate( vTaskSpeechRec,    		/* 任务函数  */
                  "vTaskSpeechRec",  		/* 任务名    */
-                 128,         			/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,        			/* 任务参数  */
-                 3,           			/* 任务优先级*/
+                 128,         				/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        				/* 任务参数  */
+                 3,           				/* 任务优先级*/
                  &xHandleTaskSpeechRec ); 	/* 任务句柄  */
 	
-	xTaskCreate( vTaskKeyGet,    		/* 任务函数  */
-                 "vTaskKeyGet",  		/* 任务名    */
-                 64,         			/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,        			/* 任务参数  */
-                 6,           			/* 任务优先级*/
-                 &xHandleTaskKeyGet ); 	/* 任务句柄  */
+	xTaskCreate( vTaskKeyGet,    			/* 任务函数  */
+                 "vTaskKeyGet",  			/* 任务名    */
+                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        				/* 任务参数  */
+                 6,           				/* 任务优先级*/
+                 &xHandleTaskKeyGet ); 		/* 任务句柄  */
+				 
+	xTaskCreate( vTaskUsartParse,    		/* 任务函数  */
+                 "vTaskUsartParse",  		/* 任务名    */
+                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,        				/* 任务参数  */
+                 6,           				/* 任务优先级*/
+                 &xHandleTaskUsartParse ); 	/* 任务句柄  */
 	
-    vTaskDelete(xHandleTaskInit); //删除开始任务
+    vTaskDelete(xHandleTaskInit); 			//删除开始任务
 	
-    taskEXIT_CRITICAL();            //退出临界区
+    taskEXIT_CRITICAL();            		//退出临界区
 }
 
 
-
-
-
-
-
+/*语音识别任务*/
 static void vTaskSpeechRec(void *pvParameters)
 
 {
@@ -132,11 +149,10 @@ static void vTaskSpeechRec(void *pvParameters)
 		xSemaphoreTake(xSpeechRecSemaphoreHandle, portMAX_DELAY);
 		
 		Speech_Handle(SpeechRecNum++ % 2);
-		
-		//wav_recorder();
 	}
 }
 
+/*按键信息获取*/
 static void vTaskKeyGet(void *pvParameters)
 
 {
@@ -151,6 +167,20 @@ static void vTaskKeyGet(void *pvParameters)
 			xSemaphoreGive(xSpeechRecSemaphoreHandle);			/*启动语音识别任务*/
 		}
 	}
+}
+
+/*串口数据解析*/
+static void vTaskUsartParse(void *pvParameters)
+
+{
+	uint8_t * point = NULL;	
+	while(1)
+	{
+	xSemaphoreTake(xUsartParseSemaphoreHandle, portMAX_DELAY);		/*等待按键中断发送信号量*/
+	
+	
+	}
+	
 }
 
 

@@ -75,3 +75,4 @@
 ..\obj\speech_rec.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\speech_rec.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\speech_rec.o: ..\BSP\Inc\bsp_usart.h
+..\obj\speech_rec.o: ..\APP\Encode_Check_Func\gbk2utf2uni.h

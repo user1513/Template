@@ -2,7 +2,7 @@
 /* Unicode - OEM code bidirectional converter  (C)ChaN, 2015              */
 /* CP936 (Simplified Chinese GBK)                                         */
 /*------------------------------------------------------------------------*/
-
+#include "GBK.h"
 const unsigned short uni2oem[] = {
 /*  Unicode - OEM,  Unicode - OEM,  Unicode - OEM,  Unicode - OEM */
 	0x00A4, 0xA1E8, 0x00A7, 0xA1EC, 0x00A8, 0xA1A7, 0x00B0, 0xA1E3,

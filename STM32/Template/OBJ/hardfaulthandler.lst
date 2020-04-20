@@ -86,12 +86,11 @@ ARM Macro Assembler    Page 2
    54 00000012                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=..\obj\hardfaulthandler.d -o..\obj\hardfaulthandler.o -I.\RT
-E\Compiler -I.\RTE\_project -IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\ARM_Compiler\
-1.6.2\Include -IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Driver
-s\CMSIS\Device\ST\STM32F4xx\Include -IF:\Keil_v5\ARM\CMSIS\Include --predefine=
-"__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" --predefine="_RTE_
- SETA 1" --predefine="STM32F407xx SETA 1" --list=..\obj\hardfaulthandler.lst se
-gger\HardFaultHandlerMDK\HardFaultHandler.S
+E\_project -IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\C
+MSIS\Device\ST\STM32F4xx\Include -IF:\Keil_v5\ARM\CMSIS\Include --predefine="__
+MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" --predefine="STM32F40
+7xx SETA 1" --list=..\obj\hardfaulthandler.lst segger\HardFaultHandlerMDK\HardF
+aultHandler.S
 
 
 
@@ -130,4 +129,4 @@ Symbol: HardFaultHandler
       At line 52 in file segger\HardFaultHandlerMDK\HardFaultHandler.S
 Comment: HardFaultHandler used once
 1 symbol
-338 symbols in table
+337 symbols in table

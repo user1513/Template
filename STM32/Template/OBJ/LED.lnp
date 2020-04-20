@@ -17,6 +17,8 @@
 "..\obj\audioplay.o"
 "..\obj\base64.o"
 "..\obj\crc.o"
+"..\obj\gbk2utf2uni.o"
+"..\obj\gbk.o"
 "..\obj\usmart.o"
 "..\obj\usmart_config.o"
 "..\obj\usmart_str.o"
@@ -54,8 +56,6 @@
 "..\obj\stm32f4xx_spi.o"
 "..\obj\hardfaulthandler.o"
 "..\obj\segger_hardfaulthandler.o"
-"..\obj\eventrecorder.o"
-"..\obj\retarget_io.o"
 --library_type=microlib --strict --scatter "..\OBJ\LED.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

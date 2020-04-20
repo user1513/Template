@@ -75,3 +75,4 @@
 ..\obj\diskio.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_usart.h
+..\obj\diskio.o: ..\APP\Encode_Check_Func\gbk2utf2uni.h

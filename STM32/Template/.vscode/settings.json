@@ -28,6 +28,7 @@
         "speech_rec.h": "c",
         "bsp_usart.h": "c",
         "bsp_dma.h": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "gbk2utf2uni.h": "c"
     }
 }
