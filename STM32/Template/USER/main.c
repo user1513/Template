@@ -137,7 +137,7 @@ static void vTaskTaskInit(void *pvParameters)
 				 
 	xTaskCreate( vTaskAudioPlay,    		/* 任务函数  */
                  "vTaskAudioPlay",  		/* 任务名    */
-                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 128,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
                  2,           				/* 任务优先级*/
                  &xHandleTaskAudioPlay ); 	/* 任务句柄  */
@@ -186,19 +186,30 @@ static void vTaskUsartParse(void *pvParameters)
 	while(1)
 	{
 	xSemaphoreTake(xUsartParseSemaphoreHandle, portMAX_DELAY);		/*等待按键中断发送信号量*/
+		
 	usart_parse(read_current_finaliy_point());
+		
 	}
 }
 //e6 89 93 e5 bc 80 e5 8d a7 e5 ae a4 e7 81 af 2c e5 85 b3 e9 97 ad e5 ae a2 e5 8e 85 e7 a9 ba e8 b0 83
 
-	uint32_t ucTmp = 0;
+char sprintf_str[30] = {0};	
+
 static void vTaskAudioPlay(void *pvParameters)
 {
-	uint32_t * ucpTmp = NULL;
+	uint32_t ucTmp = 0;
+	
 	while(1)
 	{
-		xQueueReceive(AudioNoQueueHandle,(void *)&ucpTmp, portMAX_DELAY);
-		ucTmp = (int)ucpTmp;
+		xQueueReceive(AudioNoQueueHandle,&ucTmp, portMAX_DELAY);/*获取音频播放队列*/
+		
+		sprintf(sprintf_str,"0:AudioPlay/%04d.wav",ucTmp);		/*将接收到的音频名进行整合*/
+		
+		recoder_enter_play_mode();								/*进入播放模式*/
+		
+		wav_play_song((u8*)sprintf_str);						/*播放音频*/
+		
+		vTaskDelay(500);
 	}
 }
 
@@ -219,7 +230,9 @@ static void vTaskLED(void *pvParameters)
     while(1)
     {
 		bspLedToggle();
+		
         vTaskDelay(500);
+		
     }
 }
 

@@ -73,3 +73,4 @@
 ..\obj\bsp.o: ..\BSP\Inc\bsp_exti.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_usart.h
+..\obj\bsp.o: ..\APP\Speech_Rec\Voice_Access.h

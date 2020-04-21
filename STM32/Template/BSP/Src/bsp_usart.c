@@ -52,11 +52,11 @@ void bspUsartInit(uint32_t bound){
 
 void USART2_IRQHandler(void)                	//串口2中断服务程序
 {
-	u8 Res;
+	u8 Res = Res;;
 	if(USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)  //接收中断
 	{
 		Res = USART2->DR; 
-		
+		Res = Res;
 		usartReadStart(swich_current_read_point(), 100);
 		
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;

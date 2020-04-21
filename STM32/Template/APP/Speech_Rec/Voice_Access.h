@@ -20,6 +20,7 @@ PCM内部保存数据为base64编码后的数据
 
 void rec_i2s_dma_rx_callback(void);
 void recoder_enter_rec_mode(void);
+void recoder_enter_play_mode(void);
 #if config_ENABLE_MODE == SAVE_TYPE_WAV
 void recoder_wav_init(__WaveHeader* wavhead);
 void recoder_msg_show(u32 tsec,u32 kbps);

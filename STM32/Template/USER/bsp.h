@@ -66,6 +66,8 @@
 #include "bsp_usart.h"
 
 #include "myapp.h"
+
+#include "Voice_Access.h"
 /*外设初始化函数*/
 void bspInit(void);
 

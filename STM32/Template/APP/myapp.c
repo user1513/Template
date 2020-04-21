@@ -72,12 +72,15 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 	return 0;
 }
 
+/*语音识别串口数据解析*/
 static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 
 {
+	uint32_t queueval = 0;
 	if (!length)
 	{
-		//xQueueSend(AudioNoQueueHandle, (void*)1, portMAX_DELAY);
+		queueval = 3;
+		xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);
 		return;
 	}
 	char* cpTmp = (char *)pvPortMalloc(sizeof(char) * 100);
@@ -89,6 +92,8 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 
 	utf82gbk((unsigned char *)cpTmp, ucpTmp);
 
+	printf("\ngbk:%s\n", cpTmp);/*打印utf8转换后gbk*/
+	
 	length = strlen(cpTmp);
 
 	char* tmp = NULL;
@@ -171,16 +176,17 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 
 	if (cpTmpSort3[0][0] != cpTmpSort2[0][0] && cpTmpSort3[0][0] != cpTmpSort1[0][0])
 	{
-		//xQueueSend(AudioNoQueueHandle, (void*)0001, portMAX_DELAY);
+		queueval = 3;
+		xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);
 	}
 	else
 	{
+		uint8_t i = 0;
 		while (cpTmpSort3[0][0]--)
 		{
-			xQueueSend(AudioNoQueueHandle, (void*)(cpTmpSort1[1][0] * 1000 +
-													cpTmpSort2[1][0] * 10 +
-													cpTmpSort3[1][0]), 
-													portMAX_DELAY);
+			queueval = (cpTmpSort1[1][i] * 1000 + cpTmpSort2[1][i] * 10 + cpTmpSort3[1][i]);
+			xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);
+			i++;
 		}
 	}
 
