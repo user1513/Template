@@ -25,26 +25,34 @@ uint16_t str_parse(char *src_data,char *dest_data)
 	uint16_t offset = 0;
 	uint16_t data_start_offset = 0;
 	uint16_t data_end_offset = 0;
-	while((*pTmp) != '[') {pTmp++; offset++;}
-	while(*pTmp)
-	{
-		if(pTmp[0] == '[' && pTmp[1] == '\"')
-		{
-			data_start_offset = offset + 2;
-			offset += 1;
-			pTmp += 1;
-		}
+    uint16_t weight = 0;
+    if(os_strstr(pTmp,"success"))
+    {
+        while((*pTmp) != '[') {pTmp++; offset++;}
+        while(*pTmp)
+        {
+            if(pTmp[0] == '[' && pTmp[1] == '\"')
+            {
+                data_start_offset = offset + 2;
+                offset += 1;
+                pTmp += 1;
+            }
 
-		if(pTmp[1] == ']' && pTmp[0] == '\"')
-		{
-			data_end_offset = offset;
-			break;
-		}
-		offset++;
-		pTmp++;
-	}
-	uint16_t weight = data_end_offset - data_start_offset;
-
+            if(pTmp[1] == ']' && pTmp[0] == '\"')
+            {
+                data_end_offset = offset;
+                break;
+            }
+            offset++;
+            pTmp++;
+        }
+        weight = data_end_offset - data_start_offset;
+    }
+    else
+    {
+        weight = 0;
+    }
+    
 	UartDataPacking(dest_data, SPEECH_REC_TYPE_PACK,weight,0);
 
 	os_memcpy(dest_data + 7,src_data + data_start_offset, weight);
@@ -104,13 +112,13 @@ static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint
 
 void ICACHE_FLASH_ATTR ESP8266_WIFI_recv_callback(void *arg, char *pdata, unsigned short len)
 {
-	char str[50] = {0};
+	char str[100] = {0};
 	char *pstr = str;
 
     struct espconn* pEspconn = (struct espconn*)arg;
     remot_info * P_port_info = NULL;	// 远端连接信息结构体指针
 
-
+    system_soft_wdt_feed();
     if(espconn_get_connection_info(pEspconn, &P_port_info, 0)==ESPCONN_OK)	// 获取远端信息
 	{
 		pEspconn->proto.udp->remote_port  = P_port_info->remote_port;		// 获取对方端口号

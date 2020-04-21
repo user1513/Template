@@ -39,8 +39,6 @@ Content-length: %d\r\n\
 const char * SpeechRecStrBody = "\
 {\"format\":\"%s\",\"rate\":16000,\"dev_pid\":%d,\"channel\":1,\"token\":\"%s\",\"cuid\":\"%s\",\"len\":%d,\"speech\":\"";
 
-/*用于将一段数据打包成合格的数据包结构*/
-static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check);
 /*数据前部打包*/
 static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length);
 /*数据尾部打包*/
@@ -173,7 +171,7 @@ void SpeechRecUartPack(void)
 
 /*用于将一段数据打包成合格的数据包结构*/
 /*注意length只代表数据长度,不代表整个数据包长度*/
-static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check)
+uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check)
 
 {
 	UartDataFrontPacking(str, type, length);

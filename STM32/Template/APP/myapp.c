@@ -3,6 +3,8 @@
 #include "queue.h"
 #include "gbk2utf2uni.h" /*UTF-8与GBK互转*/
 #include "string.h"
+#include "Speech_Rec.h"
+#include "bsp_dma.h"
 extern QueueHandle_t AudioNoQueueHandle;
 
 #define config_MAX_REC_NUM 4	/*定义可以识别的关键词个数*/
@@ -44,10 +46,13 @@ KeyChar g_StatueKeyChar[]=
 	{2, "关"}
 };
 
-
+static uint8_t LastEspStatue = 0xff;/*保存一下上次esp信息*/
 uint8_t usart_parse(uint8_t * _ucpTmp)
 {
 	uint8_t i = 0;
+	
+	
+	
 	while(_ucpTmp[i] != 0x55 && _ucpTmp[i+1] != 0xaa)
 	{
 		i++;
@@ -63,11 +68,35 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 	if(length > 100) return 2; 	/*超出单帧读取范围*/
 
 	if(_ucpTmp[ i + 4 + length] != 0xa5) return 3;/*帧尾数据错误*/
-
+	int queuetmp = 1;
 	switch(_ucpTmp[i - 1])//通过类型来找到对应的执行方法
 	{
-		case 0x03:SpeechRecUartParse(&_ucpTmp[i + 3] ,length); break;		/*语音识别信息*/
-		case 0x05:break;		/*ESP联网信息*/
+		case 0x03:
+		if(length)
+		{
+			SpeechRecUartParse(&_ucpTmp[i + 3] ,length);/*语音识别信息*/
+		}
+		else
+		{
+			queuetmp = 3;
+			xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
+		}			
+		break;		
+		case 0x05:
+		if(_ucpTmp[i + 3] != LastEspStatue)
+		{
+			if(_ucpTmp[i + 3])/*ESP联网信息*/
+			{
+				xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
+			}
+			else
+			{
+				queuetmp = 2;
+				xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
+			}
+			LastEspStatue = _ucpTmp[i + 3];/*保存状态值*/
+		}
+		break;		
 	}
 	return 0;
 }
@@ -129,8 +158,25 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 	for (uint8_t i = 0, j = 0; i < sizeof(g_DeviceKeyChar) / sizeof(g_DeviceKeyChar[0]); i++)
 	{
 		tmp = cpTmp;
+		
 		while ((tmp = strstr(tmp, g_DeviceKeyChar[i].str)) != NULL)
 		{
+			if(!strcmp(g_DeviceKeyChar[i].str,"灯"))
+			{
+				char str[] = "台灯";
+				if(strstr(tmp - 2,str) == (tmp - 2))
+				{
+					if (cpTmpSort2[0][j] + strlen(g_DeviceKeyChar[i].str) > (length - 1))
+					{
+						break;
+					}
+					else
+					{
+						tmp += strlen(g_DeviceKeyChar[i].str);
+					}
+					continue;
+				}
+			}
 			cpTmpSort2[0][j] = tmp - cpTmp;
 			
 			cpTmpSort2[1][j] = g_DeviceKeyChar[i].No;
@@ -174,7 +220,7 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 	/*按照关键词出现先后排序*/
 	cpTmpSort3[0][0] = keychartimesort((uint8_t*)cpTmpSort3[0]);
 
-	if (cpTmpSort3[0][0] != cpTmpSort2[0][0] && cpTmpSort3[0][0] != cpTmpSort1[0][0])
+	if (cpTmpSort3[0][0] != cpTmpSort2[0][0] || cpTmpSort3[0][0] != cpTmpSort1[0][0] || cpTmpSort1[0][0] == 0 || cpTmpSort3[0][0] == 0 || cpTmpSort2[0][0] == 0)
 	{
 		queueval = 3;
 		xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);
@@ -234,14 +280,18 @@ static uint8_t keychartimesort(uint8_t* ucpTmp)
 	return num;
 }
 
+char cTmp[8] = {0};
+
+void GetEspInfo(void)
+{
+
+	UartDataPacking(cTmp, 0x04, 0, 0);/*类型为4,数据长度0,无校验*/
+	
+	usartSendStart((uint8_t *)cTmp, 9);
+}
+
+
+
 
  
 
-
-
-
-
-
-
-
- 

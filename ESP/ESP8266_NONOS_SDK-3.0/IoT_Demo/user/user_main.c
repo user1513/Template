@@ -142,7 +142,7 @@ void scan_All_Ap_Info_done(void *arg, STATUS status)
             pBss_info = pBss_info->next.stqe_next;
         }
 
-        My_Set_station_Status("WIWH", "19728888", 1);
+        My_Set_station_Status("2601b-2.4G", "19728888", 1);
         bsp_SoftTimer_Restart(&udp_start_os_timer, 100, (void *)2, 1);
     }
 }
@@ -185,6 +185,7 @@ char * g_UartPoint2 = NULL;
 char uartstr[110];
 uint8 uartflag = 0;
 uint8 uartOKflag = 1;
+
 void uart0_rx_intr_handler(void *para)
 {
 
@@ -217,6 +218,7 @@ void uart0_rx_intr_handler(void *para)
 			if(g_total >= 2800)
 			{
 				g_total = 0;
+				system_soft_wdt_feed();
 				if(uartOKflag)
 				{
 				uartOKflag = 0;

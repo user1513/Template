@@ -224,6 +224,7 @@ static void vTaskAudioPlay(void *pvParameters)
 *   优 先 级: 2  
 *********************************************************************************************************
 */
+uint8_t timeout = 0;
 static void vTaskLED(void *pvParameters)
 
 {
@@ -231,8 +232,12 @@ static void vTaskLED(void *pvParameters)
     {
 		bspLedToggle();
 		
-        vTaskDelay(500);
-		
+		if(timeout++ > 20)				/*每10s查询一次esp的状态*/
+		{
+			timeout = 0;
+			//GetEspInfo();
+		}
+        vTaskDelay(500);		
     }
 }
 
