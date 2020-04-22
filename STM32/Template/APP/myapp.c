@@ -12,6 +12,7 @@ extern QueueHandle_t AudioNoQueueHandle;
 /*按照出现关键词的先后进行排序*/
 static uint8_t keychartimesort(uint8_t* ucpTmp);
 static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length);
+static void CloseEspTcpConnect(void);
 /*定义关键词*/
 typedef struct
 {
@@ -238,7 +239,7 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 			i++;
 		}
 	}
-
+	CloseEspTcpConnect();
 	/*
 	code
 	可以在这里写oled显示
@@ -283,7 +284,7 @@ static uint8_t keychartimesort(uint8_t* ucpTmp)
 	return num;
 }
 
-char cTmp[8] = {0};
+char cTmp[10] = {0};
 
 void GetEspInfo(void)
 {
@@ -293,6 +294,13 @@ void GetEspInfo(void)
 	usartSendStart((uint8_t *)cTmp, 9);
 }
 
+static void CloseEspTcpConnect(void)
+{
+
+	UartDataPacking(cTmp, 0x02, 0, 0);/*类型为4,数据长度0,无校验*/
+	
+	usartSendStart((uint8_t *)cTmp, 9);
+}
 
 
 

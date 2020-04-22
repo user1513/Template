@@ -681,7 +681,7 @@ I (..\BSP\Inc\bsp_i2s.h)(0x5E92A674)
 I (..\BSP\Inc\bsp_wm8978.h)(0x5E8FE74C)
 I (..\BSP\Inc\bsp_key.h)(0x5E95ACB3)
 I (..\BSP\Inc\bsp_led.h)(0x5E92A19B)
-F (..\APP\myapp.c)(0x5EA03FD3)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\myapp.o --omf_browse ..\obj\myapp.crf --depend ..\obj\myapp.d)
+F (..\APP\myapp.c)(0x5EA05716)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\myapp.o --omf_browse ..\obj\myapp.crf --depend ..\obj\myapp.d)
 I (..\APP\myapp.h)(0x5E9E955D)
 I (F:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x5E4B9392)
