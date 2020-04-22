@@ -46,7 +46,7 @@ KeyChar g_StatueKeyChar[]=
 	{2, "关"}
 };
 
-static uint8_t LastEspStatue = 0xff;/*保存一下上次esp信息*/
+uint8_t LastEspStatue = 0xff;/*保存一下上次esp信息*/
 uint8_t usart_parse(uint8_t * _ucpTmp)
 {
 	uint8_t i = 0;
@@ -87,12 +87,15 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 		{
 			if(_ucpTmp[i + 3])/*ESP联网信息*/
 			{
+				printf("ESP联网失败!!!\n");
 				xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
 			}
 			else
 			{
 				queuetmp = 2;
+				printf("ESP联网成功!!!\n");
 				xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
+				
 			}
 			LastEspStatue = _ucpTmp[i + 3];/*保存状态值*/
 		}

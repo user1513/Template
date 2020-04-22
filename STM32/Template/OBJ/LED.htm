@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\LED.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\LED.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Apr 21 17:59:33 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Apr 22 21:16:49 2020
 <BR><P>
 <H3>Maximum Stack Usage =        736 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1772,6 +1772,7 @@ Global Symbols
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortExitCritical
 <LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortEnterCritical
+<LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_parse
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bspInit
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rec_i2s_dma_rx_callback
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SpeechRecUartPack
@@ -2756,11 +2757,12 @@ Global Symbols
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SpeechRecUartPack
 </UL>
 
-<P><STRONG><a name="[1c5]"></a>usart_parse</STRONG> (Thumb, 206 bytes, Stack size 24 bytes, myapp.o(i.usart_parse))
+<P><STRONG><a name="[1c5]"></a>usart_parse</STRONG> (Thumb, 218 bytes, Stack size 24 bytes, myapp.o(i.usart_parse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = usart_parse &rArr; SpeechRecUartParse &rArr; xQueueGenericSend &rArr; prvUnlockQueue &rArr; prvNotifyQueueSetContainer &rArr; prvCopyDataToQueue &rArr; xTaskPriorityDisinherit &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSend
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SpeechRecUartParse
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskUsartParse
 </UL>
@@ -3299,6 +3301,7 @@ Global Symbols
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_parse
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskSpeechRec
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskKeyGet
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SpeechRecUartParse
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetDmaStatus
@@ -3539,10 +3542,11 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.vTaskTaskInit)
 </UL>
-<P><STRONG><a name="[86]"></a>vTaskSpeechRec</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, main.o(i.vTaskSpeechRec))
-<BR><BR>[Stack]<UL><LI>Max Depth = 672<LI>Call Chain = vTaskSpeechRec &rArr; Speech_Handle &rArr; SpeechRecUartPack &rArr; voice_info_size &rArr; mf_open &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; SD_WriteDisk &rArr; SD_WriteBlock &rArr; SD_Init &rArr; SD_EnableWideBusOperation &rArr; SDEnWideBus &rArr; FindSCR &rArr; CmdResp1Error
+<P><STRONG><a name="[86]"></a>vTaskSpeechRec</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, main.o(i.vTaskSpeechRec))
+<BR><BR>[Stack]<UL><LI>Max Depth = 680<LI>Call Chain = vTaskSpeechRec &rArr; Speech_Handle &rArr; SpeechRecUartPack &rArr; voice_info_size &rArr; mf_open &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; SD_WriteDisk &rArr; SD_WriteBlock &rArr; SD_Init &rArr; SD_EnableWideBusOperation &rArr; SDEnWideBus &rArr; FindSCR &rArr; CmdResp1Error
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueSemaphoreTake
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSend
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Speech_Handle
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.vTaskTaskInit)

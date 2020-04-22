@@ -5,6 +5,7 @@
 //软件定时器结构体
 os_timer_t led_os_timer;
 os_timer_t udp_start_os_timer;
+os_timer_t wifi_statue_timer;		/*上电上电联网后自动发送一次联网状态,当上电20s后联网失败自动发送联网失败状态之后每隔10s发送状态直到联网成功停止数据发送*/
 os_timer_t sntp_timer;
 //
 struct espconn stcp_Con;
@@ -12,9 +13,10 @@ struct espconn stcp_Con;
 void scan_All_Ap_Info_done(void *arg, STATUS status);
 void Led_Soft_Timer_Handle(void * reg);
 void  udp_Soft_Timer_Handle(void * reg);
+void wifi_statue_timer_Handle (void * reg);
 void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg);
 
-
+uint8_t wifi_statue_flag = 0;
 GetDnsInfo g_DnsInfo[2] ={
 {"vop.baidu.com","0",80},
 {"www.baidu.com","0",80}};
@@ -24,7 +26,7 @@ struct sntp_No_str tSntp[3] = {
 	{1,"asia.pool.ntp.org"},
 	{2,"cn.ntp.org.cn"}};
 
-
+uint8_t * wifi_statue_str = NULL;//用于存放联网状态数据包
 
 void ICACHE_FLASH_ATTR user_init(void)
 {
@@ -69,13 +71,43 @@ void ICACHE_FLASH_ATTR user_init(void)
     */
     
     //设置软件定时
+	wifi_statue_str = (uint8_t *)os_malloc( sizeof(uint8_t) * 10);/*用于存放检测联网状态的数据包*/
+	
+	UartDataPacking(wifi_statue_str, 0x05, 1, 0);
+	
+	wifi_statue_str[6] = 1;
+
     Led_SoftTimer_init(&led_os_timer,Led_Soft_Timer_Handle,500);
+
     bsp_SoftTimer_init(&udp_start_os_timer,udp_Soft_Timer_Handle,2000,1,1);
+
+	bsp_SoftTimer_init(&wifi_statue_timer, wifi_statue_timer_Handle, 20000, (uint32_t)wifi_statue_str, 0);
 }
 
 
 
+void wifi_statue_timer_Handle (void * reg)
 
+{
+	uint8_t * ulpStr = (uint8_t *)reg;
+
+	if(wifi_statue_flag == 1)
+	{
+		os_printf("ESP联网成功\n");
+		bsp_SoftTimer_close(&wifi_statue_timer);
+	}
+	else
+	{
+		os_printf("ESP联网失败\n");
+		for(int i = 0; i < 10; i++)
+		{
+			uart_tx_one_char(UART0, ulpStr[i]);
+		}
+		multiple_dns_parse(&g_DnsInfo[sizeof(g_DnsInfo)/sizeof(g_DnsInfo[0]) - 1], &stcp_Con, sizeof(g_DnsInfo)/sizeof(g_DnsInfo[0]));
+		bsp_SoftTimer_Restart(&wifi_statue_timer,5000,(uint32_t)ulpStr, 0);
+	}
+	
+}
 
 void Led_Soft_Timer_Handle(void * reg)
 {

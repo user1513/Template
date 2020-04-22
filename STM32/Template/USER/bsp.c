@@ -19,7 +19,7 @@ void bspInit(void)
 
 //    TIM3_Int_Init(9,8399);          /*timer3 = 84Mhz, 设定溢出时间为1ms*/
 
-	uart_init(512000);				/*串口0初始化*/
+	uart_init(460800);				/*串口0初始化*/
 	
     //vDhtxx_Init();                /*DHT22初始化函数*/
 	

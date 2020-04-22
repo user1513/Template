@@ -12,4 +12,6 @@ void Create_Tcp_Connect_Server(struct espconn* pEspconn, int local_port);
 void Create_Tcp_Connect_Client(struct espconn* pEspconn, const char * remote_ip_str, int remote_port);
 //°lËÍwifi”µ“þ
 void Send_Wifi_Data(const char* str);
+
+uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check);
 #endif

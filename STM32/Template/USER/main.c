@@ -147,18 +147,24 @@ static void vTaskTaskInit(void *pvParameters)
     taskEXIT_CRITICAL();            		//退出临界区
 }
 
-
+extern uint8_t LastEspStatue ;	/*外部引用*/
 /*语音识别任务*/
 static void vTaskSpeechRec(void *pvParameters)
 
 {
 //	SpeechRecUartPack();
 	static uint8_t SpeechRecNum = 0;
+	uint8_t queueval = 1;
 	while(1)
 	{
 		xSemaphoreTake(xSpeechRecSemaphoreHandle, portMAX_DELAY);
-		
-		Speech_Handle(SpeechRecNum++ % 2);
+		if(!LastEspStatue)
+			Speech_Handle(SpeechRecNum++ % 2);
+		else
+		{
+			queueval = 1;
+			xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);
+		}
 	}
 }
 

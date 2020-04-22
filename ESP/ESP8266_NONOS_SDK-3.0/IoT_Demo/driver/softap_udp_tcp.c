@@ -13,11 +13,12 @@ static bool ICACHE_FLASH_ATTR IpStr2Tab(uint8_t* ip_table,const char * ip_str);
 #define SPEECH_REC_TYPE_PACK		3/*发送api获取数据*/
 
 /*用于将一段数据打包成合格的数据包结构*/
-static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check);
+uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check);
 /*数据前部打包*/
 static void UartDataFrontPacking(char* str, uint8_t type, uint32_t length);
 /*数据尾部打包*/
 static void UartDataTailPacking(char* str, uint32_t length, uint8_t Offset, uint8_t Check);
+
 
 uint16_t str_parse(char *src_data,char *dest_data)
 {
@@ -62,7 +63,7 @@ uint16_t str_parse(char *src_data,char *dest_data)
 
 /*用于将一段数据打包成合格的数据包结构*/
 /*注意length只代表数据长度,不代表整个数据包长度*/
-static uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check)
+uint32_t UartDataPacking(char* str, uint8_t type, uint32_t length, uint8_t Check)
 
 {
 	UartDataFrontPacking(str, type, length);
