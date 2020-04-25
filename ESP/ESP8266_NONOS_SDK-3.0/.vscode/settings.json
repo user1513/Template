@@ -11,6 +11,7 @@
         "bsp_delay.h": "c",
         "dns.h": "c",
         "my_sntp.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "debug.h": "c"
     }
 }

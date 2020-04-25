@@ -19,6 +19,10 @@ typedef struct
 #include "driver/hw_timer.h"//单独用来配置硬件定时器
 #include "sntp.h"
 #include "mem.h"
+#include "mqtt.h"
+#include "wifi.h"
+#include "config.h"
+#include "debug.h"
 //自己改写代码
 #include "driver/softap_station.h"
 #include "driver/softap_udp_tcp.h"

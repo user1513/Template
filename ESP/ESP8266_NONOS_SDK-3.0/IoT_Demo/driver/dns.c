@@ -30,7 +30,6 @@ void ESP8266_dns_found_callback(const char *name, ip_addr_t *ipaddr, void *callb
 		{
 			uart_tx_one_char(UART0, wifi_statue_str[i]);
 		}
-		os_free(wifi_statue_str);
 		wifi_statue_flag = 1;
         //Create_Tcp_Connect_Client(&stcp_Con, str, 80);  
         //Create_Tcp_Connect_Client(&stcp_Con, "192.168.0.105", 8888);

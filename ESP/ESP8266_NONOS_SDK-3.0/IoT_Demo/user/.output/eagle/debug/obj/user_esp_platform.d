@@ -27,4 +27,4 @@
  ../../include/espconn.h ../include/user_esp_platform.h \
  ../include/user_iot_version.h ../include/user_config.h \
  ../include/user_esp_platform_timer.h ../include/user_light_adj.h \
- ../../include/upgrade.h ../include/user_light.h ../../include/pwm.h
+ ../../include/upgrade.h
