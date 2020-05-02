@@ -11,7 +11,7 @@
 #include "fattester.h"	 
 #include "stdlib.h"
 #include "base64.h"
-
+#include "FreeRTOS.h"
 u8 *i2srecbuf1;
 u8 *i2srecbuf2; 
 
@@ -284,9 +284,9 @@ u8 voice_Receive(void)
 	u8 res;
 	u8 rval=0;
 
-	i2srecbuf1=malloc(I2S_RX_DMA_BUF_SIZE);//I2S录音内存1申请
-	i2srecbuf2=malloc(I2S_RX_DMA_BUF_SIZE);//I2S录音内存2申请  
-  	f_rec=(FIL *)malloc(sizeof(FIL));		//开辟FIL字节的内存区域  
+	i2srecbuf1=pvPortMalloc(I2S_RX_DMA_BUF_SIZE);//I2S录音内存1申请
+	i2srecbuf2=pvPortMalloc(I2S_RX_DMA_BUF_SIZE);//I2S录音内存2申请  
+  	f_rec=(FIL *)pvPortMalloc(sizeof(FIL));		//开辟FIL字节的内存区域  
     if(!i2srecbuf1||!i2srecbuf2||!f_rec)rval=1; 	
     if(rval==0)		
 	{
@@ -309,9 +309,10 @@ u8 voice_Receive(void)
 	}
     else
     {
-        free(i2srecbuf1);	//释放内存
-        free(i2srecbuf2);	//释放内存  
-        free(f_rec);		//释放内存
+		printf("pvPortMalloc fail\n");
+        vPortFree(i2srecbuf1);	//释放内存
+        vPortFree(i2srecbuf2);	//释放内存  
+        vPortFree(f_rec);		//释放内存
     }
     return rval;
 }
@@ -326,9 +327,9 @@ void voice_End_Receive(void)
     }
 
     recoder_enter_play_mode();	//关闭接收DMA		
-	free(i2srecbuf1);	        //释放内存
-	free(i2srecbuf2);	        //释放内存  
-	free(f_rec);		        //释放内存
+	vPortFree(i2srecbuf1);	        //释放内存
+	vPortFree(i2srecbuf2);	        //释放内存  
+	vPortFree(f_rec);		        //释放内存
 }
 
 void voice_info_Send(void)

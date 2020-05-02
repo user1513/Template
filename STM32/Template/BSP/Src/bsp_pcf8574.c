@@ -23,7 +23,7 @@ void bsp_pcf8974x_io_init(void)
 {
     GPIO_InitTypeDef  GPIO_InitStructure;
 
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);//使能GPIOA时钟
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);//使能GPIOA时钟
 
 	//GPIOA3,4初始化设置
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;//LED0和LED1对应IO口
@@ -31,9 +31,9 @@ void bsp_pcf8974x_io_init(void)
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//上拉
-	GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIO
+	GPIO_Init(GPIOD, &GPIO_InitStructure);//初始化GPIO
 
-    GPIO_SetBits(GPIOB, GPIO_Pin_0 | GPIO_Pin_1);//GPIOA3,4置高
+    GPIO_SetBits(GPIOD, GPIO_Pin_0 | GPIO_Pin_1);//GPIOA3,4置高
 
     #if PCF8574_INT_STATE
 

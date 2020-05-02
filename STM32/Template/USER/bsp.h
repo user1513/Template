@@ -17,11 +17,14 @@
 
 #include "bsp_key.h"
 
+#include "bsp_spi.h"
+
+#include "JLX_GB2312G_1016.h"
 //#include "EventRecorder.h"
 
 //#include "bsp_timer.h"
 
-// #include "bsp_dhtxx.h"
+ #include "bsp_dhtxx.h"
 
 // #include "bsp_oled.h"
 
@@ -68,6 +71,11 @@
 #include "myapp.h"
 
 #include "Voice_Access.h"
+
+#include "bsp_encoder.h"
+
+#include "bsp_pcf8574.h"
+
 /*外设初始化函数*/
 void bspInit(void);
 

@@ -457,6 +457,41 @@
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>JLX_GB2312G_1016.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\JLX_GB2312G_1016.c</FilePath>
+            </File>
+            <File>
+              <FileName>JLX_GB2312z.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\JLX_GB2312z.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_swi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_swi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pcf8574.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_pcf8574.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_encoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dhtxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_dhtxx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -58,8 +58,11 @@
 ..\obj\diskio.o: ..\USMART\usmart_str.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_led.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_key.h
-..\obj\diskio.o: ..\BSP\Inc\bsp_swi2c.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_spi.h
+..\obj\diskio.o: ..\BSP\Inc\JLX_GB2312G_1016.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_dhtxx.h
 ..\obj\diskio.o: ..\USER\bsp.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\diskio.o: ..\APP\Encode_Check_Func\CRC.h
@@ -76,3 +79,4 @@
 ..\obj\diskio.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\diskio.o: ..\APP\Speech_Rec\Voice_Access.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_encoder.h

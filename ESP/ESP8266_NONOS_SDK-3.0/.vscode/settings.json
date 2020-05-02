@@ -12,6 +12,7 @@
         "dns.h": "c",
         "my_sntp.h": "c",
         "uart.h": "c",
-        "debug.h": "c"
+        "debug.h": "c",
+        "mqtt_msg.h": "c"
     }
 }

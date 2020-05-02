@@ -21,7 +21,7 @@ void bspInit(void)
 
 	uart_init(460800);				/*串口0初始化*/
 	
-    //vDhtxx_Init();                /*DHT22初始化函数*/
+    vDhtxx_Init();                /*DHT22初始化函数*/
 	
 	//OLED_Init();					/*OLED初始化函数*/
 
@@ -58,6 +58,20 @@ void bspInit(void)
 	bspUsartInit(460800);
 	
 	bspDmaUsartInit();				/*DMA初始化*/
+
+	//bsp_encoder_init();				/*定时器编码器模式配置*/
+	
+	bsp_pcf8974x_io_init();			/*pcf8974io初始化*/
+	
+	SPI1_Init();
+	
+	initial_lcd();//LCD 模块初始化
+	
+	clear_screen();
+	
+	lx_Gb2312g_Write_5X7_Ascll_Str("www.baidu.com", 2,8 ,1);
+	
+	lx_Gb2312g_Str("你好啊,老板12345", 7, 0, 1);
 	
 	printf("程序开始!!!\n");
 

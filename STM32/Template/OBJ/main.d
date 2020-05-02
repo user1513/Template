@@ -59,8 +59,11 @@
 ..\obj\main.o: ..\USMART\usmart_str.h
 ..\obj\main.o: ..\BSP\Inc\bsp_led.h
 ..\obj\main.o: ..\BSP\Inc\bsp_key.h
-..\obj\main.o: ..\BSP\Inc\bsp_swi2c.h
+..\obj\main.o: ..\BSP\Inc\bsp_spi.h
+..\obj\main.o: ..\BSP\Inc\JLX_GB2312G_1016.h
+..\obj\main.o: ..\BSP\Inc\bsp_dhtxx.h
 ..\obj\main.o: ..\USER\bsp.h
+..\obj\main.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\main.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\main.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\main.o: ..\APP\Encode_Check_Func\CRC.h
@@ -78,3 +81,4 @@
 ..\obj\main.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\main.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\main.o: ..\APP\Speech_Rec\Voice_Access.h
+..\obj\main.o: ..\BSP\Inc\bsp_encoder.h

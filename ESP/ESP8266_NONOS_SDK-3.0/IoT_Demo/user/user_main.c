@@ -10,13 +10,14 @@
 // 类型定义
 //=================================
 typedef unsigned long 		u32_t;
+
 //=================================
 
 
 // 全局变量
 //============================================================================
 MQTT_Client mqttClient;			// MQTT客户端_结构体【此变量非常重要】
-
+uint32_t g_ultotal = 0;
 
 // MQTT已成功连接：ESP8266发送【CONNECT】，并接收到【CONNACK】
 //============================================================================
@@ -34,12 +35,12 @@ void mqttConnectedCb(uint32_t *args)
 
 	// 【参数2：主题名 / 参数3：发布消息的有效载荷 / 参数4：有效载荷长度 / 参数5：发布Qos / 参数6：Retain】
 	//-----------------------------------------------------------------------------------------------------------------------------------------
-	MQTT_Publish(client, "SW_LED", "ESP8266_Online", strlen("ESP8266_Online"), 0, 0);	// 向主题"SW_LED"发布"ESP8266_Online"，Qos=0、retain=0
+//	MQTT_Publish(client, "SW_LED", "ESP8266_Online", strlen("ESP8266_Online"), 0, 0);	// 向主题"SW_LED"发布"ESP8266_Online"，Qos=0、retain=0
 //	MQTT_Publish(client, "SW_LED", "ESP8266_Online", strlen("ESP8266_Online"), 1, 0);
 //	MQTT_Publish(client, "SW_LED", "ESP8266_Online", strlen("ESP8266_Online"), 2, 0);
 	//MQTT_Subscribe(client, "Will", 0);
 
-	MQTT_Publish(client, "Will", "ESP8266_Online", strlen("ESP8266_Online"), 0, 1);
+//	MQTT_Publish(client, "SW_LED", "ESP8266_Online", strlen("ESP8266_Online"), 0, 0);
 }
 //============================================================================
 
@@ -86,17 +87,15 @@ void mqttDataCb(uint32_t *args, const char* topic, uint32_t topic_len, const cha
 //########################################################################################
     // 根据接收到的主题名/有效载荷，控制LED的亮/灭
     //-----------------------------------------------------------------------------------
-    if( os_strcmp(topicBuf,"SW_LED") == 0 )			// 主题 == "SW_LED"
+    if( os_strcmp(topicBuf,"SW_LED") == 0 && data_len == 4)			// 主题 == "SW_LED"
     {
-    	if( os_strcmp(dataBuf,"LED_ON") == 0 )		// 有效载荷 == "LED_ON"
-    	{
-    		GPIO_OUTPUT_SET(GPIO_ID_PIN(4),0);		// LED亮
-    	}
-
-    	else if( os_strcmp(dataBuf,"LED_OFF") == 0 )	// 有效载荷 == "LED_OFF"
-    	{
-    		GPIO_OUTPUT_SET(GPIO_ID_PIN(4),1);			// LED灭
-    	}
+    	char uartsendstr[100];
+		UartDataPacking(uartsendstr, 0x07, data_len, 0);
+		os_memcpy(&uartsendstr[7], data, data_len);
+		for(int i = 0; i < (9 + data_len); i++)
+		{
+			uart_tx_one_char(UART0, uartsendstr[i]);
+		}
     }
 //########################################################################################
 
@@ -194,11 +193,11 @@ void ICACHE_FLASH_ATTR user_init(void)
 
 	// MQTT连接参数赋值：客户端标识符【..】、MQTT用户名【..】、MQTT密钥【..】、保持连接时长【120s】、清除会话【1：clean_session】
 	//----------------------------------------------------------------------------------------------------------------------------
-	MQTT_InitClient(&mqttClient, sysCfg.device_id, sysCfg.mqtt_user, sysCfg.mqtt_pass, sysCfg.mqtt_keepalive, 1);
+	MQTT_InitClient(&mqttClient, sysCfg.device_id, sysCfg.mqtt_user, sysCfg.mqtt_pass, sysCfg.mqtt_keepalive, 0);
 
 	// 设置遗嘱参数(如果云端没有对应的遗嘱主题，则MQTT连接会被拒绝)
 	//--------------------------------------------------------------
-	MQTT_InitLWT(&mqttClient, "Will", "ESP8266_Offline", 0, 1);
+	//MQTT_InitLWT(&mqttClient, "Will", "ESP8266_Offline", 0, 0);
 
 
 	// 设置MQTT相关函数
@@ -247,7 +246,7 @@ void wifi_statue_timer_Handle (void * reg)
 void Led_Soft_Timer_Handle(void * reg)
 {
     bsp_led_flash();
-    os_printf("RSSI:%d\n", (int)wifi_station_get_rssi());
+    os_printf("RSSI:%d total:%d\n", (int)wifi_station_get_rssi(), (int)g_ultotal);
 }
 
 void  wifiConnectCb(uint8_t status)
@@ -323,6 +322,10 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg)
 }
 
 
+
+
+
+
 /******************************************************************************
  * FunctionName : uart0_rx_intr_handler
  * Description  : Internal used function
@@ -330,14 +333,15 @@ void ICACHE_FLASH_ATTR user_check_sntp_stamp(void *arg)
  * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
  * Returns      : NONE
 */
+
 uint16_t g_total = 0;
 char * g_CurrentPoint = NULL;
 char * g_UartPoint1 = NULL;
 char * g_UartPoint2 = NULL;
-char uartstr[110];
+char uartstr[128];
 uint8 uartflag = 0;
 uint8 uartOKflag = 1;
-
+uint32_t mqtt_rec_length ;
 void uart0_rx_intr_handler(void *para)
 {
 
@@ -359,32 +363,42 @@ void uart0_rx_intr_handler(void *para)
 	}else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
         fifo_len = RF_FIFO_LEN(UART0);
         buf_idx = 0;
+		//os_printf("UART_RXFIFO_FULL_INT_ST %d!!!\n", fifo_len);
         while(buf_idx < fifo_len)
         {
         	RcvChar = READ_FIFO;
             //uart_tx_one_char(UART0, RcvChar);
-
         	g_CurrentPoint[g_total] = RcvChar;
 			buf_idx++;
 			g_total++;
 			if(g_total >= 2800)
-			{
-				g_total = 0;
-				system_soft_wdt_feed();
+			{	
+				//system_soft_wdt_feed();
 				if(uartOKflag)
-				{
-				uartOKflag = 0;
-				espconn_send(&stcp_Con,g_CurrentPoint,2800);
-
+				{						
+					uartOKflag = 0;
+					sint8 val = 0;
+					val = espconn_send(&stcp_Con,g_CurrentPoint,g_total);
+					if(val)
+					{
+						RTS_FLAG(1);
+						os_printf("espconn_send1 ----> %d!!!\n", (int)val);
+					}
+					else
+					{
+						g_ultotal += g_total;
+						g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+						g_total = 0;
+						RTS_FLAG(0);
+					}
 				}
 				else
 				{
-					CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
-					os_printf("espconn_no_send!!!\n");
-					uartflag |= 0x40;
 					RTS_FLAG(1);
+					//CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_FULL_INT_ENA);
+					//CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
+					os_printf("espconn_no_send!!!\n");
 				}
-				g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
 			}
         }
 
@@ -396,6 +410,7 @@ void uart0_rx_intr_handler(void *para)
 
         fifo_len = RF_FIFO_LEN(UART0);
         buf_idx = 0;
+		os_printf("UART_RXFIFO_TOUT_INT_ST %d!!!\n", fifo_len);
         while(buf_idx < fifo_len)
 		{
 			RcvChar = READ_FIFO;
@@ -410,62 +425,104 @@ void uart0_rx_intr_handler(void *para)
 
 			buf_idx++;
 		}
-
-        if(uartflag&0x01)
-	   {
-		if(uartOKflag == 1)
+		uint8_t tmp_flag = 0;
+		if(uartstr[0] == 0x55 && uartstr[1] == 0xAA)
 		{
-			espconn_send(&stcp_Con,g_CurrentPoint,g_total);
-			uartflag = 0;
-			g_total = 0;
+			if(uartstr[3] == 6)//接收mqtt数据
+			{
+				os_memset(uartstr,0,2);
+				mqtt_rec_length = (uartstr[4] << 16) + (uartstr[5] << 8) + uartstr[6];
+				MQTT_Publish(&mqttClient, "Test1", &uartstr[7], mqtt_rec_length, 0, 0);
+				tmp_flag = 1;
+			}
+			if(uartstr[3] == 2 || uartstr[3] == 0)
+			{
+				uartflag = 0 ;
+			}
 		}
-		else
+		if(!tmp_flag)
 		{
-			if(g_total != 0)
-			uartflag = 0X81;
+			if(uartflag&0x01)
+			{
+				g_ultotal += g_total;
+				if(uartOKflag == 1)
+				{
+					uartOKflag = 0;
+					sint8 val = 0;
+					val = espconn_send(&stcp_Con,g_CurrentPoint,g_total);
+					if(val)
+					{
+						RTS_FLAG(1);
+						os_printf("espconn_send2 ----> %d!!!\n", (int)val);
+						uartflag = 0X81;
+					}
+					else
+					{
+						g_total = 0;
+						g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+						RTS_FLAG(0);
+					}
+				}
+				else
+				{
 
+					if(g_total != 0)
+					{
+					RTS_FLAG(1);
+					uartflag = 0X81;
+					os_printf("espconn_no_send_again!!!\n");
+					}
+
+				}
+			}
 		}
-	   }
 
         if(uartstr[0] == 0x55 && uartstr[1] == 0xAA)
-        		{
-        			os_memset(uartstr,0,2);
-                	switch(uartstr[3])
-                	{
-                	case 0:
-                		uartOKflag = 1;
-                		uartflag = 1 ;
-                		g_total = 0;
-                		if( g_UartPoint1 != NULL || g_UartPoint2 != NULL)
-                		{
-                    		os_free(g_UartPoint1);
-                    		os_free(g_UartPoint2);
-                		}
-                		//Create_Tcp_Connect_Client(&stcp_Con, "192.168.0.105", 8888);
-                		Create_Tcp_Connect_Client(&stcp_Con,g_DnsInfo[0].ip_name , g_DnsInfo[0].port);
-                		g_UartPoint1 = (char *)os_malloc(sizeof(char) * (2800 + 100));
-                		g_UartPoint2 = (char *)os_malloc(sizeof(char) * (2800 + 100));
-                		g_CurrentPoint = g_UartPoint1;
-                		if(g_UartPoint1 == NULL || g_UartPoint2 == NULL)
-                		{
-                			os_printf("动态分配空间失败\n");
-                		}
-                	break;
-                	case 1:break;
-                	case 2:
-                		uartflag = 0 ;
-                		espconn_disconnect(&stcp_Con);
-                		os_free(g_UartPoint1);
-                		os_free(g_UartPoint2);
-                		g_UartPoint1 = NULL;
-                		g_UartPoint2 = NULL;
-                		break;
-                	default:break;
-                	}
-        		}
+		{
+			os_memset(uartstr,0,2);
+			switch(uartstr[3])
+			{
+			case 0:
+				g_ultotal = 0;
+				uartOKflag = 1;
+				uartflag = 1 ;
+				g_total = 0;
+				RTS_FLAG(0);
+				if( g_UartPoint1 != NULL || g_UartPoint2 != NULL)
+				{
+					os_free(g_UartPoint1);
+					os_free(g_UartPoint2);
+				}
+				//Create_Tcp_Connect_Client(&stcp_Con, "192.168.43.15", 8888);
+				//Create_Tcp_Connect_Client(&stcp_Con, "114.222.59.85", 12345);
+				//MQTT_Disconnect(&mqttClient);
+				Create_Tcp_Connect_Client(&stcp_Con,g_DnsInfo[0].ip_name , g_DnsInfo[0].port);
+				os_printf("ip_name:%s,port:%d", g_DnsInfo[0].ip_name, g_DnsInfo[0].port);
+				g_UartPoint1 = (char *)os_malloc(sizeof(char) * (2800 + 100));
+				g_UartPoint2 = (char *)os_malloc(sizeof(char) * (2800 + 100));
+				g_CurrentPoint = g_UartPoint1;
+				if(g_UartPoint1 == NULL || g_UartPoint2 == NULL)
+				{
+					os_printf("动态分配空间失败\n");
+				}
+				break;
+			case 1:break;
+			case 2:
+				RTS_FLAG(0);
+				uartflag = 0 ;
+				espconn_disconnect(&stcp_Con);
+				os_free(g_UartPoint1);
+				os_free(g_UartPoint2);
+				g_UartPoint1 = NULL;
+				g_UartPoint2 = NULL;
+				//MQTT_Connect(&mqttClient);
+				break;
+			default:break;
+			}
+		}
 
 
-		os_printf("\nESP8266_WIFI_Send_OK\n");
+		os_printf("\nESP8266_USART\n");
 		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
 	}else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
 		os_printf("EMPTY_INT_ST\r\n");
@@ -487,6 +544,106 @@ void uart0_rx_intr_handler(void *para)
 	}
 
 }
+
+
+
+// uint16_t g_total = 0;
+// char * g_CurrentPoint = NULL;
+// char * g_UartPoint1 = NULL;
+// char * g_UartPoint2 = NULL;
+// char uartstr[110];
+// uint8 uartflag = 0;
+// uint8 uartOKflag = 1;
+// uint32_t mqtt_rec_length ;
+// void uart0_rx_intr_handler(void *para)
+// {
+
+// 	uint8 RcvChar;
+// 	uint8 uart_no = UART0;//UartDev.buff_uart_no;
+// 	uint8 fifo_len = 0;
+// 	uint8 buf_idx = 0;
+// 	uint8 temp,cnt;
+// 	char * pTmp = NULL;
+// 	//RcvMsgBuff *pRxBuff = (RcvMsgBuff *)para;
+
+// 		/*ATTENTION:*/
+// 	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
+// 	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
+// 	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
+// 	if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
+// 		os_printf("FRM_ERR\r\n");
+// 		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
+// 	}else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
+//         fifo_len = RF_FIFO_LEN(UART0);
+//         buf_idx = 0;
+//         while(buf_idx < fifo_len)
+//         {
+//         	RcvChar = READ_FIFO;
+//             //uart_tx_one_char(UART0, RcvChar);
+// 			buf_idx++;
+// 			g_total++;
+// 			if(g_total >= 200)
+// 			{
+
+// 			}
+// 					CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_FULL_INT_ENA);
+// 					//CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
+// 					os_printf("espconn_no_send!!!\n");
+// 					RTS_FLAG(1);
+// 					break;
+
+//         }
+
+
+
+// 		//uart_rx_intr_disable(UART0);
+// 		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
+// 	}else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
+
+//         fifo_len = RF_FIFO_LEN(UART0);
+//         buf_idx = 0;
+//         while(buf_idx < fifo_len)
+// 		{
+// 			RcvChar = READ_FIFO;
+// 			uartstr[buf_idx] = RcvChar;	
+// 			buf_idx++;
+// 		}
+// 		os_printf("\nESP8266_USART\n");
+// 		WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
+// 	}else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
+// 		os_printf("EMPTY_INT_ST\r\n");
+// 	/* to output uart data from uart buffer directly in empty interrupt handler*/
+// 	/*instead of processing in system event, in order not to wait for current task/function to quit */
+// 	/*ATTENTION:*/
+// 	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
+// 	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
+// 	CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_TXFIFO_EMPTY_INT_ENA);
+// 	#if UART_BUFF_EN
+// 		tx_start_uart_buffer(UART0);
+// 	#endif
+// 		//system_os_post(uart_recvTaskPrio, 1, 0);
+// 		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_TXFIFO_EMPTY_INT_CLR);
+
+// 	}else if(UART_RXFIFO_OVF_INT_ST  == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_OVF_INT_ST)){
+// 		WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_RXFIFO_OVF_INT_CLR);
+// 		os_printf("RX OVF!!\r\n");
+// 	}
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #if ((SPI_FLASH_SIZE_MAP == 0) || (SPI_FLASH_SIZE_MAP == 1))
 #error "The flash map is not supported"

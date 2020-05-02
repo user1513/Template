@@ -73,6 +73,7 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 	switch(_ucpTmp[i - 1])//通过类型来找到对应的执行方法
 	{
 		case 0x03:
+		printf("获取http返回数据 length: %d\n", length);
 		if(length)
 		{
 			SpeechRecUartParse(&_ucpTmp[i + 3] ,length);/*语音识别信息*/
@@ -81,7 +82,10 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 		{
 			queuetmp = 3;
 			xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
-		}			
+		}
+		
+		printf("Close Esp Tcp Connect\n");
+		CloseEspTcpConnect();		
 		break;		
 		case 0x05:
 		if(_ucpTmp[i + 3] != LastEspStatue)
@@ -128,7 +132,7 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 	printf("\ngbk:%s\n", cpTmp);/*打印utf8转换后gbk*/
 	
 	length = strlen(cpTmp);
-
+	printf("SpeechRecUartParse_running\n");
 	char* tmp = NULL;
 	/*由于存在不同的执行方式,所以说话的时候必须说全套
 	比如:打开卧室灯,关闭阳台灯(正确)
@@ -239,7 +243,6 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 			i++;
 		}
 	}
-	CloseEspTcpConnect();
 	/*
 	code
 	可以在这里写oled显示

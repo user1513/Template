@@ -11,7 +11,7 @@ typedef enum{
 
 /*IMPORTANT: the following configuration maybe need modified*/
 /***********************************************************************************************************************************************************************************************************************************************************/
-#define CFG_HOLDER    		0x66661663	// 持有人标识(只有更新此数值，系统参数才会更新)		/* Change this value to load default configurations */
+#define CFG_HOLDER    		0x66444643	// 持有人标识(只有更新此数值，系统参数才会更新)		/* Change this value to load default configurations */
 
 /*DEFAULT CONFIGURATIONS*/
 // 注：【MQTT协议规定：连接服务端的每个客户端都必须有唯一的客户端标识符（ClientId）】。如果两相同ID的客户端不断重连，就会进入互踢死循环
@@ -22,8 +22,8 @@ typedef enum{
 #define MQTT_USER        	"hsizxd9/iot_light_esp8266_01" 			// MQTT用户名				// your MQTT login name, if MQTT server allow anonymous login,any string is OK, otherwise, please input valid login name which you had registered
 #define MQTT_PASS        	"9iKAqSyqxiQ2s78G" 	// MQTT密码					// you MQTT login password, same as above
 
-#define STA_SSID 			"2601b-2.4G"    	// WIFI名称					// your AP/router SSID to config your device networking
-#define STA_PASS 			"19728888" 	      // WIFI密码					// your AP/router password
+#define STA_SSID 			"wiwh"    	// WIFI名称					// your AP/router SSID to config your device networking
+#define STA_PASS 			"1234567890" 	      // WIFI密码					// your AP/router password
 #define STA_TYPE			AUTH_WPA2_PSK
 
 #define DEFAULT_SECURITY	NO_TLS      		// 加密传输类型【默认不加密】	// very important: you must config DEFAULT_SECURITY for SSL/TLS

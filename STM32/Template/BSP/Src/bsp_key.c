@@ -53,9 +53,9 @@ void bspKeyInit(void)
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOE, ENABLE);//使能GPIOA,GPIOE时钟
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//使能GPIOA,GPIOE时钟
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; //KEY0 KEY1 KEY2对应引脚
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15 | GPIO_Pin_10; //KEY0 KEY1 KEY2对应引脚
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;//普通输入模式
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;//100M
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//上拉

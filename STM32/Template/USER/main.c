@@ -108,7 +108,7 @@ static void vTaskTaskInit(void *pvParameters)
 
 	xTaskCreate( vTaskLED,    				/* 任务函数  */
                  "vTaskLED",  				/* 任务名    */
-                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 128,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
                  5,           				/* 任务优先级*/
                  &xHandleTaskLED ); 		/* 任务句柄  */
@@ -116,7 +116,7 @@ static void vTaskTaskInit(void *pvParameters)
 	
 	xTaskCreate( vTaskSpeechRec,    		/* 任务函数  */
                  "vTaskSpeechRec",  		/* 任务名    */
-                 128,         				/* 任务栈大小，单位word，也就是4字节 */
+                 256,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
                  3,           				/* 任务优先级*/
                  &xHandleTaskSpeechRec ); 	/* 任务句柄  */
@@ -130,14 +130,14 @@ static void vTaskTaskInit(void *pvParameters)
 				 
 	xTaskCreate( vTaskUsartParse,    		/* 任务函数  */
                  "vTaskUsartParse",  		/* 任务名    */
-                 64,         				/* 任务栈大小，单位word，也就是4字节 */
+                 256,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
                  6,           				/* 任务优先级*/
                  &xHandleTaskUsartParse ); 	/* 任务句柄  */
 				 
 	xTaskCreate( vTaskAudioPlay,    		/* 任务函数  */
                  "vTaskAudioPlay",  		/* 任务名    */
-                 128,         				/* 任务栈大小，单位word，也就是4字节 */
+                 256,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
                  2,           				/* 任务优先级*/
                  &xHandleTaskAudioPlay ); 	/* 任务句柄  */
@@ -148,6 +148,8 @@ static void vTaskTaskInit(void *pvParameters)
 }
 
 extern uint8_t LastEspStatue ;	/*外部引用*/
+
+uint8_t speech_rec_statue = 0 ;	
 /*语音识别任务*/
 static void vTaskSpeechRec(void *pvParameters)
 
@@ -158,8 +160,19 @@ static void vTaskSpeechRec(void *pvParameters)
 	while(1)
 	{
 		xSemaphoreTake(xSpeechRecSemaphoreHandle, portMAX_DELAY);
+		printf("go to TaskSpeechRec %d\n", (int)SpeechRecNum);
 		if(!LastEspStatue)
+		{
+			speech_rec_statue = 1;
+			
 			Speech_Handle(SpeechRecNum++ % 2);
+			
+			if(speech_rec_statue && (!(SpeechRecNum % 2)))
+			{
+				speech_rec_statue = 0;
+			}
+		}
+			
 		else
 		{
 			queueval = 1;
@@ -175,13 +188,16 @@ static void vTaskKeyGet(void *pvParameters)
 	while(1)
 	{
 		xSemaphoreTake(xKeySemaphoreHandle, portMAX_DELAY);		/*等待按键中断发送信号量*/
+		printf("go to vTaskKeyGet \n");
+		vTaskDelay(500);
 
-		vTaskDelay(10);
-
-		if(KEY == 0)
+		if((KEY == 0) || (KEY1 == 0))
 		{
 			xSemaphoreGive(xSpeechRecSemaphoreHandle);			/*启动语音识别任务*/
+			printf("go to vTaskKeyGet ---->>> ok\n");
 		}
+		ENABLE_EXIT_LINE(EXTI_Line15);
+		ENABLE_EXIT_LINE(EXTI_Line10);
 	}
 }
 
@@ -231,17 +247,35 @@ static void vTaskAudioPlay(void *pvParameters)
 *********************************************************************************************************
 */
 uint8_t timeout = 0;
+uint8_t count = 0;
+double DHTxx_Tab[2];
 static void vTaskLED(void *pvParameters)
 
 {
     while(1)
     {
 		bspLedToggle();
+		bsp_pcf8974x_test(0, count);
+		count++;
 		
-		if(timeout++ > 20)				/*每10s查询一次esp的状态*/
+//		count = TIM4->CNT;
+		//TIM4->CNT = 0;
+//		printf("TIM4->CNT:%d\n", count);
+		if((!(speech_rec_statue)) && (!LastEspStatue))
 		{
-			timeout = 0;
-			//GetEspInfo();
+			if(timeout++ > 10)				/*每5s上传一次数据*/
+			{
+				DHTxx_Get_Data(DHTxx_Tab);
+				char str[30];
+				sprintf(&str[7], "%2.1f,%2.1f,%d,%d",DHTxx_Tab[0] , DHTxx_Tab[1] , count, count + 100);
+				printf("%s\n", &str[7]);
+				uint8_t length = strlen(&str[7]);
+				UartDataPacking(str, 6, length, 0);
+				usartSendStart((uint8_t*)str, 9 + length);/*数据长度+数据包结构*/
+				timeout = 0;
+				//GetEspInfo();
+				
+			}
 		}
         vTaskDelay(500);		
     }

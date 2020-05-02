@@ -24,14 +24,14 @@
 #endif
 
 //IO口引脚宏定义
-#define PCF8974X_I2C_SCL       PBout(0) 
-#define PCF8974X_I2C_SDA_IN    PBin(1)
-#define PCF8974X_I2C_SDA_OUT   PBout(1)
+#define PCF8974X_I2C_SCL       PDout(0) 
+#define PCF8974X_I2C_SDA_IN    PDin(1)
+#define PCF8974X_I2C_SDA_OUT   PDout(1)
 
 
 //IO方向设置
-#define PCF8974X_IO_IN()  {GPIOB->MODER&=~(3<<(1*2));GPIOB->MODER|=0<<1*2;}	//PA4输入模式
-#define PCF8974X_IO_OUT() {GPIOB->MODER&=~(3<<(1*2));GPIOB->MODER|=1<<1*2;} 	//PA4输出模式
+#define PCF8974X_IO_IN()  {GPIOD->MODER&=~(3<<(1*2));GPIOD->MODER|=0<<1*2;}	//PA4输入模式
+#define PCF8974X_IO_OUT() {GPIOD->MODER&=~(3<<(1*2));GPIOD->MODER|=1<<1*2;} 	//PA4输出模式
 
 
 /*函数声明*/

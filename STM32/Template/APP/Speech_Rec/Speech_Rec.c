@@ -22,7 +22,7 @@
 
 /*token:开放平台获取到的开发者[access_token]获取 Access Token "access_token")
 一个月会更换一次*/
-#define TOKEN		"24.91af5b7738399578bc9c7920f4558d06.2592000.1589172592.282335-19369127"
+#define TOKEN		"25.32445ba57e0f796aa7db9ff78f2d888a.315360000.1903679091.282335-19369127"
 
 /*用户唯一标识，用来区分用户，计算UV值。建议填写能区分用户的机器 MAC 地址或 IMEI 码，长度为60字符以内。*/
 #define CUID		"DC4A3EE6B0D9"
@@ -75,6 +75,12 @@ void Speech_Handle(uint8_t _ucMode)
 
 void SpeechRecUartPack(void)
 {
+	int	file_count;
+
+	restart_send:	
+	
+	file_count = 0;
+	
 	char* str = (char*)pvPortMalloc(sizeof(char)*400);/*分配空间*/
 
 	char* str1 = (char*)pvPortMalloc(sizeof(char)*200);/*分配空间*/
@@ -83,7 +89,7 @@ void SpeechRecUartPack(void)
 
 	uint32_t length = 0;
 
-	uint32_t filelength = voice_info_size();/*获取base64加密后的文件大小*/
+	uint32_t  filelength = voice_info_size();/*获取base64加密后的文件大小*/
 	
 	sprintf(str1,SpeechRecStrBody,FORMAT,DEV_PID,TOKEN,CUID, (int)(filelength * 0.75));
 	
@@ -93,13 +99,19 @@ void SpeechRecUartPack(void)
 	
 	SetDmaStatus(0x80);		/*设置dma模式*/
 	
-	usartSendStart((uint8_t*)str, strlen(str));/*数据长度+数据包结构*/
+	length = strlen(str);
+	
+	printf("total data: %d\n",length + filelength + 2);
+		
+	usartSendStart((uint8_t*)str, length);/*数据长度+数据包结构*/
 	
 	vPortFree(str1);
 	
 	while(GetDmaStatus()&0x80);
 	
 	vPortFree(str);
+	
+	vTaskDelay(100);	
 	
 	str = (char*)pvPortMalloc(sizeof(char)*2000);
 
@@ -112,7 +124,9 @@ void SpeechRecUartPack(void)
 	uint8_t ret = 0;
 
 	ret = f_read(file, str, 2000, &br);
-
+	
+	file_count += br;
+	
 	if(ret)
 	{
 		printf("读取失败\n");
@@ -120,43 +134,54 @@ void SpeechRecUartPack(void)
 	
 	uint8_t flag = 1;
 	
-	while(br == 2000)
+	while(br == 2000 || file_count < filelength)
 	{
 		if(flag)
 		{
-		SetDmaStatus(0x80);		/*设置dma模式*/
+			SetDmaStatus(0x80);		/*设置dma模式*/
+			
+			usartSendStart((uint8_t*)str, br);
+			
+			ret = f_read(file, str1, 2000, &br);
+			
+			if(ret)
+			{
+				printf("读取失败\n");
+			}
 		
-		usartSendStart((uint8_t*)str, br);
-		
-		ret = f_read(file, str1, 2000, &br);
-		
-		if(ret)
-		{
-			printf("读取失败\n");
-		}
-		
-		while(GetDmaStatus()&0x80);
 		}
 		else
 		{
-		SetDmaStatus(0x80);		/*设置dma模式*/
-		
-		usartSendStart((uint8_t*)str1, br);
-		
-		ret = f_read(file, str, 2000, &br);
+			SetDmaStatus(0x80);		/*设置dma模式*/
 			
-		if(ret)
-		{
-			printf("读取失败\n");
+			usartSendStart((uint8_t*)str1, br);
+			
+			ret = f_read(file, str, 2000, &br);
+				
+			if(ret)
+			{
+				printf("读取失败\n");
+			}
 		}
-		
 		while(GetDmaStatus()&0x80);
-		}
 		flag = !flag;
+		file_count += br;
 	}
 	
 	f_close(file);
-
+	
+	if(file_count < filelength)
+	{
+		UartDataPacking(g_Str,SPEECH_REC_TYPE_END,0,0);	
+		usartSendStart((uint8_t*)g_Str, 9);/*数据长度+数据包结构*/
+		vPortFree(str1);
+		vPortFree(str);
+		printf("pcm数据读取小于实际值\n");
+		vTaskDelay(500);
+		UartDataPacking(g_Str,SPEECH_REC_TYPE_START,0,0);	
+		usartSendStart((uint8_t*)g_Str, 9);/*数据长度+数据包结构*/
+		goto restart_send;
+	}
 	sprintf(str, "\"}");
 
 	usartSendStart((uint8_t*)str, 2);

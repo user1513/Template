@@ -44,8 +44,11 @@
 ..\obj\bsp_sdio_sdcard.o: ..\USMART\usmart_str.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_led.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_key.h
-..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_swi2c.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_spi.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\JLX_GB2312G_1016.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_dhtxx.h
 ..\obj\bsp_sdio_sdcard.o: ..\USER\bsp.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_swi2c.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_pcf8574.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_sdio_sdcard.h
 ..\obj\bsp_sdio_sdcard.o: ..\APP\Encode_Check_Func\CRC.h
@@ -75,3 +78,4 @@
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\bsp_sdio_sdcard.o: ..\APP\Speech_Rec\Voice_Access.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_encoder.h

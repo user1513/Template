@@ -29,6 +29,8 @@
         "bsp_usart.h": "c",
         "bsp_dma.h": "c",
         "cstring": "c",
-        "gbk2utf2uni.h": "c"
+        "gbk2utf2uni.h": "c",
+        "stm32f4xx_tim.h": "c",
+        "bsp_encoder.h": "c"
     }
 }

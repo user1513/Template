@@ -51,6 +51,7 @@ uint16_t str_parse(char *src_data,char *dest_data)
     }
     else
     {
+        RTS_FLAG(0);
         weight = 0;
     }
     
@@ -163,39 +164,55 @@ extern char * g_UartPoint2 ;
 
 void  ESP8266_WIFI_sent_callback(void *arg)
 {
-    os_printf("\nESP8266_WIFI_Send_OK\n");
+    
+    uartOKflag = 1;
+	if(uartflag == 0x81)
+	{
+    os_printf("uartflag == 0x81 \n");
 
+    sint8 val = 0;
+	val = espconn_send(&stcp_Con,g_CurrentPoint,g_total);
+	if(val)
+		os_printf("espconn_send3 ----> %d!!!\n", (int)val);
+	uartflag = 0x01;
+	g_total = 0;
+	g_CurrentPoint = (g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1;
+	RTS_FLAG(0);
+	}
 }
 
 //连接tcp连接成功回调函数
+/*
 void ICACHE_FLASH_ATTR ESP8266_WIFI_write_finish_callback(void *arg)
 {
-//	os_printf("ESP8266_WIFI_write_finish_callback\n");
+	os_printf("ESP8266_WIFI_write_finish_callback\n");
 	 uartOKflag = 1;
 	    if(uartflag == 0x81)
 	    {
-	    	uartflag = 0;
-	    	espconn_send(&stcp_Con,g_CurrentPoint,g_total);
-	    	g_total = 0;
+	    espconn_send(&stcp_Con,g_CurrentPoint,g_total);
+        uartflag = 0x01;
+	    g_total = 0;
+        g_CurrentPoint = (g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1;
+        RTS_FLAG(0);
 	    }
-	    if(uartflag & 0x40)
-	    {
+	    // if(uartflag & 0x40)
+	    // {
 
-			SET_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
-	    	RTS_FLAG(0);
-	        uartOKflag = 0;
-	        uartflag = 0x01;
-	        os_printf("wait uartOKflag!!!\n");
-	        espconn_send(&stcp_Con,((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1),2800);
-	    }
+		// 	SET_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
+	    // 	RTS_FLAG(0);
+	    //     uartOKflag = 0;
+	    //     uartflag = 0x01;
+	    //     os_printf("wait uartOKflag!!!\n");
+	    //     espconn_send(&stcp_Con,((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1),2800);
+	    // }
 }
-
+*/
 //连接tcp连接成功回调函数
 void ICACHE_FLASH_ATTR ESP8266_WIFI_connect_callback(void *arg)
 {
     os_printf("TCP连接成功\n");
-    espconn_regist_write_finish(&stcp_Con, (espconn_connect_callback) ESP8266_WIFI_write_finish_callback);
-    espconn_set_opt(&stcp_Con,0x04);
+//    espconn_regist_write_finish(&stcp_Con, (espconn_connect_callback) ESP8266_WIFI_write_finish_callback);
+//   espconn_set_opt(&stcp_Con,0x04);
 
 }
 

@@ -7,12 +7,12 @@
 #define DHTXX_DEVICE DHT22    //不同的器件进行不同的裁剪
 
 
-#define DHTXX_RCC_AHB1Periph_GPIOx 	RCC_AHB1Periph_GPIOA
-#define DHTXX_GPIOx 				GPIOA
-#define DHTXX_GPIO_Pin_x 			GPIO_Pin_2
-#define DHTXX_GPIO_Pin_num 			2
-#define DHTXX_WRITE_DATA 			PAout(2)
-#define DHTXX_READ_DATA 			PAin(2)
+#define DHTXX_RCC_AHB1Periph_GPIOx 	RCC_AHB1Periph_GPIOC
+#define DHTXX_GPIOx 				GPIOC
+#define DHTXX_GPIO_Pin_x 			GPIO_Pin_1
+#define DHTXX_GPIO_Pin_num 			1
+#define DHTXX_WRITE_DATA 			PCout(1)
+#define DHTXX_READ_DATA 			PCin(1)
 #define DHTXX_IO_IN(GPIOx,GPIO_Pin) {GPIOx->MODER &= ~(3 << (GPIO_Pin*2)); GPIOx->MODER|= (0 << (GPIO_Pin*2));}
 
 #define DHTXX_IO_OUT(GPIOx,GPIO_Pin) {GPIOx->MODER &= ~(3 << (GPIO_Pin*2)); GPIOx->MODER|= (1 <<  (GPIO_Pin*2));}
