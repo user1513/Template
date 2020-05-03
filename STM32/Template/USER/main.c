@@ -227,43 +227,41 @@ static void vTaskAudioPlay(void *pvParameters)
 	{
 		xQueueReceive(AudioNoQueueHandle,&ulMessage, portMAX_DELAY);/*获取音频播放队列*/
 		
-		if(ulMessage > 1000)
+
+		ucTmp = ulMessage/1000;
+		if((ulMessage - (ucTmp * 1000)) < 10 && ulMessage > 10)							/*判断是否是从MQTT接收的指令*/
 		{
-			ucTmp = ulMessage/1000;
-			if((ulMessage - (ucTmp * 1000)) < 10)							/*判断是否是从MQTT接收的指令*/
-			{
-				if(ulMessage % 2)
-					bsp_pcf8974x_bit_set(0, ucTmp + 3,0);
-				else
-					bsp_pcf8974x_bit_set(0, ucTmp + 3,1);
-			}
+			if(ulMessage % 2)
+				bsp_pcf8974x_bit_set(0, ucTmp + 3,0);
 			else
-			{
-				if(ulMessage == 1011)/*卧室灯*/
-					bsp_pcf8974x_bit_set(0, 4 + 3,0);
-				if(ulMessage == 1012)/*卧室灯*/
-					bsp_pcf8974x_bit_set(0, 4 + 3,1);
-				if(ulMessage == 2011)/*客厅灯*/
-					bsp_pcf8974x_bit_set(0, 2 + 3,0);
-				if(ulMessage == 2012)/*客厅灯*/
-					bsp_pcf8974x_bit_set(0, 2 + 3,1);
-				if(ulMessage == 4011)/*书房灯*/
-					bsp_pcf8974x_bit_set(0, 3 + 3,0);
-				if(ulMessage == 4012)/*书房灯*/
-					bsp_pcf8974x_bit_set(0, 3 + 3,1);
-				if(ulMessage == 5011)/*厨房灯*/
-					bsp_pcf8974x_bit_set(0, 1 + 3,1);
-				if(ulMessage == 5012)/*厨房灯*/
-					bsp_pcf8974x_bit_set(0, 1 + 3,1);
-				
-				sprintf(sprintf_str,"0:AudioPlay/%04d.wav",ulMessage);		/*将接收到的音频名进行整合*/
-		
-				recoder_enter_play_mode();								/*进入播放模式*/
-				
-				wav_play_song((u8*)sprintf_str);						/*播放音频*/
-				
-				vTaskDelay(500);
-			}
+				bsp_pcf8974x_bit_set(0, ucTmp + 3,1);
+		}
+		else
+		{
+			if(ulMessage == 1011)/*卧室灯*/
+				bsp_pcf8974x_bit_set(0, 4 + 3,0);
+			if(ulMessage == 1012)/*卧室灯*/
+				bsp_pcf8974x_bit_set(0, 4 + 3,1);
+			if(ulMessage == 2011)/*客厅灯*/
+				bsp_pcf8974x_bit_set(0, 2 + 3,0);
+			if(ulMessage == 2012)/*客厅灯*/
+				bsp_pcf8974x_bit_set(0, 2 + 3,1);
+			if(ulMessage == 4011)/*书房灯*/
+				bsp_pcf8974x_bit_set(0, 3 + 3,0);
+			if(ulMessage == 4012)/*书房灯*/
+				bsp_pcf8974x_bit_set(0, 3 + 3,1);
+			if(ulMessage == 5011)/*厨房灯*/
+				bsp_pcf8974x_bit_set(0, 1 + 3,1);
+			if(ulMessage == 5012)/*厨房灯*/
+				bsp_pcf8974x_bit_set(0, 1 + 3,1);
+			
+			sprintf(sprintf_str,"0:AudioPlay/%04d.wav",ulMessage);		/*将接收到的音频名进行整合*/
+	
+			recoder_enter_play_mode();								/*进入播放模式*/
+			
+			wav_play_song((u8*)sprintf_str);						/*播放音频*/
+			
+			vTaskDelay(500);
 		}
 		
 	}

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\LED.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\LED.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun May 03 16:56:34 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun May 03 17:30:19 2020
 <BR><P>
 <H3>Maximum Stack Usage =        736 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -3893,7 +3893,7 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[8d]"></a>vTaskAudioPlay</STRONG> (Thumb, 300 bytes, Stack size 8 bytes, main.o(i.vTaskAudioPlay))
+<P><STRONG><a name="[8d]"></a>vTaskAudioPlay</STRONG> (Thumb, 284 bytes, Stack size 8 bytes, main.o(i.vTaskAudioPlay))
 <BR><BR>[Stack]<UL><LI>Max Depth = 648<LI>Call Chain = vTaskAudioPlay &rArr; wav_play_song &rArr; wav_decode_init &rArr; f_open &rArr; dir_register &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; sync_window &rArr; disk_write &rArr; SD_WriteDisk &rArr; SD_WriteBlock &rArr; SD_Init &rArr; SD_EnableWideBusOperation &rArr; SDEnWideBus &rArr; FindSCR &rArr; CmdResp1Error
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueReceive
