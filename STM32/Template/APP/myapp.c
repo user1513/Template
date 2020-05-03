@@ -74,12 +74,14 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 	{
 		case 0x03:
 		printf("获取http返回数据 length: %d\n", length);
+		clear_screen();				/*oled清屏*/
 		if(length)
 		{
 			SpeechRecUartParse(&_ucpTmp[i + 3] ,length);/*语音识别信息*/
 		}
 		else
 		{
+			lx_Gb2312g_Str("你说的太快了，我没有听清楚！！！", 1, 0, 0);
 			queuetmp = 3;
 			xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
 		}
@@ -93,17 +95,31 @@ uint8_t usart_parse(uint8_t * _ucpTmp)
 			if(_ucpTmp[i + 3])/*ESP联网信息*/
 			{
 				printf("ESP联网失败!!!\n");
+				lx_Gb2312g_Str("设备联网失败！！", 5, 0, 0);
 				xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
 			}
 			else
 			{
 				queuetmp = 2;
 				printf("ESP联网成功!!!\n");
+				lx_Gb2312g_Str("设备联网成功！！", 5, 0, 0);
 				xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
 				
 			}
 			LastEspStatue = _ucpTmp[i + 3];/*保存状态值*/
 		}
+		break;
+		case 0x07:
+		queuetmp = 0;
+		printf("MQTT_DATA:");	
+		for(int i = 0; i < length; i++)
+		{	
+			queuetmp += _ucpTmp[i + 7] - '0' ;
+			
+			queuetmp *= ((i == (length - 1)) ? 1 : 10);
+		}
+		printf("%d\n",queuetmp);		
+		xQueueSend(AudioNoQueueHandle, (void*)&queuetmp, portMAX_DELAY);
 		break;		
 	}
 	return 0;
@@ -247,7 +263,7 @@ static void SpeechRecUartParse(uint8_t* ucpTmp, uint8_t length)
 	code
 	可以在这里写oled显示
 	*/
-
+	lx_Gb2312g_Str(cpTmp, 1, 0, 0);
 	vPortFree(cpTmp);
 
 }

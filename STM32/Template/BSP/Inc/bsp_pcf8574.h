@@ -42,6 +42,7 @@ void bsp_pcf8974x_test(uint8_t _ucDeviceNo, uint8_t _ucData);
 
 uint8_t bsp_pcf8974x_receive(uint8_t _ucDeviceNo) ;
 
+void bsp_pcf8974x_bit_set(uint8_t _ucDeviceNo,uint8_t _ucBitNum, uint8_t level);
 
 #endif
 

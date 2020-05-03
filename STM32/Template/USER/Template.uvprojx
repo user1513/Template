@@ -492,6 +492,11 @@
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_dhtxx.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_bh1750fvi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_bh1750fvi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

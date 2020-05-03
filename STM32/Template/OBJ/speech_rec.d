@@ -79,3 +79,4 @@
 ..\obj\speech_rec.o: ..\BSP\Inc\bsp_dma.h
 ..\obj\speech_rec.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\speech_rec.o: ..\BSP\Inc\bsp_encoder.h
+..\obj\speech_rec.o: ..\BSP\Inc\bsp_bh1750fvi.h

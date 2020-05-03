@@ -80,3 +80,4 @@
 ..\obj\diskio.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\diskio.o: ..\APP\Speech_Rec\Voice_Access.h
 ..\obj\diskio.o: ..\BSP\Inc\bsp_encoder.h
+..\obj\diskio.o: ..\BSP\Inc\bsp_bh1750fvi.h

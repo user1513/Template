@@ -79,3 +79,4 @@
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\bsp_sdio_sdcard.o: ..\APP\Speech_Rec\Voice_Access.h
 ..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_encoder.h
+..\obj\bsp_sdio_sdcard.o: ..\BSP\Inc\bsp_bh1750fvi.h

@@ -79,3 +79,4 @@
 ..\obj\fattester.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\fattester.o: ..\APP\Speech_Rec\Voice_Access.h
 ..\obj\fattester.o: ..\BSP\Inc\bsp_encoder.h
+..\obj\fattester.o: ..\BSP\Inc\bsp_bh1750fvi.h

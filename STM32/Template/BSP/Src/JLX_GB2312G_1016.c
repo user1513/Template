@@ -166,6 +166,19 @@ void lx_Gb2312g_Write_15X16_Chinese(char *uAscll, uint8_t page, uint8_t column, 
     }
 }
 
+/*输入行变量指针，列变量指针，字体大小，默认*/
+static void column_overflow(uint8_t * ucLine, uint8_t * ucColumn, uint8_t ucFontSize)
+
+{
+    if(*ucColumn >= 128)
+    {
+        if(ucLine != 0)
+            *ucLine += (ucFontSize / 8) == 0 ? 1 : (ucFontSize / 8);
+        *ucColumn = 0;
+    }  
+}
+
+
 void lx_Gb2312g_Str(char *uAscll,uint8_t page, uint8_t column, uint8_t Convet)
 {
 
@@ -203,6 +216,7 @@ void lx_Gb2312g_Str(char *uAscll,uint8_t page, uint8_t column, uint8_t Convet)
 			column += 8;
 			uAscll += 1;
 		}
+        column_overflow(&page, &column, 16);
 	}    
 }
 

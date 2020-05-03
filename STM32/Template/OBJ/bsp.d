@@ -78,3 +78,4 @@
 ..\obj\bsp.o: ..\BSP\Inc\bsp_usart.h
 ..\obj\bsp.o: ..\APP\Speech_Rec\Voice_Access.h
 ..\obj\bsp.o: ..\BSP\Inc\bsp_encoder.h
+..\obj\bsp.o: ..\BSP\Inc\bsp_bh1750fvi.h

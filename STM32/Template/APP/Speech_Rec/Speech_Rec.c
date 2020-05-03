@@ -54,12 +54,27 @@ void Speech_Handle(uint8_t _ucMode)
     switch(_ucMode)
     {
         case 0:
+		clear_screen();				/*oled清屏*/
+		
+		lx_Gb2312g_Str(" [语音识别INFO] ", 1, 0, 1);
+		
+		lx_Gb2312g_Str("①开始采集音频~~", 3, 0, 0);
+		
 		UartDataPacking(g_Str,SPEECH_REC_TYPE_START,0,0);	
 		usartSendStart((uint8_t*)g_Str, 9);/*数据长度+数据包结构*/
-		status = voice_Receive(); break;
+		
+		vTaskSuspendAll();												/*挂起调度器*/
+		
+		status = voice_Receive(); 
+
+		xTaskResumeAll();												/*恢复调度器*/
+		break;
+		
         case 1://if(!status) {status = 0xff; voice_End_Receive(); voice_info_Send();} break;
 			if(!status) 
 				{
+					lx_Gb2312g_Str("②开始发送音频~~ ", 5, 0, 0);
+					lx_Gb2312g_Str("请等待返回数据~~", 7, 0, 0);
 					status = 0xff; 
 					voice_End_Receive(); 
 					delay_ms(50);

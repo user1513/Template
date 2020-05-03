@@ -61,6 +61,18 @@ static void bsp_pcf8974x_header(uint8_t _ucDeviceNo,uint8_t _ucWR)
 	swi2cWaitAck(&t_pcf8574_swi2c, 1);									/*等待ack*/
 }
 
+/*注意_ucBitNum从0开始到7结束*/
+void bsp_pcf8974x_bit_set(uint8_t _ucDeviceNo,uint8_t _ucBitNum, uint8_t level)
+{
+	uint8_t tmp = bsp_pcf8974x_receive(_ucDeviceNo);
+	if(level)
+		tmp |= 1 << _ucBitNum;
+	else
+		tmp &= ~(1 << _ucBitNum);
+		
+	bsp_pcf8974x_test(_ucDeviceNo, tmp);
+}
+
 void bsp_pcf8974x_test(uint8_t _ucDeviceNo, uint8_t _ucData)
 	
 {

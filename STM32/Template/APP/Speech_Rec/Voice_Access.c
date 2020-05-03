@@ -317,6 +317,7 @@ u8 voice_Receive(void)
     return rval;
 }
 
+
 void voice_End_Receive(void)
 {
     if(rec_sta&0X80)//有录音
@@ -326,7 +327,7 @@ void voice_End_Receive(void)
         wavsize=0;
     }
 
-    recoder_enter_play_mode();	//关闭接收DMA		
+    recoder_enter_play_mode();	//关闭接收DMA	
 	vPortFree(i2srecbuf1);	        //释放内存
 	vPortFree(i2srecbuf2);	        //释放内存  
 	vPortFree(f_rec);		        //释放内存

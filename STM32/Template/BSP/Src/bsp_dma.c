@@ -146,11 +146,13 @@ void usartReadStop(void)
 void SetDmaStatus(uint8_t _ucMode)
 	
 {
-	xSemaphoreTake(xDmaModeMutexHandle, portMAX_DELAY);
+	//xSemaphoreTake(xDmaModeMutexHandle, portMAX_DELAY);
+	vTaskSuspendAll();
 	
 	g_DmaMode |= _ucMode;
 	
-	xSemaphoreGive(xDmaModeMutexHandle);
+	xTaskResumeAll();
+	//xSemaphoreGive(xDmaModeMutexHandle);
 }
 
 uint8_t GetDmaStatus(void)

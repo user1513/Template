@@ -42,7 +42,7 @@ SemaphoreHandle_t xSpeechRecSemaphoreHandle = NULL;	/*创建按键与语音识别同步信号
 
 SemaphoreHandle_t xUsartParseSemaphoreHandle = NULL;/*创建二值信号量,专门用于串口空闲中断与串口解析任务同步*/
 
-QueueHandle_t xDmaModeMutexHandle  = NULL;			/*创建互斥信号量,确保dma的工作模式不会出错*/
+//QueueHandle_t xDmaModeMutexHandle  = NULL;			/*创建互斥信号量,确保dma的工作模式不会出错*/
 
 QueueHandle_t AudioNoQueueHandle = NULL; 			/*创建队列用于存放音频播放内容*/
 /*
@@ -102,7 +102,7 @@ static void vTaskTaskInit(void *pvParameters)
 	/*创建二值信号量,专门用于串口空闲中断与串口解析任务同步*/
 	xUsartParseSemaphoreHandle = xSemaphoreCreateBinary();
 	/*创建互斥信号量,确保dma的工作模式不会出错*/
-	xDmaModeMutexHandle = xSemaphoreCreateMutex();
+	//xDmaModeMutexHandle = xSemaphoreCreateMutex();
 	/*创建队列存放需要播放的音频编号,可以存放5个大小为4个字节的item*/
 	AudioNoQueueHandle = xQueueCreate( 5, sizeof(int));
 
@@ -130,14 +130,14 @@ static void vTaskTaskInit(void *pvParameters)
 				 
 	xTaskCreate( vTaskUsartParse,    		/* 任务函数  */
                  "vTaskUsartParse",  		/* 任务名    */
-                 256,         				/* 任务栈大小，单位word，也就是4字节 */
+                 128,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
-                 6,           				/* 任务优先级*/
+                 7,           				/* 任务优先级*/
                  &xHandleTaskUsartParse ); 	/* 任务句柄  */
 				 
 	xTaskCreate( vTaskAudioPlay,    		/* 任务函数  */
                  "vTaskAudioPlay",  		/* 任务名    */
-                 256,         				/* 任务栈大小，单位word，也就是4字节 */
+                 128,         				/* 任务栈大小，单位word，也就是4字节 */
                  NULL,        				/* 任务参数  */
                  2,           				/* 任务优先级*/
                  &xHandleTaskAudioPlay ); 	/* 任务句柄  */
@@ -159,13 +159,15 @@ static void vTaskSpeechRec(void *pvParameters)
 	uint8_t queueval = 1;
 	while(1)
 	{
-		xSemaphoreTake(xSpeechRecSemaphoreHandle, portMAX_DELAY);
+		xSemaphoreTake(xSpeechRecSemaphoreHandle, portMAX_DELAY);		/*等待信号量*/
+		
 		printf("go to TaskSpeechRec %d\n", (int)SpeechRecNum);
+		
 		if(!LastEspStatue)
 		{
 			speech_rec_statue = 1;
 			
-			Speech_Handle(SpeechRecNum++ % 2);
+			Speech_Handle(SpeechRecNum++ % 2);							/*运行语音识别函数*/
 			
 			if(speech_rec_statue && (!(SpeechRecNum % 2)))
 			{
@@ -176,7 +178,7 @@ static void vTaskSpeechRec(void *pvParameters)
 		else
 		{
 			queueval = 1;
-			xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);
+			xQueueSend(AudioNoQueueHandle, (void*)&queueval, portMAX_DELAY);/*联网失败*/
 		}
 	}
 }
@@ -219,19 +221,51 @@ char sprintf_str[30] = {0};
 
 static void vTaskAudioPlay(void *pvParameters)
 {
-	uint32_t ucTmp = 0;
-	
+	uint32_t ulMessage = 0;
+	uint8_t ucTmp = 0;
 	while(1)
 	{
-		xQueueReceive(AudioNoQueueHandle,&ucTmp, portMAX_DELAY);/*获取音频播放队列*/
+		xQueueReceive(AudioNoQueueHandle,&ulMessage, portMAX_DELAY);/*获取音频播放队列*/
 		
-		sprintf(sprintf_str,"0:AudioPlay/%04d.wav",ucTmp);		/*将接收到的音频名进行整合*/
+		if(ulMessage > 1000)
+		{
+			ucTmp = ulMessage/1000;
+			if((ulMessage - (ucTmp * 1000)) < 10)							/*判断是否是从MQTT接收的指令*/
+			{
+				if(ulMessage % 2)
+					bsp_pcf8974x_bit_set(0, ucTmp + 3,0);
+				else
+					bsp_pcf8974x_bit_set(0, ucTmp + 3,1);
+			}
+			else
+			{
+				if(ulMessage == 1011)/*卧室灯*/
+					bsp_pcf8974x_bit_set(0, 4 + 3,0);
+				if(ulMessage == 1012)/*卧室灯*/
+					bsp_pcf8974x_bit_set(0, 4 + 3,1);
+				if(ulMessage == 2011)/*客厅灯*/
+					bsp_pcf8974x_bit_set(0, 2 + 3,0);
+				if(ulMessage == 2012)/*客厅灯*/
+					bsp_pcf8974x_bit_set(0, 2 + 3,1);
+				if(ulMessage == 4011)/*书房灯*/
+					bsp_pcf8974x_bit_set(0, 3 + 3,0);
+				if(ulMessage == 4012)/*书房灯*/
+					bsp_pcf8974x_bit_set(0, 3 + 3,1);
+				if(ulMessage == 5011)/*厨房灯*/
+					bsp_pcf8974x_bit_set(0, 1 + 3,1);
+				if(ulMessage == 5012)/*厨房灯*/
+					bsp_pcf8974x_bit_set(0, 1 + 3,1);
+				
+				sprintf(sprintf_str,"0:AudioPlay/%04d.wav",ulMessage);		/*将接收到的音频名进行整合*/
 		
-		recoder_enter_play_mode();								/*进入播放模式*/
+				recoder_enter_play_mode();								/*进入播放模式*/
+				
+				wav_play_song((u8*)sprintf_str);						/*播放音频*/
+				
+				vTaskDelay(500);
+			}
+		}
 		
-		wav_play_song((u8*)sprintf_str);						/*播放音频*/
-		
-		vTaskDelay(500);
 	}
 }
 
@@ -255,27 +289,57 @@ static void vTaskLED(void *pvParameters)
     while(1)
     {
 		bspLedToggle();
-		bsp_pcf8974x_test(0, count);
+
+		uint8_t pcf8974x_state = bsp_pcf8974x_receive(0);
+		
+		bsp_pcf8974x_test(0, (pcf8974x_state&0xf0) + (count & 0x0f));
+
 		count++;
 		
-//		count = TIM4->CNT;
-		//TIM4->CNT = 0;
-//		printf("TIM4->CNT:%d\n", count);
 		if((!(speech_rec_statue)) && (!LastEspStatue))
 		{
 			if(timeout++ > 10)				/*每5s上传一次数据*/
 			{
-				DHTxx_Get_Data(DHTxx_Tab);
+				clear_screen();				/*oled清屏*/
+				
+				DHTxx_Get_Data(DHTxx_Tab);	/*获取dhtxx数据*/
+				
+				uint16_t bh1750fvi_val = bh1750fvi_send_measure(BH1750FVI_H_RESOLUTION);/*获取bh1750fvi数据*/
+				
 				char str[30];
-				sprintf(&str[7], "%2.1f,%2.1f,%d,%d",DHTxx_Tab[0] , DHTxx_Tab[1] , count, count + 100);
+				
+				lx_Gb2312g_Str("  [传感器INFO]  ", 1, 0, 1);
+				
+				sprintf(str,"温度:%2.1f℃",DHTxx_Tab[1]);
+				
+				lx_Gb2312g_Str(str, 3, 0, 0);
+				
+				sprintf(str,"湿度:%2.1f%%",DHTxx_Tab[0]);
+				
+				lx_Gb2312g_Str(str, 5, 0, 0);
+				
+				sprintf(str,"光照强度:%dlx",bh1750fvi_val);
+				
+				lx_Gb2312g_Str(str, 7, 0, 0);
+				
+				sprintf(&str[7], "%2.1f,%2.1f,%d,%d",DHTxx_Tab[1] , DHTxx_Tab[0] , bh1750fvi_val, count + 100);
+				
 				printf("%s\n", &str[7]);
+				
 				uint8_t length = strlen(&str[7]);
+				
 				UartDataPacking(str, 6, length, 0);
+				
 				usartSendStart((uint8_t*)str, 9 + length);/*数据长度+数据包结构*/
+				
 				timeout = 0;
 				//GetEspInfo();
 				
 			}
+		}
+		else
+		{
+			timeout = 0;
 		}
         vTaskDelay(500);		
     }

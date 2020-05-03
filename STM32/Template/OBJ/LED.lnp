@@ -17,6 +17,7 @@
 "..\obj\bsp_pcf8574.o"
 "..\obj\bsp_encoder.o"
 "..\obj\bsp_dhtxx.o"
+"..\obj\bsp_bh1750fvi.o"
 "..\obj\wavplay.o"
 "..\obj\myapp.o"
 "..\obj\speech_rec.o"

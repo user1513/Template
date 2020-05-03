@@ -76,6 +76,8 @@
 
 #include "bsp_pcf8574.h"
 
+#include "bsp_bh1750fvi.h"
+
 /*外设初始化函数*/
 void bspInit(void);
 

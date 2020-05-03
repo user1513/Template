@@ -42,7 +42,7 @@ void bspInit(void)
 	usmart_init(84);				/*初始化usmart*/
 	
 	WM8978_Init();				//初始化WM8978
-	WM8978_HPvol_Set(40,40);	//耳机音量设置
+	WM8978_HPvol_Set(63,63);	//耳机音量设置
 	WM8978_SPKvol_Set(63);		//喇叭音量设置
 
 	exfuns_init();					/*fatfs变量声明*/
@@ -63,15 +63,23 @@ void bspInit(void)
 	
 	bsp_pcf8974x_io_init();			/*pcf8974io初始化*/
 	
+	bsp_bh1750fvi_io_init();
+	
 	SPI1_Init();
 	
 	initial_lcd();//LCD 模块初始化
 	
+	bsp_pcf8974x_test(0,0xff);
+	
 	clear_screen();
 	
-	lx_Gb2312g_Write_5X7_Ascll_Str("www.baidu.com", 2,8 ,1);
+	lx_Gb2312g_Str("<基于语音控制的>", 1, 0, 0);
 	
-	lx_Gb2312g_Str("你好啊,老板12345", 7, 0, 1);
+	lx_Gb2312g_Str("智能家居系统设计", 3, 0, 0);
+	
+	lx_Gb2312g_Str("等待设备联网成功", 5, 0, 0);
+	
+	lx_Gb2312g_Str("    制作者：小袁", 7, 0, 0);
 	
 	printf("程序开始!!!\n");
 
