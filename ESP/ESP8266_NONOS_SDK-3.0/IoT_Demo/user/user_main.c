@@ -387,7 +387,7 @@ void uart0_rx_intr_handler(void *para)
 					else
 					{
 						g_ultotal += g_total;
-						g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);
+						g_CurrentPoint = ((g_CurrentPoint == g_UartPoint1) ? g_UartPoint2 : g_UartPoint1);	
 						g_total = 0;
 						RTS_FLAG(0);
 					}
@@ -395,8 +395,6 @@ void uart0_rx_intr_handler(void *para)
 				else
 				{
 					RTS_FLAG(1);
-					//CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_FULL_INT_ENA);
-					//CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_RXFIFO_TOUT_INT_ENA);
 					os_printf("espconn_no_send!!!\n");
 				}
 			}

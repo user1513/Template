@@ -119,7 +119,7 @@ uint16_t bh1750fvi_send_measure(uint8_t ucMode)
 
     swi2cStop(&t_bh1750fvi_swi2c);                                                  /*停止I2C*/
 
-    if(ucMode & 0x03)                                                               /*判断是否是单次测量*/
+    if(ucMode & 0x03)                                                               /*判断分辨率测量*/
         delay_ms(BH1750FVI_L_RESOLUTION_MEASURE_TIME);  
     else
         delay_ms(BH1750FVI_H_RESOLUTION_MEASURE_TIME); 

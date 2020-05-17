@@ -1,6 +1,6 @@
 Dependencies for Project 'Template', Target 'project': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
-F (.\main.c)(0x5EAE8F27)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x5EB3C62E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (includes.h)(0x5E95AAD3)
 I (F:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9AD21A)
 I (F:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AD21A)
@@ -64,7 +64,7 @@ I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
 I (..\USER\bsp.h)(0x5EAE5455)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -87,7 +87,7 @@ I (..\BSP\Inc\bsp_bh1750fvi.h)(0x5EAE5769)
 F (.\includes.h)(0x5E95AAD3)()
 F (.\FreeRTOSConfig.h)(0x5EAD8442)()
 F (.\bsp.h)(0x5EAE5455)()
-F (.\bsp.c)(0x5EAE7395)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp.o --omf_browse ..\obj\bsp.crf --depend ..\obj\bsp.d)
+F (.\bsp.c)(0x5EB3DFE0)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp.o --omf_browse ..\obj\bsp.crf --depend ..\obj\bsp.d)
 I (bsp.h)(0x5EAE5455)
 I (stm32f4xx.h)(0x542BA483)
 I (..\CORE\core_cm4.h)(0x53C7D530)
@@ -136,7 +136,7 @@ I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
 I (..\USER\bsp.h)(0x5EAE5455)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -253,7 +253,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
 I (..\Fatfs\inc\ff.h)(0x5E8FF46F)
@@ -535,7 +535,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -615,7 +615,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -764,7 +764,7 @@ I (..\FWLIB\inc\stm32f4xx_fsmc.h)(0x53DBAFAD)
 I (..\SYSTEM\delay\delay.h)(0x5E95A73C)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 F (..\BSP\Src\bsp_swi2c.c)(0x5E85FC43)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp_swi2c.o --omf_browse ..\obj\bsp_swi2c.crf --depend ..\obj\bsp_swi2c.d)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\USER\bsp.h)(0x5EAE5455)
 I (..\USER\stm32f4xx.h)(0x542BA483)
 I (..\CORE\core_cm4.h)(0x53C7D530)
@@ -890,7 +890,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
 I (..\Fatfs\inc\ff.h)(0x5E8FF46F)
@@ -1004,7 +1004,7 @@ I (..\BSP\Inc\bsp_led.h)(0x5E92A19B)
 I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -1036,7 +1036,7 @@ I (..\BSP\Inc\bsp_usart.h)(0x5E970405)
 I (..\APP\Speech_Rec\Voice_Access.h)(0x5E9E6C8A)
 I (..\BSP\Inc\bsp_encoder.h)(0x5EAAA2A6)
 I (..\BSP\Inc\bsp_bh1750fvi.h)(0x5EAE5769)
-F (..\BSP\Src\bsp_bh1750fvi.c)(0x5EAE5767)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp_bh1750fvi.o --omf_browse ..\obj\bsp_bh1750fvi.crf --depend ..\obj\bsp_bh1750fvi.d)
+F (..\BSP\Src\bsp_bh1750fvi.c)(0x5EB3F725)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\bsp_bh1750fvi.o --omf_browse ..\obj\bsp_bh1750fvi.crf --depend ..\obj\bsp_bh1750fvi.d)
 I (..\BSP\Inc\bsp_bh1750fvi.h)(0x5EAE5769)
 I (..\USER\bsp.h)(0x5EAE5455)
 I (..\USER\stm32f4xx.h)(0x542BA483)
@@ -1084,7 +1084,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -1222,7 +1222,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -1315,7 +1315,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\BSP\Inc\bsp_sdio_sdcard.h)(0x5E8DDCFB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
@@ -1457,7 +1457,7 @@ I (..\SYSTEM\delay\delay.h)(0x5E95A73C)
 I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\Fatfs\inc\exfuns.h)(0x5E8DC8B2)
 I (F:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AD218)
-F (..\APP\Encode_Check_Func\base64.c)(0x5E93E383)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\base64.o --omf_browse ..\obj\base64.crf --depend ..\obj\base64.d)
+F (..\APP\Encode_Check_Func\base64.c)(0x5EB40E4E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I ..\CORE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\FWLIB\inc -I ..\BSP\Inc -I ..\USMART -I ..\Fatfs\inc -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\AUDIOCODEC\wav -I ..\APP -I ..\APP\Encode_Check_Func -I ..\APP\Speech_Play -I ..\APP\Speech_Rec-I.\RTE\_project-IF:\Keil_v5\F\Keil_v5\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\base64.o --omf_browse ..\obj\base64.crf --depend ..\obj\base64.d)
 I (..\APP\Encode_Check_Func\base64.h)(0x5E93DC77)
 I (F:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AD21A)
 I (F:\Keil_v5\ARM\ARMCC\include\float.h)(0x5D9AD218)
@@ -2249,7 +2249,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
 I (..\Fatfs\inc\exfuns.h)(0x5E8DC8B2)
@@ -2541,7 +2541,7 @@ I (..\BSP\Inc\bsp_key.h)(0x5EAAD195)
 I (..\BSP\Inc\bsp_spi.h)(0x5EA98E8A)
 I (..\BSP\Inc\JLX_GB2312G_1016.h)(0x5EAAF60D)
 I (..\BSP\Inc\bsp_dhtxx.h)(0x5EAAF2A3)
-I (..\BSP\Inc\bsp_swi2c.h)(0x5E85D4EF)
+I (..\BSP\Inc\bsp_swi2c.h)(0x5EB3EF8B)
 I (..\BSP\Inc\bsp_pcf8574.h)(0x5EAE7FBB)
 I (..\APP\Encode_Check_Func\CRC.h)(0x5E86FF5C)
 I (..\Fatfs\inc\exfuns.h)(0x5E8DC8B2)

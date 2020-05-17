@@ -2,11 +2,11 @@
 
 void bspInit(void)
 {
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组4
 	
     delay_init(168);		        /*初始化延时函数*/
 
-	bspLedInit();		            /*初始化LED端口*/
+	bspLedInit();		            /*	*/
 
 	bspKeyInit();					/*初始化按键端口*/
 	
@@ -21,7 +21,7 @@ void bspInit(void)
 
 	uart_init(460800);				/*串口0初始化*/
 	
-    vDhtxx_Init();                /*DHT22初始化函数*/
+    vDhtxx_Init();                	/*DHT22初始化函数*/
 	
 	//OLED_Init();					/*OLED初始化函数*/
 
@@ -37,7 +37,7 @@ void bspInit(void)
 
 	//TIM_SetCompare2(TIM2, 32);	/*PWM占空比初始化*/
 
-//	bsp_pcf8974x_io_init();			/*pcf8974外设初始化*/
+	//bsp_pcf8974x_io_init();		/*pcf8974外设初始化*/
 
 	usmart_init(84);				/*初始化usmart*/
 	
@@ -55,23 +55,23 @@ void bspInit(void)
 		delay_ms(500);
 	}
 	
-	bspUsartInit(460800);
+	bspUsartInit(460800);			/*串口初始化*/
 	
 	bspDmaUsartInit();				/*DMA初始化*/
 
-	//bsp_encoder_init();				/*定时器编码器模式配置*/
+	//bsp_encoder_init();			/*定时器编码器模式配置*/
 	
 	bsp_pcf8974x_io_init();			/*pcf8974io初始化*/
 	
-	bsp_bh1750fvi_io_init();
+	bsp_bh1750fvi_io_init();		/*光照度传感器初始化*/
 	
-	SPI1_Init();
+	SPI1_Init();					/*SPI1初始化*/
 	
-	initial_lcd();//LCD 模块初始化
+	initial_lcd();					/*LCD 模块初始化*/
 	
-	bsp_pcf8974x_test(0,0xff);
+	bsp_pcf8974x_test(0,0xff);		/*设定led全灭*/
 	
-	clear_screen();
+	clear_screen();					/*清屏*/
 	
 	lx_Gb2312g_Str("<基于语音控制的>", 1, 0, 0);
 	
