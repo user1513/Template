@@ -47,6 +47,7 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"			/*用于信号量*/
+#include "timers.h"
 /*
 ***********************************************************************
 * 								宏定义

@@ -27,8 +27,7 @@
 
 #else
 
-#define KEY 	PAin(15)
-#define KEY1 	PAin(10)
+#define KEY0 	PAin(15)
 #endif
 
 #define KEY0_PRES 	1

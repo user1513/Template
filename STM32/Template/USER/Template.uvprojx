@@ -397,6 +397,11 @@
               <FileType>5</FileType>
               <FilePath>.\FreeRTOSConfig.h</FilePath>
             </File>
+            <File>
+              <FileName>SYSInfoTest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SYSInfoTest.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -418,26 +423,6 @@
               <FilePath>..\BSP\Src\bsp_led.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_sdio_sdcard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_sdio_sdcard.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_wm8978.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_wm8978.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_myiic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_myiic.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_i2s.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_i2s.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_key.c</FilePath>
@@ -448,104 +433,14 @@
               <FilePath>..\BSP\Src\bsp_exti.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>JLX_GB2312G_1016.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\JLX_GB2312G_1016.c</FilePath>
-            </File>
-            <File>
-              <FileName>JLX_GB2312z.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\JLX_GB2312z.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_swi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_swi2c.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_pcf8574.c</FileName>
+              <FileName>bsp_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_pcf8574.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_encoder.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_encoder.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_dhtxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_dhtxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_bh1750fvi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\Src\bsp_bh1750fvi.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>APP</GroupName>
-          <Files>
-            <File>
-              <FileName>wavplay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\AUDIOCODEC\wav\wavplay.c</FilePath>
-            </File>
-            <File>
-              <FileName>myapp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\myapp.c</FilePath>
-            </File>
-            <File>
-              <FileName>Speech_Rec.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Speech_Rec\Speech_Rec.c</FilePath>
-            </File>
-            <File>
-              <FileName>Voice_Access.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Speech_Rec\Voice_Access.c</FilePath>
-            </File>
-            <File>
-              <FileName>audioplay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Speech_Play\audioplay.c</FilePath>
-            </File>
-            <File>
-              <FileName>base64.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Encode_Check_Func\base64.c</FilePath>
-            </File>
-            <File>
-              <FileName>CRC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Encode_Check_Func\CRC.c</FilePath>
-            </File>
-            <File>
-              <FileName>gbk2utf2uni.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Encode_Check_Func\gbk2utf2uni.c</FilePath>
-            </File>
-            <File>
-              <FileName>GBK.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\Encode_Check_Func\GBK.c</FilePath>
+              <FilePath>..\BSP\Src\bsp_timer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -650,46 +545,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FATFS</GroupName>
-          <Files>
-            <File>
-              <FileName>ffconf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Fatfs\inc\ffconf.h</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Fatfs\src\diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Fatfs\src\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Fatfs\src\ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Fatfs\src\ffunicode.c</FilePath>
-            </File>
-            <File>
-              <FileName>exfuns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Fatfs\src\exfuns.c</FilePath>
-            </File>
-            <File>
-              <FileName>fattester.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Fatfs\src\fattester.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CORE</GroupName>
           <Files>
             <File>
@@ -738,11 +593,6 @@
               <FilePath>..\FWLIB\src\stm32f4xx_usart.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FWLIB\src\stm32f4xx_adc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FWLIB\src\stm32f4xx_tim.c</FilePath>
@@ -756,16 +606,6 @@
               <FileName>stm32f4xx_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FWLIB\src\stm32f4xx_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FWLIB\src\stm32f4xx_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FWLIB\src\stm32f4xx_spi.c</FilePath>
             </File>
           </Files>
         </Group>

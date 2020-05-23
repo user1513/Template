@@ -43,7 +43,7 @@
 
 #include "sys.h"
 #include "usart.h"
-	
+ extern volatile uint32_t ulHighFrequencyTimerTicks;	
 /* Ensure stdint is only used by the compiler, and not the assembler. */
 #ifdef __ICCARM__
 	#include <stdint.h>
@@ -87,7 +87,13 @@
 #define configUSE_MALLOC_FAILED_HOOK	0
 #define configUSE_APPLICATION_TASK_TAG	0
 #define configUSE_COUNTING_SEMAPHORES	1
-#define configGENERATE_RUN_TIME_STATS	0
+
+/* Run time and task stats gathering related definitions. */
+#define configGENERATE_RUN_TIME_STATS                1
+#define configUSE_STATS_FORMATTING_FUNCTIONS         1
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()     (ulHighFrequencyTimerTicks = 0ul)
+#define portGET_RUN_TIME_COUNTER_VALUE()             ulHighFrequencyTimerTicks
+//#define portALT_GET_RUN_TIME_COUNTER_VALUE           1
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 		0
@@ -95,7 +101,7 @@
 
 /* Software timer definitions. */
 #define configUSE_TIMERS				1
-#define configTIMER_TASK_PRIORITY		( 2 )
+#define configTIMER_TASK_PRIORITY		( configMAX_PRIORITIES - 1 )		/*默认设置软件定时器任务优先级最高*/
 #define configTIMER_QUEUE_LENGTH		10
 #define configTIMER_TASK_STACK_DEPTH	( configMINIMAL_STACK_SIZE * 2 )
 

@@ -55,13 +55,25 @@ void bspKeyInit(void)
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//使能GPIOA,GPIOE时钟
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15 | GPIO_Pin_10; //KEY0 KEY1 KEY2对应引脚
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; //KEY0 KEY1 KEY2对应引脚
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;//普通输入模式
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;//100M
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100M
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//上拉
 	GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA15
 	
 } 
+
+
+u8 KEY_Scan(u8 mode)
+{	 
+
+
+	if(KEY0 == 0)
+	{
+		return 1;	
+	}
+	else return 0xff;
+}
 
 #endif
 

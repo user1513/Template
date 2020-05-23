@@ -6,7 +6,7 @@
 #include "sys.h"
 #include "stdio.h"	
 #include "stdarg.h"
-#include "fattester.h"
+//#include "fattester.h"
 #include "bsp_key.h"
 //函数名列表初始化(用户自己添加)
 //用户直接在这里输入要执行的函数名及其查找串
@@ -25,28 +25,28 @@ struct _m_usmart_nametab usmart_nametab[]=
 	(void*)FuncTest, "u8 FuncTest(u8 data)",	
 	(void*)delay_ms,"void delay_ms(u16 nms)",
  	(void*)delay_us,"void delay_us(u32 nus)",	 	
-	(void*)mf_mount,"u8 mf_mount(u8* path,u8 mt)",
-	(void*)mf_open, "u8 mf_open(u8*path,u8 mode)",
-	(void*)mf_close, "u8 mf_close(void)",
-	(void*)mf_read, "u8 mf_read(u16 len)",
-	(void*)mf_write, "u8 mf_write(u8*dat,u16 len)",
-	(void*)mf_opendir, "u8 mf_opendir(u8* path)",
-	(void*)mf_closedir, "u8 mf_closedir(void)",
-	(void*)mf_readdir, "u8 mf_readdir(void)",
-	(void*)scan_files, "u8 scan_files (char* path,uint8_t depth)",
-	(void*)mf_showfree, "u32 mf_showfree(u8 *drv)",
-	(void*)mf_lseek, "u8 mf_lseek(u32 offset)",
-	(void*)mf_tell, "u32 mf_tell(void)",
-	(void*)mf_size, "u32 mf_size(void)",
-	(void*)mf_mkdir, "u8 mf_mkdir(u8*pname)",
-	(void*)mf_fmkfs, "u8 mf_fmkfs(u8* path,u16 au)",
-	(void*)mf_unlink, "u8 mf_unlink(u8 *pname)",
-	(void*)mf_rename, "u8 mf_rename(u8 *oldname,u8* newname)",
-	(void*)mf_getlabel, "void mf_getlabel(u8 *path)",
-	(void*)mf_setlabel, "void mf_setlabel(u8 *path)", 
-	(void*)mf_gets, "void mf_gets(u16 size)",
-	(void*)mf_putc, "u8 mf_putc(u8 c)",
-	(void*)mf_puts, "u8 mf_puts(u8*c)",
+//	(void*)mf_mount,"u8 mf_mount(u8* path,u8 mt)",
+//	(void*)mf_open, "u8 mf_open(u8*path,u8 mode)",
+//	(void*)mf_close, "u8 mf_close(void)",
+//	(void*)mf_read, "u8 mf_read(u16 len)",
+//	(void*)mf_write, "u8 mf_write(u8*dat,u16 len)",
+//	(void*)mf_opendir, "u8 mf_opendir(u8* path)",
+//	(void*)mf_closedir, "u8 mf_closedir(void)",
+//	(void*)mf_readdir, "u8 mf_readdir(void)",
+//	(void*)scan_files, "u8 scan_files (char* path,uint8_t depth)",
+//	(void*)mf_showfree, "u32 mf_showfree(u8 *drv)",
+//	(void*)mf_lseek, "u8 mf_lseek(u32 offset)",
+//	(void*)mf_tell, "u32 mf_tell(void)",
+//	(void*)mf_size, "u32 mf_size(void)",
+//	(void*)mf_mkdir, "u8 mf_mkdir(u8*pname)",
+//	(void*)mf_fmkfs, "u8 mf_fmkfs(u8* path,u16 au)",
+//	(void*)mf_unlink, "u8 mf_unlink(u8 *pname)",
+//	(void*)mf_rename, "u8 mf_rename(u8 *oldname,u8* newname)",
+//	(void*)mf_getlabel, "void mf_getlabel(u8 *path)",
+//	(void*)mf_setlabel, "void mf_setlabel(u8 *path)", 
+//	(void*)mf_gets, "void mf_gets(u16 size)",
+//	(void*)mf_putc, "u8 mf_putc(u8 c)",
+//	(void*)mf_puts, "u8 mf_puts(u8*c)",
 	(void*)uasrt_key_send,"u8 uasrt_key_send(u8 _ucKey)",
 };						  
 ///////////////////////////////////END///////////////////////////////////////////////

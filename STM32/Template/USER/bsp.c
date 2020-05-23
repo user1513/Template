@@ -19,9 +19,9 @@ void bspInit(void)
 
 //    TIM3_Int_Init(9,8399);          /*timer3 = 84Mhz, 设定溢出时间为1ms*/
 
-	uart_init(460800);				/*串口0初始化*/
+	uart_init(115200);				/*串口0初始化*/
 	
-    vDhtxx_Init();                	/*DHT22初始化函数*/
+//   vDhtxx_Init();                	/*DHT22初始化函数*/
 	
 	//OLED_Init();					/*OLED初始化函数*/
 
@@ -41,45 +41,38 @@ void bspInit(void)
 
 	usmart_init(84);				/*初始化usmart*/
 	
-	WM8978_Init();				//初始化WM8978
-	WM8978_HPvol_Set(63,63);	//耳机音量设置
-	WM8978_SPKvol_Set(63);		//喇叭音量设置
+//	WM8978_Init();				//初始化WM8978
+//	WM8978_HPvol_Set(63,63);	//耳机音量设置
+//	WM8978_SPKvol_Set(63);		//喇叭音量设置
 
-	exfuns_init();					/*fatfs变量声明*/
+//	exfuns_init();					/*fatfs变量声明*/
 	
-	while(SD_Init())//检测不到SD卡	/*SD卡初始化*/
-	{
-		printf("SD Card Error!\n");
-		delay_ms(500);					
-		printf("Please Check!\n");
-		delay_ms(500);
-	}
+//	while(SD_Init())//检测不到SD卡	/*SD卡初始化*/
+//	{
+//		printf("SD Card Error!\n");
+//		delay_ms(500);					
+//		printf("Please Check!\n");
+//		delay_ms(500);
+//	}
 	
-	bspUsartInit(460800);			/*串口初始化*/
+//	bspUsartInit(460800);			/*串口初始化*/
 	
-	bspDmaUsartInit();				/*DMA初始化*/
+//	bspDmaUsartInit();				/*DMA初始化*/
 
 	//bsp_encoder_init();			/*定时器编码器模式配置*/
 	
-	bsp_pcf8974x_io_init();			/*pcf8974io初始化*/
+//	bsp_pcf8974x_io_init();			/*pcf8974io初始化*/
 	
-	bsp_bh1750fvi_io_init();		/*光照度传感器初始化*/
+//	bsp_bh1750fvi_io_init();		/*光照度传感器初始化*/
 	
-	SPI1_Init();					/*SPI1初始化*/
+//	SPI1_Init();					/*SPI1初始化*/
 	
-	initial_lcd();					/*LCD 模块初始化*/
+//	initial_lcd();					/*LCD 模块初始化*/
 	
-	bsp_pcf8974x_test(0,0xff);		/*设定led全灭*/
+//	bsp_pcf8974x_test(0,0xff);		/*设定led全灭*/
 	
-	clear_screen();					/*清屏*/
-	
-	lx_Gb2312g_Str("<基于语音控制的>", 1, 0, 0);
-	
-	lx_Gb2312g_Str("智能家居系统设计", 3, 0, 0);
-	
-	lx_Gb2312g_Str("等待设备联网成功", 5, 0, 0);
-	
-	lx_Gb2312g_Str("    制作者：小袁", 7, 0, 0);
+//	clear_screen();					/*清屏*/
+	vSetupSysInfoTest();
 	
 	printf("程序开始!!!\n");
 
